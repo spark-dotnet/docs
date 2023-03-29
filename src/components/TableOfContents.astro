@@ -1,0 +1,11 @@
+---
+const { links } = Astro.props;
+---
+<ul>
+    {links.map((link) => (
+        <li class="inline-flex items-center">
+            <span class="text-[#AC49FE] mr-2">#</span>
+            <a href={link.url}>{link.name}</a>
+        </li>
+    ))}
+  </ul>

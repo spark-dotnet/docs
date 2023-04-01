@@ -1,0 +1,63 @@
+---
+title: "Authentication"
+description: "Blazor Spark Authentication"
+---
+
+# Authentication
+Most web applications require some form of authentication. Spark provides this out of the box with it's own custom cookie auth implementation.
+
+## User Model
+Every Spark app comes with a `User` model. This acts as your schema for your users table and also the class that is used during authentication.
+
+Users also have Roles tied to them for authorization. You can read more about that on the [Authorization page](/docs/authorization).
+```csharp
+public class User : BaseModel
+{
+    public User()
+    {
+        UserRoles = new HashSet<UserRole>();
+    }
+
+    public int Id { get; set; }
+
+    public string Name { get; set; }
+
+    public string Email { get; set; }
+
+    public string Password { get; set; }
+
+    public string? RemeberToken { get; set; }
+
+    public DateTime? EmailVerifiedAt { get; set; }
+
+    public virtual ICollection<UserRole> UserRoles { get; set; }
+}
+```
+
+## Scafolded Auth Pages
+Spark builds the login, logout, and register pages for you. Feel free to customize their look and feel how you see fit. 
+
+These pages aren't Blazor pages but Razor pages instead. This is because Blazor pages do not have access to the `HttpContext` methods required to authenticate.
+
+### Login Page
+Located at `Pages/Auth/Login.cshtml`
+
+### Logout Page
+Located at `Pages/Auth/Logout.cshtml`
+
+### Register Page
+Located at `Pages/Auth/Register.cshtml`
+
+## Requiring Authentication for Blazor pages
+If you have pages in your app you only want logged in users to see, use the `Authorize` attribute in your Blazor page.
+```csharp
+@page "/dashboard"
+@attribute [Authorize]
+<section class="max-w-5xl mx-auto py-28 min-h-screen px-4">
+    <article>
+        <h1 class="text-2xl font-bold text-gray-800">
+            User Dashboard
+        </h1>
+    </article>
+</section>
+```

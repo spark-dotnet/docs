@@ -1,0 +1,39 @@
+---
+title: "Installation"
+description: "Blazor Spark installation"
+---
+
+# Installation
+
+> Blazor Spark is still in very early development. Lots will change. Please use at your own risk in production.
+
+## What is Blazor Spark?
+Blazor Spark is an all-in-one web application framework for building fast, reliable monolithic web apps.
+
+.NET has great tooling. But it is all a bit scattered and in some cases, clunky. Blazor Spark is a web framework that takes .NET's web ecosystem and sands down the rough edges, creating an enjoyable developer experience and easily maintanable code.
+
+## Your First Spark Project
+Before creating your first spark project, you should ensure that your local machine has **.NET 7 or greater** installed. You can find the download [here](https://dotnet.microsoft.com/en-us/download/dotnet/7.0).
+
+After you have installed .NET, you will need to install the Spark console tool.
+```bash
+dotnet tool install --global BlazorSpark.Console
+spark install
+```
+
+You are now ready to create your first Spark project!
+```bash
+spark new MyApp
+```
+
+After the project has been created, you can create and run the migrations for the user tables.
+```bash
+cd MyApp
+spark make:migration User
+spark run:migration
+```
+
+Finally, start .NET's local development server using the dotnet watch command:
+```bash
+dotnet watch
+```

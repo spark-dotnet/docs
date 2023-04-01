@@ -13,7 +13,7 @@ const { title } = Astro.props;
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="shortcut icon" href="/logo.png">
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 	</head>
@@ -36,10 +36,18 @@ pre {
     @apply -mx-6 p-6 mb-12 rounded-lg bg-gray-900 !important;
 }
 
+pre code {
+    font-size: .8rem;
+    font-weight: 500;
+    line-height: 1.9;
+    @apply bg-gray-900 px-0 !important;
+}
+
 code {
     font-size: .8rem;
     font-weight: 500;
     line-height: 1.9;
+    @apply bg-gray-100 text-purple-600 px-2 py-1;
 }
 
 .markdown p {
@@ -50,8 +58,19 @@ code {
     @apply text-[2.5em] mb-8 font-medium text-black;
 }
 
+.markdown ul {
+    @apply list-disc list-inside;
+}
+
+.markdown blockquote {
+    @apply -mx-6 p-6 mt-10 mb-12 bg-blue-50 border-l-4 border-blue-600 !important;
+}
+.markdown blockquote > p:last-of-type {
+    @apply mb-0 !important;
+}
+
 .markdown h2 {
-    @apply text-3xl mt-24 mb-8 font-medium text-gray-900;
+    @apply text-3xl mt-20 mb-8 font-medium text-gray-900;
 }
 
 .markdown h3 {

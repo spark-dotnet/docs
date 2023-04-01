@@ -75,7 +75,7 @@ public class ApplicationDbContext : DbContext
 
 Finally, you can create and run a migration. This essentially acts as source control for your database schema. When a migration is created, a new file with the schema changes is created in the `Migrations` folder. Running a migration will apply those changes to your database.
 
-Spark comes with handy CLI commands to easily create and run your migrations
+Spark comes with handy CLI commands to easily create and run your migrations:
 ```bash
 spark make:migration AddDeveloperTable
 spark run:migration

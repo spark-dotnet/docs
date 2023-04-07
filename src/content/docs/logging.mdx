@@ -1,0 +1,50 @@
+---
+title: "Logging"
+description: "Blazor Spark Logging"
+---
+
+# Logging
+To help you be aware of what's happening with your application, Spark provides a logging service to allow you to log messages.
+
+Under the hood, Spark uses the [Serilog](https://serilog.net/) library.
+
+## Configuration
+Logging can be configured in your `.env` file.
+```ini
+LOG_CHANNEL=file
+LOG_LEVEL=information
+```
+
+### Channels
+Log channels control where your logs are wrote to. There are currently 2 log channels but more will be coming.
+- file
+- console
+
+### Levels
+Log levels control the minimum level of event that is logged to your channel. For instance, if your log level is set to `warning`, only log messages with a warning level or higher will be logged. Debug and information logs are ignored.
+- debug
+- information
+- warning
+- error
+- fatal
+
+It is recommended to set your logs to `warning` in production to avoid noise in your logs.
+
+## Using the Logger
+The Spark logger is added to the DI container for you. You simply need to inject the Spark `ILogger` service into your service or Blazor component. From there, you can write logging messages where needed.
+```csharp
+@page "/"
+@inject ILogger logger
+
+<h1 class="">
+    Build something beautiful
+</h1>
+
+@code {
+
+    protected override void OnInitialized()
+    {
+        logger.Information($"Initialized at {DateTime.Now}");
+    }
+}
+```

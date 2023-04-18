@@ -46,3 +46,16 @@ Finally, start .NET's local development server using the dotnet watch command:
 ```bash
 dotnet watch
 ```
+
+## Updating Spark CLI
+The easiest way to update the Spark CLI is to uninstall and reinstall it.
+```bash
+dotnet tool uninstall -g BlazorSpark.Console
+dotnet tool install -g BlazorSpark.Console
+```
+
+## Updating the Spark Project Template
+To update the Spark project template, simply run the spark update command in your console.
+```bash
+spark update
+```

@@ -8,31 +8,39 @@ description: "Learn how directories are setup in Blazor Spark."
 The default Blazor Spark application structure is setup to give a great starting point for your web application. 
 Most of the structure will look familar to you as it follows standard conventions for Blazor applications with some new Spark directories sprinkled in.
 
-## Data
-The `Data` directory contains your efcore model classes and the db context. Each database table for your application has a corresponding Model class that efcore will use to interact with that table.
+## Application
+The `Application` directory contains the core code of you application. 
+
+### Database
+The `Database` directory contains your `DbContext` and `Migrations` for EF Core.
+
+### Events
+The `Events` directory contains your event and listener classes. Events are used to alert other parts of your app that a given action has occurred. This provides great flexibility and decoupling.
+
+### Models
+The `Models` directory contains your efcore model classes and the db context. Each database table for your application has a corresponding Model class that efcore will use to interact with that table.
+
+### Services
+The `Services` directory contains your services that can be Dependency Injected on startup. Services are typically used to abstract away business logic or database calls.
+
+### Startup
+> Work in progress
+
+The `Startup` directory contains the AppServiceRegistration class. This class is where you can add any services, events, or tasks you wrote to the DI container. It also adds the internal Spark services to the DI container.
+
+### Tasks
+The `Tasks` directory contains queueable jobs for your application. Tasks can be scheduled or added to a background queue.
 
 ## Pages
-The `Pages` directory contains your Blazor views. This is where your sites frontend markdown and page logic will be contained.
+The `Pages` directory contains your Blazor pages and components. This is where your sites frontend markdown and page logic will be contained. The inner `Shared` directory contains your re-usable Blazor components. These components can be imported into your Blazor views and keep your front-end dry.
 
 ## Resources
 > Work in progress
 
 The `Resources` directory contains your uncompiled CSS files. This is where your Tailwind base classes reside and where you can write custom CSS classes as well.
 
-## Services
-The `Services` directory contains your services that can be Dependency Injected on startup. Services are typically used to abstract away business logic or database calls.
-
-## Shared
-The `Shared` directory contains your re-usable Blazor components. These components can be imported into your Blazor views and keep your front-end dry.
-
 ## Storage
 The `Storage` directory contains your application logs if the Spark logger is setup to log to files. A new log file is created every day to reduce large single file sizes.
-
-## Startup
-> Work in progress
-
-The `Startup` directory contains the ServiceStartup class. This class is where you can add any services you wrote to the DI container. It also sets up your database connection and authentication configuration.
-
 
 ## wwwroot
 The `wwwroot` directory contains your compiled CSS, images, and other frontend public dependancies you want to use.

@@ -13,10 +13,21 @@ The `.env` file should never be committed to your apps source control. They cont
 The `.env.example` file acts as an example of what your `.env` file should look like. This should be commited to source control and act as a guide to other developers when setting up their app.
 
 ## Retrieving Environment Variables
-Environment variables can be accessed by using the `System.Environment` class like below.
+Spark adds all environment variables to your apps configuration, just like variables in your appsettings.json. This means any variable in your `.env` can be accessed by injecting `IConfiguration`. 
+```csharp
+using Microsoft.Extensions.Configuration;
+
+public class Developer(IConfiguration config)
+{
+    var something = config.GetValue<string>("SOME_ENV_VARIABLE");
+}
+```
+Environment variables can also be accessed through the static `Env` class.
 
 ```csharp
-var appName = Environment.GetEnvironmentVariable("APP_NAME");
+using BlazorSpark.Library.Environment;
+
+var something = Env.Get("SOME_ENV_VARIABLE");
 ```
 
 ## What about Appsettings?

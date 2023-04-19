@@ -1,0 +1,19 @@
+---
+title: "Events"
+description: "Blazor Spark Events"
+---
+
+# Events
+Events are a great way to decouple aspects of your application. For example, you may wish to send an email after a new user has registered for you app. You can raise an `Application/Events/UserCreated` event which a listener can receive and use to send the email.
+
+Event classes are typically stored in the `Application/Events` directory, while their listeners are stored in `Application/Events/Listeners`.
+
+Under the hood, Spark uses the [Coravel](https://github.com/jamesmh/coravel) library for events.
+
+## Registering Events & Listeners
+
+## Defining Events
+
+## Defining Listeners
+
+## Dispatching Events

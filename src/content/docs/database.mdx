@@ -26,10 +26,11 @@ DB_PASSWORD=
 ```
 
 ## Database Context
-When a Spark app starts, a DB Context Factory is created and added to your apps DI container in the `Setup/ServicesSetup.cs` class.
+When a Spark app starts, a DB Context Factory is created and added to your apps DI container via Sparks internal service registration.
 
-Spark uses a DB Context Facory because Blazor applications do not create a service scope that aligned with the desired DB Context lifetime and will result in errors in your Blazor app.
-You can read more about this [here](https://learn.microsoft.com/en-us/ef/core/dbcontext-configuration/#using-a-dbcontext-factory-eg-for-blazor).
+
+> Spark uses a DB Context Facory because Blazor applications do not create a service scope that aligned with the desired DB Context lifetime and will result in errors in your Blazor app.
+> You can read more about this [here](https://learn.microsoft.com/en-us/ef/core/dbcontext-configuration/#using-a-dbcontext-factory-eg-for-blazor).
 
 You can inject the DB Context Factory in your services like the following:
 
@@ -49,7 +50,7 @@ public class UsersService
 
 Spark uses models and migrations to setup and maintain the database schema through EF Core.
 
-To create a new model, simply create a new class in the `Data` folder. You can extend the `BaseModel` class. This will add `CreatedAt` and `UpdatedAt` properties for you.
+To create a new model, simply create a new class in the `Application/Models` folder. You can extend the `BaseModel` class. This will add `CreatedAt` and `UpdatedAt` properties for you.
 
 ```csharp
 public class Developer : BaseModel
@@ -62,7 +63,7 @@ public class Developer : BaseModel
 }
 ```
 
-Then, register your model in the `ApplicationDbContext` class in the `Data` folder:
+Then, register your model in the `ApplicationDbContext` class in the `Application/Database` folder:
 ```csharp
 public class ApplicationDbContext : DbContext
 {
@@ -73,7 +74,7 @@ public class ApplicationDbContext : DbContext
     ...
 ```
 
-Finally, you can create and run a migration. This essentially acts as source control for your database schema. When a migration is created, a new file with the schema changes is created in the `Migrations` folder. Running a migration will apply those changes to your database.
+Finally, you can create and run a migration. This essentially acts as source control for your database schema. When a migration is created, a new file with the schema changes is created in the `Application/Migrations` folder. Running a migration will apply those changes to your database.
 
 Spark comes with handy CLI commands to easily create and run your migrations:
 ```bash
@@ -101,7 +102,7 @@ public class DeveloperService
 }
 ```
 
-Once you register the DeveloperService to the DI container in your `Setup/ServicesSetup.cs` class, you can query data from any Blazor Page or component by injecting the service.
+Once you register the DeveloperService to the DI container in your `Application/Startup/AppServiceRegistration.cs` class, you can query data from any Blazor Page or component by injecting the service.
 ```csharp
 @page "/developers"
 @inject DeveloperService developerService

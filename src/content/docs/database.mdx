@@ -10,9 +10,8 @@ If you've never used EF Core before, you can check out Microsofts documentation 
 
 Spark currently supports the following databases out of the box.
 - SQLite
-- PostgreSQL <span class="text-green-500">(coming soon)</span>
-- SQL Server <span class="text-green-500">(coming soon)</span>
-- MySQL <span class="text-green-500">(coming soon)</span>
+- PostgreSQL
+- MySQL
 
 ## Configuration
 By default, when a new Spark app is created, it comes with an SQLite setup. Databases configurations are setup in your `.env` file.
@@ -23,6 +22,25 @@ DB_PORT=3306
 DB_DATABASE=Spark.db
 DB_USERNAME=root
 DB_PASSWORD=
+```
+
+### PostgreSQL ENV Example
+```ini
+DB_CONNECTION=postgres
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DATABASE=your_db_name
+DB_USERNAME=your_user
+DB_PASSWORD=your_user_password
+```
+### MySQL ENV Example
+```ini
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=your_db_name
+DB_USERNAME=your_user
+DB_PASSWORD=your_user_password
 ```
 
 ## Database Context

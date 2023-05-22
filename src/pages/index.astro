@@ -3,11 +3,84 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title="Build Blazor web apps fast">
-	<main class="text-center flex flex-col h-screen justify-center items-center bg-gradient-to-r from-[#608CF9] to-[#AC48FE] px-2">
-		<h1 class="font-bold text-5xl font-title tracking-tight md:text-7xl max-w-2xl mx-auto text-white">The .NET Blazor Framework for <span class="text-yellow-300">Makers</span></h1>
-		<p class="text-xl sm:text-2xl text-gray-50 max-w-2xl text-center mt-8 leading-loose sm:leading-loose">
-			Blazor Spark picks up where Blazor Server leaves off. Build production ready, full-stack web applications fast.
-		</p>
-		<a href="/docs/introduction" class="mt-8 text-xl px-8 py-3 bg-black text-white font-medium rounded-md hover:bg-gray-800">Get Started</a>
+	<main class="text-center flex flex-col justify-center pt-16">
+		<section class="py-8 sm:py-16 lg:py-32 flex flex-col gap-y-6 sm:gap-y-12 px-6 sm:px-8 container mx-auto">
+			<h1 class="text-5xl sm:text-7xl md:text-8xl md:leading-none font-bold max-w-5xl mx-auto text-gray-800 text-left sm:text-center">The .NET Blazor Framework for <span class="text-yellow-400">Makers</span></h1>
+			<p class="text-xl sm:text-2xl text-gray-500 max-w-3xl text-left sm:text-center mx-auto leading-loose sm:leading-loose">
+				Blazor Spark is a batteries included web framework built on top of Blazor Server. Build production ready, full-stack web applications fast without sweating the small stuff.
+			</p>
+			<div class="flex flex-col sm:flex-row justify-center items-center gap-x-8">
+				<a href="/docs/introduction" class="w-full sm:w-fit text-xl px-8 py-3 bg-gradient-to-r from-[#608CF9] to-[#AC48FE] text-white font-medium rounded-md hover:bg-gray-800">
+					Documentation
+				</a>
+				<a href="#install" class="mt-6 sm:mt-0 text-xl sm:text-2xl text-gray-500 hover:text-gray-800 active:text-gray-80 border-b border-gray-500 hover:border-gray-800">
+					Install Spark
+				</a>
+			</div>
+		</section>
+		<section class="py-8 sm:py-16 lg:py-32 bg-gray-900 px-6 sm:px-8">
+			<div class="max-w-4xl mx-auto text-white text-left">
+				<div class="flex flex-col gap-y-6 sm:gap-y-12">
+					<h2 id="install" class="text-4xl sm:text-6xl whitespace-pre-line text-white font-bold max-w-lg">
+						Get started in under a minute
+					</h2>
+					<p class="text-xl sm:text-2xl leading-loose sm:leading-loose max-w-xl">
+						Spark's <a href="https://github.com/blazor-spark/blazor-spark" target="_blank" class="text-yellow-300 hover:text-yellow-200">open-source</a> web framework is a breeze to get started with:
+					</p>
+					<code class="font-mono text-white flex flex-col items-start text-xl sm:text-2xl space-y-2">
+						<p><span class="">C:\code&#62;</span> dotnet tool install --global BlazorSpark.Console</p>
+						<p><span class="">C:\code&#62;</span> spark install</p>
+						<p><span class="">C:\code&#62;</span> spark new MyApp</p>
+					</code>
+					<p class="text-xl sm:text-2xl leading-loose sm:leading-loose max-w-xl">
+						And you're done! Now check out our <a href="/docs/introduction" target="_blank" class="text-yellow-300 hover:text-yellow-200">documentation</a> for next steps.
+					</p>
+				</div>
+			</div>
+		</section>
+		<section class="py-8 sm:py-16 lg:py-32 flex flex-col px-6 sm:px-8 container mx-auto max-w-5xl">
+			<h2 class="text-5xl sm:text-7xl whitespace-pre-line font-bold mx-auto text-gray-800">
+				Why Use Spark?
+			</h2>
+			<div>
+				<h2 class="text-4xl sm:text-6xl whitespace-pre-line font-extrabold text-gray-800 pt-12 md:pt-24 text-left max-w-lg">
+					Convention over Configuration
+				</h2>
+				<p class="text-xl sm:text-2xl leading-relaxed sm:leading-relaxed text-gray-500 lg:col-end-8 pt-4 sm:pt-8 text-left max-w-2xl">
+					Spark embraces convention, freeing developers to build instead of deliberating mundane details.
+				</p>
+				<div class="mt-8 sm:mt-16">
+					<img class="hidden sm:block w-76 h-auto -ml-6 lg:-ml-12 xl:-ml-24" src="/convention.png" alt="Blazor Spark convention over configuration" />
+					<img class="block sm:hidden w-full h-auto -ml-4" src="/convention-editor.png" alt="Blazor Spark app folders" />
+					<img class="block sm:hidden w-full h-auto -ml-4" src="/convention-browser.png" alt="Blazor Spark default app" />
+				</div>
+			</div>
+			<div>
+				<h2 class="text-4xl sm:text-6xl whitespace-pre-line font-extrabold text-gray-800 pt-12 md:pt-24 text-left max-w-lg">
+					Don't sweat the small stuff
+				</h2>
+				<p class="text-xl sm:text-2xl leading-relaxed sm:leading-relaxed text-gray-500 lg:col-end-8 pt-4 sm:pt-8 text-left max-w-2xl">
+					Spark comes with features like auth, mail, and logging already setup. Freeing you to create without sweating the small things.
+				</p>
+				<div class="mt-8 sm:mt-16">
+					<img class="hidden sm:block w-76 h-auto -ml-6 lg:-ml-12 xl:-ml-24" src="/auth.png" alt="Blazor Spark authentication feature" />
+					<img class="block sm:hidden w-full h-auto -ml-4" src="/auth-editor.png" alt="Blazor Spark authentication code" />
+					<img class="block sm:hidden w-full h-auto -ml-4" src="/auth-browser.png" alt="Blazor Spark authentication page" />
+				</div>
+			</div>
+			<div>
+				<h2 class="text-4xl sm:text-6xl whitespace-pre-line font-extrabold text-gray-800 pt-12 md:pt-24 text-left max-w-lg">
+					Enjoyable Developer Experience
+				</h2>
+				<p class="text-xl sm:text-2xl leading-relaxed sm:leading-relaxed text-gray-500 lg:col-end-8 pt-4 sm:pt-8 text-left max-w-2xl">
+					A happy developer is a productive developer. Our CLI helps you make applications, run migrations, and generate classes. 
+				</p>
+				<div class="mt-8 sm:mt-16">
+					<img class="hidden sm:block w-76 h-auto -ml-6 lg:-ml-12 xl:-ml-24" src="/cli.png" alt="Blazor Spark cli" />
+					<img class="block sm:hidden w-full h-auto -ml-4" src="/cli-editor.png" alt="Blazor Spark mailable cli command" />
+					<img class="block sm:hidden w-full h-auto -ml-4" src="/cli-app.png" alt="Blazor Spark mailable code" />
+				</div>
+			</div>
+		</section>
 	</main>
 </Layout>

@@ -22,7 +22,9 @@ const sidebar = SIDEBAR;
 								const url = child.link;
 								let fonts = '';
 								if ('docs/'+url == currentPageMatch) {
-									fonts = 'font-bold';
+									fonts = 'font-bold bg-gray-100 rounded';
+								} else {
+									fonts = 'font-light rounded';
 								}
 								return (
 									<li class="nav-link">
@@ -76,30 +78,28 @@ const sidebar = SIDEBAR;
 	}
 
 	.nav-group-title {
-		font-size: 1rem;
-		font-weight: 700;
+		@apply text-gray-700 font-bold text-lg -ml-4;
 		padding: 0.1rem 1rem;
-		text-transform: uppercase;
 		margin-bottom: 0.5rem;
 	}
 
 	.nav-link a {
-		font-size: 1rem;
 		margin: 1px;
 		padding: 0.3rem 1rem;
 		text-decoration: none;
 		display: block;
+		@apply text-gray-700;
 	}
 
 	.nav-link a:hover,
 	.nav-link a:focus {
-		background-color: var(--theme-bg-hover);
+		@apply bg-gray-100 text-gray-900;
 	}
 
 	.nav-link a[aria-current='page'] {
 		color: var(--theme-text-accent);
 		background-color: var(--theme-bg-accent);
-		font-weight: 600;
+		@apply font-bold;
 	}
 
 	@media (min-width: 50em) {

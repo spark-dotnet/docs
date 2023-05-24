@@ -14,11 +14,15 @@ Spark currently supports the following databases out of the box.
 - MySQL
 
 ## Configuration
-By default, when a new Spark app is created, it comes with an SQLite setup. Databases configurations are setup in your `.env` file.
+By default, when a new Blazor Spark app is created, it comes with a SQLite already wired up. Databases configurations are setup in your `.env` file.
+
+You can switch your database type by cahnging the `DB_CONNECTION` value to one of our other supported databases.
+
+### SQlite ENV Example
 ```ini
 DB_CONNECTION=sqlite
-DB_HOST=localhost
-DB_PORT=3306
+DB_HOST=null
+DB_PORT=null
 DB_DATABASE=Spark.db
 DB_USERNAME=root
 DB_PASSWORD=
@@ -44,7 +48,7 @@ DB_PASSWORD=your_user_password
 ```
 
 ## Database Context
-When a Spark app starts, a DB Context Factory is created and added to your apps DI container via Sparks internal service registration.
+When a Blazor Spark app starts, a DB Context Factory is created and added to your apps DI container via Sparks internal service registration.
 
 
 > Spark uses a DB Context Facory because Blazor applications do not create a service scope that aligned with the desired DB Context lifetime and will result in errors in your Blazor app.
@@ -61,92 +65,5 @@ public class UsersService
     {
         _factory = factory;
     }
-}
-```
-
-## Models & Migrations
-
-Spark uses models and migrations to setup and maintain the database schema through EF Core.
-
-To create a new model, simply create a new class in the `Application/Models` folder. You can extend the `BaseModel` class. This will add `CreatedAt` and `UpdatedAt` properties for you.
-
-```csharp
-public class Developer : BaseModel
-{
-    public int Id { get; set; }
-
-    public string Name { get; set; }
-
-    public string Title { get; set; }
-}
-```
-
-Then, register your model in the `ApplicationDbContext` class in the `Application/Database` folder:
-```csharp
-public class ApplicationDbContext : DbContext
-{
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
-    { }
-
-    public virtual DbSet<Developer> Developers { set; get; }
-    ...
-```
-
-Finally, you can create and run a migration. This essentially acts as source control for your database schema. When a migration is created, a new file with the schema changes is created in the `Application/Migrations` folder. Running a migration will apply those changes to your database.
-
-Spark comes with handy CLI commands to easily create and run your migrations:
-```bash
-spark make:migration AddDeveloperTable
-spark run:migration
-```
-
-## Querying Data
-Because Spark sets up your EF Core dependency, database connection, and DB Context for you, interacting with your database is very simple out of the box.
-```csharp
-public class DeveloperService
-{
-    private readonly IDbContextFactory<ApplicationDbContext> _factory;
-
-    public DeveloperService(IDbContextFactory<ApplicationDbContext> factory)
-    {
-        this._factory = factory;
-    }
-
-    public async Task<List<Developer>> GetAll()
-    {
-        using var context = _factory.CreateDbContext();
-        return await context.Developers.ToListAsync();
-    }
-}
-```
-
-Once you register the DeveloperService to the DI container in your `Application/Startup/AppServiceRegistration.cs` class, you can query data from any Blazor Page or component by injecting the service.
-```csharp
-@page "/developers"
-@inject DeveloperService developerService
-
-<div class="">
-    @if (developers == null)
-    {
-        <p>Loading...</p>
-    }
-    else
-    {
-        <ul>
-        @foreach (var developer in Developers)
-        {
-            <li>developer.Name</li>
-        }
-        </ul>
-    }
-</div>
-
-@code {
-	private List<Developer> developers;
-
-	protected override async Task OnInitializedAsync()
-	{
-		developers = await developerService.GetAll();
-	}
 }
 ```

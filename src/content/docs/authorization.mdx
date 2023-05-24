@@ -7,7 +7,7 @@ description: "Blazor Spark Authorization"
 Spark utilizes role based authorization and it is already scaffolded for you.
 
 ## Role Models
-Every Spark app comes with a `Role` model. Roles can control what pages logged in users see. A user can be assigned a role through the `UserRole` relationship.
+Every Spark app comes with a `Role` model in the `Application\Models` directory. Roles can control what pages logged in users see. A user can be assigned a role through the `UserRole` relationship.
 ```csharp
 public class Role : BaseModel
 {
@@ -24,7 +24,7 @@ public class Role : BaseModel
 ```
 
 ## Adding More Custom Roles
-By default, a Spark app comes with 2 roles out of the box. `Admin` and `User`. You can add more roles in the `/Data/CustomRoles.cs` class.
+By default, a Spark app comes with 2 roles out of the box. `Admin` and `User`. You can add more roles in the `/Application/Models/CustomRoles.cs` class.
 ```csharp
 public static class CustomRoles
 {
@@ -34,7 +34,7 @@ public static class CustomRoles
 ```
 
 ## Using Authorization in Blazor pages
-You can use roles to determine what type of users can access Blazor pages by using the Authorize attribute and passing in a custom role.
+You can use roles to determine what users can access Blazor pages by using the `Authorize` attribute and passing in a custom role.
 ```csharp
 @page "/admin/dashboard"
 @attribute [Authorize(Roles = CustomRoles.Admin)]

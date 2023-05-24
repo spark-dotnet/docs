@@ -16,12 +16,14 @@ LOG_LEVEL=information
 ```
 
 ### Channels
-Log channels control where your logs are wrote to. There are currently 2 log channels but more will be coming.
+Log channels control where your logs are written. There are currently 2 log channels..
 - file
 - console
 
 ### Levels
-Log levels control the minimum level of event that is logged to your channel. For instance, if your log level is set to `warning`, only log messages with a warning level or higher will be logged. Debug and information logs are ignored.
+Log levels control the minimum level of event that is logged to your channel. 
+
+For instance, if your log level is set to `warning`, only log messages with a warning level or higher will be logged. Debug and information logs would be ignored.
 - debug
 - information
 - warning
@@ -31,7 +33,9 @@ Log levels control the minimum level of event that is logged to your channel. Fo
 It is recommended to set your logs to `warning` in production to avoid noise in your logs.
 
 ## Using the Logger
-The Spark logger is added to the DI container for you. You simply need to inject the Spark `ILogger` service into your service or Blazor component. From there, you can write logging messages where needed.
+The Spark logger is added to the DI container for you. You simply need to inject the Spark `ILogger` interface into your Blazor component or service. 
+
+From there, you can write logging messages where needed.
 ```csharp
 @page "/"
 @inject ILogger logger

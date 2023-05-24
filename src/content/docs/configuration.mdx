@@ -8,12 +8,12 @@ description: "Blazor Spark configuration"
 Blazor Spark utilizes `.env` files to store and control most of its configurations. For example, your apps database credentials should be stored in this file, since Blazor Spark will look for them when starting the application.
 
 ## Security
-The `.env` file should never be committed to your apps source control. They contain sensitive information like database credentials and should be created when setting a environment.
+The `.env` file should never be committed to your apps source control. They contain sensitive information like database credentials and should be created when setting up a new environment.
 
-The `.env.example` file acts as an example of what your `.env` file should look like. This should be commited to source control and act as a guide to other developers when setting up their app.
+The `.env.example` file acts as an example of what your `.env` file should look like. This should be commited to source control with sensitive values removed. It acts as a guide for other developers when setting up their app.
 
 ## Retrieving Environment Variables
-Spark adds all environment variables to your apps configuration, just like variables in your appsettings.json. This means any variable in your `.env` can be accessed by injecting `IConfiguration`. 
+Spark adds all environment variables to your apps configuration, just like variables in your appsettings.json. This means any variable in your `.env` can be accessed via the `IConfiguration` interface. 
 ```csharp
 using Microsoft.Extensions.Configuration;
 

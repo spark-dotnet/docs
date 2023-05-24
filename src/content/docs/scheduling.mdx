@@ -3,4 +3,23 @@ title: "Scheduling Tasks"
 description: "Blazor Spark Scheduling Tasks"
 ---
 
-Coming soon
+# Scheduling Tasks
+Configuring a cron job or windows task is common for web apps. Blazor Spark utilizes Coravel's [scheduler](https://docs.coravel.net/Scheduler/) to accomplish this.
+
+## Registering Scheduled Tasks
+All scheduled tasks must be registered in the `\Application\Startup\Scheduler.cs` class.
+```csharp
+public static IServiceProvider RegisterScheduledJobs(this IServiceProvider services)
+{
+    services.UseScheduler(scheduler =>
+    {
+        scheduler
+            .Schedule<ExampleTask>()
+            .EveryFiveMinutes();
+    });
+    return services;
+}
+```
+
+## Scheduling Tasks
+More documentation coming soon. In the meantime, read about Coravels Scheduling [here](https://docs.coravel.net/Scheduler/).

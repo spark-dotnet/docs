@@ -4,16 +4,98 @@ description: "Blazor Spark Events"
 ---
 
 # Events
-Events are a great way to decouple aspects of your application. For example, you may wish to send an email after a new user has registered for you app. You can raise an `Application/Events/UserCreated` event which a listener can receive and use to send the email.
+Events are a great way to decouple aspects of your application. For example, you may wish to send an email after a new user has registered for you app. 
 
-Event classes are typically stored in the `Application/Events` directory, while their listeners are stored in `Application/Events/Listeners`.
+You can raise an `Application/Events/UserCreated` event which a listener can receive and use to send the email.
 
 Under the hood, Spark uses the [Coravel](https://github.com/jamesmh/coravel) library for events.
 
 ## Registering Events & Listeners
+All events and listeners must be registered in the `\Application\Startup\Events.cs` class.
+```csharp
+public static class Events
+{
+    public static IServiceProvider RegisterEvents(this IServiceProvider services)
+    {
+        IEventRegistration registration = services.ConfigureEvents();
+
+        // add events and listeners here
+        registration
+            .Register<UserCreated>()
+            .Subscribe<EmailNewUser>();
+
+        return services;
+    }
+}
+```
 
 ## Defining Events
+Events are created in the `\Application\Events` directory and must implement the `Coravel.Events.Interfaces.IEvent` interface.
+```csharp
+public class UserCreated : IEvent
+{
+    public User User { get; set; }
+
+    public UserCreated(User user)
+    {
+        this.User = user;
+    }
+}
+```
 
 ## Defining Listeners
+Events are created in the `\Application\Events\Listeners` directory and must implement the `Coravel.Events.Interfaces.IListener<TEvent>` interface.
 
-## Dispatching Events
+The `IListener<TEvent>` interface requires you implement `HandleAsync(TEvent broadcasted)`.
+```csharp
+    public class EmailNewUser : IListener<UserCreated>
+    {
+        private readonly IMailer _mailer;
+        private readonly IConfiguration _config;
+
+        public EmailNewUser(IMailer mailer, IConfiguration config)
+        {
+            this._mailer = mailer;
+            _config = config;
+        }
+
+        public async Task HandleAsync(UserCreated broadcasted)
+        {
+            var user = broadcasted.User;
+            var mail = new GenericMailable()
+                .To(user.Email)
+                .Subject($"Welcome to Spark")
+                .Html(@"
+<h1>Thanks for signing up!</h1>
+");
+            await this._mailer.SendAsync(mail);
+        }
+    }
+```
+
+## Broadcasting
+Inject the `Coravel.Events.Interfaces.IDispatcher` interface into your Blazor components or service.
+
+By using the `Broadcast` method, you may broadcast the event:
+
+```csharp
+@page "/subscribe"
+@inject IDispatcher _dispatcher
+
+<EditForm Model="emailForm" OnValidSubmit="@HandleValidSubmit">
+    <InputText @bind-Value="emailForm.Email" />
+    <button type="submit">Subscribe</button>
+</EditForm>
+
+@code {
+    private EmailForm emailForm = new EmailForm();
+
+    private async Task HandleValidSubmit()
+    {
+        // create event
+        var userCreated = new UserCreated(new User(emailForm.Email));
+        // dispatch event to listener
+        await _dispatcher.Broadcast(userCreated);
+    }
+}
+```

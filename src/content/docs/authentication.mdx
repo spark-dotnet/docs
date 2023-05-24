@@ -7,7 +7,7 @@ description: "Blazor Spark Authentication"
 Most web applications require some form of authentication. Spark provides this out of the box with it's own custom cookie auth implementation.
 
 ## User Model
-Every Spark app comes with a `User` model. This acts as your schema for your users table and also the class that is used during authentication.
+Every Spark app comes with a `User` model in the `Application\Models` directory. This acts as your schema for your users table and also the class that is used during authentication.
 
 Users also have Roles tied to them for authorization. You can read more about that on the [Authorization page](/docs/authorization).
 ```csharp
@@ -26,7 +26,7 @@ public class User : BaseModel
 
     public string Password { get; set; }
 
-    public string? RemeberToken { get; set; }
+    public string? RememberToken { get; set; }
 
     public DateTime? EmailVerifiedAt { get; set; }
 

@@ -1,0 +1,157 @@
+---
+title: "Mail"
+description: "Blazor Spark Mail"
+---
+
+# Mail
+Sending email should be easy. Blazor Spark provides a clean, simple email interface powered by the popular [Mailkit](https://github.com/jstedfast/MailKit) library.
+
+## Configuration
+Blazor Spark comes with multiples drivers that change how e-mails are sent.
+
+### File Log Driver
+This driver will log emails to the `\Storage\Mail\mail.log` file. It's perfect to use for development and testing.
+
+To use this driver, configure your `.env` file to use the file driver:
+
+```ini
+MAIL_MAILER=file
+```
+
+### SMTP Driver
+This driver will use SMTP to send emails.
+
+To use this driver, configure your `.env` file to use the smtp driver:
+
+```ini
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.mailtrap.io
+MAIL_PORT=25
+MAIL_USERNAME=your_username
+MAIL_PASSWORD=your_password
+```
+
+### Global From Email
+A global from email can be set in your `.env` file. If set, it will send all emails from that email address.
+```ini
+MAIL_FROM_ADDRESS="hello@example.com"
+MAIL_FROM_NAME="George Constanza"
+```
+
+## Mailables
+Spark uses **Mailables** to send emails. They are a C# class that represents a specific email you can send. Such as "Confirm subscription" or "New user signup".
+
+Mailables inherit from `BlazorSpark.Library.Mail.Mailable` and accept a generic type you want associated with sending your mail.
+
+```csharp
+using BlazorSpark.Example.Application.Models;
+using BlazorSpark.Library.Mail;
+
+namespace BlazorSpark.Example.Application.Mail
+{
+	public class ConfirmSubscriptionMailable : Mailable<User>
+    {
+        private User _user;
+        public ConfirmSubscriptionMailable(User user) => this._user = user;
+
+        public override void Build()
+		{
+			var recipient = new MailRecipient(this._user.Email);
+			this.To(recipient)
+                .From("wes@blazorspark.com")
+				.Subject("Confirm your Blazor Spark Subscription")
+				.Html(@"
+					<p>Confirm your subscription by clicking the link</p>
+					<a href=""blazorspark.com/confirm""></a>
+				");
+		}
+	}
+}
+```
+
+Logic for your mailable should always go in the `Build()` method.
+
+### Mailable Methods
+The following methods are available in a fluent interface:
+
+`.From(string email)`
+
+`.From(new MailRecipient(string email, string name))`
+
+`.To(string email)`
+
+`.To(new MailRecipient(string email, string name))`
+
+`.To(IEnumerable<string> emails)`
+
+`.To(IEnumerable<MailRecipient> recipients)`
+
+`.Cc(IEnumerable<string> emails)`
+
+`.Cc(IEnumerable<MailRecipient> recipients)`
+
+`.Bcc(IEnumerable<string> emails)`
+
+`.Bcc(IEnumerable<MailRecipient> recipients)`
+
+`.ReplyTo(MailRecipient replyTo)`
+
+`.ReplyTo(string address)`
+
+`.Subject(string subject)`
+
+`.Attach(Attachment attachment)`
+
+`.Html(string html)`
+
+## Sending Mail
+Inject the `IMailer` interface into your Blazor components or service and pass a **Mailable** to the `SendAsync` method:
+
+### Blazor
+```csharp
+@page "/subscribe"
+@inject IMailer _mailer
+
+<EditForm Model="emailForm" OnValidSubmit="@HandleValidSubmit">
+    <InputText @bind-Value="emailForm.Email" />
+    <button type="submit">Subscribe</button>
+</EditForm>
+
+@code {
+    private EmailForm emailForm = new EmailForm();
+
+    private async Task HandleValidSubmit()
+    {
+        await this._mailer.SendAsync(
+            new ConfirmSubscriptionMailable(emailForm.Email)
+        );
+    }
+}
+```
+
+### Service
+```csharp
+private readonly IMailer _mailer;
+
+public MyService(IMailer mailer)
+{
+    this._mailer = mailer;
+}
+
+public SendConfirmation(User user) {
+    await this._mailer.SendAsync(
+        new ConfirmSubscriptionMailable(user)
+    );
+}
+```
+
+## Generic Mailable
+Blazor Spark comes with a generic mailable for scenarios where you don't want to create your own custom **Mailable**.
+```csharp
+var mail = new GenericMailable()
+    .To("hello@example.com")
+    .From("wes@blazorspark.com")
+    .Html("<h1>Hi!</h1>");
+
+await this._mailer.SendAsync(mail);
+```

@@ -1,0 +1,49 @@
+---
+title: "Models & Migrations"
+description: "Blazor Spark Models & Migrations"
+---
+
+# Models & Migrations
+Blazor Spark uses models and migrations to setup and maintain your apps database schema through EF Core.
+
+## Creating a Model
+To create a new model, simply create a new class in the `Application/Models` folder. You can extend the `BaseModel` class. This will add `CreatedAt` and `UpdatedAt` properties for you.
+
+```csharp
+public class Developer : BaseModel
+{
+    public int Id { get; set; }
+
+    public string Name { get; set; }
+
+    public string Title { get; set; }
+}
+```
+
+Then, register your model in the `ApplicationDbContext` class in the `Application/Database` folder:
+```csharp
+public class ApplicationDbContext : DbContext
+{
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+    { }
+
+    public virtual DbSet<Developer> Developers { set; get; }
+    ...
+```
+
+## Migrations
+### Create Migrations
+Once your models are registerd in your `ApplicationDbContext`, you can create a migration. This essentially acts as source control for your database schema. 
+
+When a migration is created, a new file with the schema changes is created in the `Application/Migrations` folder. 
+
+Spark comes with handy CLI commands to easily create your migrations:
+```bash
+spark make:migration AddDeveloperTable
+```
+
+### Run Migrations
+Then you can run your migration to apply the changes to your database.
+```bash
+spark run:migration
+```

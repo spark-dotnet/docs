@@ -13,12 +13,15 @@ export const SIDEBAR: Sidebar = {
     'The Basics': [
         { text: 'Configuration', link: 'configuration' },
         { text: 'Database', link: 'database' },
+        { text: 'Models & Migrations', link: 'models-and-migrations' },
+        { text: 'Data Access', link: 'data-access' },
         { text: 'Authentication', link: 'authentication' },
         { text: 'Authorization', link: 'authorization' },
         { text: 'Logging', link: 'logging' },
+        { text: 'Mail', link: 'mail' },
         { text: 'Events', link: 'events' },
-        { text: 'Tasks', link: 'tasks' },
-        { text: 'Scheduling', link: 'scheduling' },
+        { text: 'Queuing Tasks', link: 'queuing' },
+        { text: 'Scheduling Tasks', link: 'scheduling' },
         { text: 'Spark CLI', link: 'spark-cli' },
     ],
     'Tutorials': [

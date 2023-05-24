@@ -20,8 +20,8 @@ export const SIDEBAR: Sidebar = {
         { text: 'Logging', link: 'logging' },
         { text: 'Mail', link: 'mail' },
         { text: 'Events', link: 'events' },
-        { text: 'Queuing Tasks', link: 'queuing' },
-        { text: 'Scheduling Tasks', link: 'scheduling' },
+        { text: 'Queues', link: 'queues' },
+        { text: 'Task Scheduling', link: 'task-scheduling' },
         { text: 'Spark CLI', link: 'spark-cli' },
     ],
     'Tutorials': [

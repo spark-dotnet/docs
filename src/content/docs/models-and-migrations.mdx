@@ -7,7 +7,13 @@ description: "Blazor Spark Models & Migrations"
 Blazor Spark uses EFCore models and migrations to query your data and maintain your apps database.
 
 ## Creating a Model
-To create a new model, simply create a new class in the `Application/Models` folder. You can extend the `BaseModel` class. This will add `CreatedAt` and `UpdatedAt` properties for you.
+To create a new model, simply run the Spark  `make model` command.
+
+```bash
+spark make model Developer
+```
+
+A new class in the `Application/Models` folder will be created.
 
 ```csharp
 public class Developer : BaseModel
@@ -33,17 +39,18 @@ public class ApplicationDbContext : DbContext
 
 ## Migrations
 ### Create Migrations
-Once your models are registerd in your `ApplicationDbContext`, you can create a migration. This essentially acts as source control for your database schema. 
+Once your models are registered in your `ApplicationDbContext`, you can create a migration. This essentially acts as source control for your database schema. 
 
-When a migration is created, a new file with the schema changes is created in the `Application/Migrations` folder. 
+To create a new migration, simply run the Spark  `make migration` command.
 
-Spark comes with handy CLI commands to easily create your migrations:
 ```bash
-spark make:migration AddDeveloperTable
+spark make migration AddDeveloperTable
 ```
 
+A new file with your schema changes is created in the `Application/Migrations` folder. 
+
 ### Run Migrations
-Then you can run your migration to apply the changes to your database.
+You can run your migration to apply the changes to your database with the Spark `migrate` command.
 ```bash
-spark run:migration
+spark migrate
 ```

@@ -6,6 +6,15 @@ description: "Blazor Spark Task Scheduling"
 # Task Scheduling
 Configuring a cron job or windows task is common for web apps. Blazor Spark utilizes Coravel's [scheduler](https://docs.coravel.net/Scheduler/) to accomplish this.
 
+## Creating Tasks
+To create a new task, simply run the Spark  `make task` command.
+
+```bash
+spark make task ExampleTask
+```
+
+A new task will be create in the `Application/Tasks` directory.
+
 ## Registering Scheduled Tasks
 All scheduled tasks must be registered in the `\Application\Startup\Scheduler.cs` class.
 ```csharp

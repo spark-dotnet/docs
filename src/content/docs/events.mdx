@@ -29,6 +29,15 @@ public static class Events
 }
 ```
 
+## Creating Events and Listeners
+To create a new event and listener, simply run the Spark  `make event` command.
+
+```bash
+spark make event UserCreated EmailNewUser
+```
+
+A new event will be create in the `Application/Events` directory and a new listener will be create in the `Application/Events/Listeners` directory.
+
 ## Defining Events
 Events are created in the `\Application\Events` directory and must implement the `Coravel.Events.Interfaces.IEvent` interface.
 ```csharp

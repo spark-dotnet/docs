@@ -30,8 +30,13 @@ spark new MyApp
 After the project has been created, you can create and run the migrations for the user tables.
 ```bash
 cd MyApp
-spark make:migration User
-spark run:migration
+spark make migration User
+spark migrate
+```
+
+You can open your Blazor Spark project in Visual Studio from the console by using Spark's `open` command.
+```bash
+spark open
 ```
 
 Finally, start .NET's local development server using the dotnet watch command:

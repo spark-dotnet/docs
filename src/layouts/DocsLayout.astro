@@ -21,11 +21,11 @@ const { title } = Astro.props;
 	</head>
 	<body>
 		<DocsNav />
-        <div class="flex-col md:flex-row flex px-2 lg:px-6 mx-auto pt-12 pb-12">
+        <div class="flex-col md:flex-row flex px-2 max-w-7xl mx-auto pt-12 pb-12">
             <aside class="relative min-h-0 flex flex-col px-4 lg:w-80 items-start">
                 <LeftSideBar currentPage={Astro.url.pathname} />
             </aside>
-            <div class="flex-1 px-5 lg:px-8 markdown max-w-3xl">
+            <div class="flex-1 px-8 markdown max-w-3xl">
                 <slot />
             </div>
         </div>

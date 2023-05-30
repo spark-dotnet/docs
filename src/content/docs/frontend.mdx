@@ -64,6 +64,7 @@ Most applications have standard CRUD pages for resources.
 For instance, if you app stored developers in the database, your CRUD pages should be setup like the this:
 - **./Pages/Developers/Index.razor** (show all developers)
 - **./Pages/Developers/Show.razor** (show 1 developer)
+- **./Pages/Developers/Create.razor** (create a developer)
 - **./Pages/Developers/Delete.razor** (delete 1 developer)
 - **./Pages/Developers/Edit.razor** (edit 1 developer)
 
@@ -85,6 +86,10 @@ A Blazor component with a path of `./Pages/Users/Index` will have a route of:
 A Blazor component with a path of `./Pages/Users/Show` will have a route of:
 
  `@page "/users/{id}"`
+
+A Blazor component with a path of `./Pages/Users/Create` will have a route of:
+
+ `@page "/users/create"`
 
 A Blazor component with a path of `./Pages/Users/Delete` will have a route of:
 

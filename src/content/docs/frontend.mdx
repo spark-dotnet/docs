@@ -1,0 +1,111 @@
+---
+title: "Frontend"
+description: "Blazor Spark Frontend"
+---
+
+# Frontend
+Blazor Spark utilizes Blazor components to compose it's frontend markup and logic.
+
+Blazor components let you mix in HTML markup with C#, allowing you to quickly create dynamic components to use in your app.
+
+```csharp
+@inject DeveloperService _developerService
+
+<ul>
+    @foreach (var developer in developers)
+    {
+    <li>
+        @developer.Name
+    </li>
+    }
+</ul>
+
+@code {
+    private List<Developer> developers { get; set; }
+    protected override void OnInitialized()
+    {
+        developers = await _developerService.GetDevelopers();
+    }
+}
+```
+## Components
+Blazor components are re-usable elements you can use anywhere in your application.
+
+Your Blazor components should be created in the `./Pages/Shared` directory.
+
+### Creating Blazor Components
+To create a new Blazor component, simply run the Spark make component command.
+
+```bash
+spark make component SomeComponent
+```
+A new Blazor component named `SomeComponent.razor` will be created in the `./Pages/Shared` directory.
+
+## Pages
+Your Blazor pages should be created in the `./Pages` directory.
+
+A Blazor page is a Blazor component with a `@page "/some-url"` attribute at the top that represents the url it's located at.
+
+### Creating Blazor Pages
+To create a new Blazor page, simply run the Spark make page command.
+
+```bash
+spark make page Users/Index
+```
+
+A new Blazor Page named `Index.razor` will be created in the `./Pages/Users` directory.
+
+## Component Naming Conventions
+Blazor Spark has conventions you should follow when creating your Blazor components.
+
+### File names
+Most applications have standard CRUD pages for resources.
+
+For instance, if you app stored developers in the database, your CRUD pages should be setup like the this:
+- **./Pages/Developers/Index.razor** (show all developers)
+- **./Pages/Developers/Show.razor** (show 1 developer)
+- **./Pages/Developers/Delete.razor** (delete 1 developer)
+- **./Pages/Developers/Edit.razor** (edit 1 developer)
+
+Blazor components files should also use **PascalCase** naming.
+
+### Route names
+When setting your `@page` attribute in a Blazor page, the following conventions should be followed:
+
+**1.** Use lower case kebab case. Ex. `@page "/users/show-me-a-user"`
+
+**2.** Use plural names. Ex. `@page "/users"`
+
+**3.** CRUD routes should follow this naming convention:
+
+A Blazor component with a path of `./Pages/Users/Index` will have a route of:
+
+ `@page "/users"`
+
+A Blazor component with a path of `./Pages/Users/Show` will have a route of:
+
+ `@page "/users/{id}"`
+
+A Blazor component with a path of `./Pages/Users/Delete` will have a route of:
+
+ `@page "/users/delete/{id}"`
+
+A Blazor component with a path of `./Pages/Users/Edit` will have a route of:
+
+ `@page "/users/edit/{id}"`
+
+>
+> If you use the Spark CLI commands to create your Pages and Components, all of the route naming conventions will automatically be setup for you.
+>
+
+## Assets
+
+### CSS
+Blazor Spark projects come with Tailwind CSS by default. You can learn more about Tailwind [here](https://tailwindcss.com/).
+
+### Javascript
+Blazor Spark project come with AlpineJS by default. 
+
+AlpineJS is a javascript library that helps you create simple page interactions like mobile menus and toggling elements.
+
+You can learn more about Alpine [here](https://alpinejs.dev/).

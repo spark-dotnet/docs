@@ -12,6 +12,7 @@ export const SIDEBAR: Sidebar = {
     ],
     'The Basics': [
         { text: 'Configuration', link: 'configuration' },
+        { text: 'Frontend', link: 'frontend' },
         { text: 'Database', link: 'database' },
         { text: 'Models & Migrations', link: 'models-and-migrations' },
         { text: 'Data Access', link: 'data-access' },

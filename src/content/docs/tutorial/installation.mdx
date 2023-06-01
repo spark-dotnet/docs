@@ -1,0 +1,69 @@
+---
+title: "Blazor Spark Tutorial: Installation"
+description: "How to setup a blog with Blazor Spark."
+---
+
+# <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#608CF9] to-[#AC48FE]">02.</span> Installing Blazor Spark
+
+## Requirements
+First, verify you have installed **.NET 7**. You can find the download [here](https://dotnet.microsoft.com/en-us/download/dotnet/7.0).
+
+After installing .NET 7, you will also need to install Entity Framework Core tools. This can be installed with a simple dotnet command:
+
+```bash
+dotnet tool install --global dotnet-ef
+```
+
+## Blazor Spark Installation
+After you have installed the required dependencies, you will need to install the Spark console tool and the Blazor Spark templates.
+```bash
+# Install Spark CLI
+dotnet tool install --global BlazorSpark.Console
+# Install Spark Templates
+spark install
+```
+
+## Create your Blog Project
+You are now ready to create your Blazor Spark project! Lets name it MyBlog. This can be done by using the Spark CLI `spark new [projectName]` command.
+```bash
+spark new MyBlog
+```
+
+After the project has been created, you can create and run the migrations for the user auth tables.
+```bash
+cd MyBlog
+spark make migration User
+spark migrate
+```
+
+You can open your project in Visual Studio by running the `spark open` command.
+```bash
+spark open
+```
+
+For simplicity, you can use SQLite to store your application's data. This is set in your apps `.env` file under the `DB_CONNECTION` variable by default. Other options are mysql and postgres.
+```ini
+APP_NAME=BlazorSpark
+
+DB_CONNECTION=sqlite
+DB_HOST=localhost
+DB_PORT=3306
+DB_DATABASE=Spark.db
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+## Run your app
+Go back to the console and start your app locally using the `dotnet watch` command. This will start the app and refresh the browser whenever changes are made to the application.
+```bash
+dotnet watch
+```
+<div class="border shadow-lg -mt-6">![Blazor spark home page](/myblog_initial.png)</div>
+
+<div class="mt-16"></div>
+Blazor Spark comes with authentication and authorization setup for you. You should see a "Register" link at the top-right. Follow that to see the registration form provided by Blazor Spark.
+![Blazor spark home page](/myblog_register.png)
+
+Register yourself an account and log in!
+
+<a href="/docs/tutorial/creating-posts">Continue to start creating Blog Posts →</a>

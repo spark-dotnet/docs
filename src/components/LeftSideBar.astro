@@ -11,7 +11,7 @@ const sidebar = SIDEBAR;
 ---
 
 <div class="mb-12 lg:mb-0" aria-labelledby="grid-left">
-	<ul class="nav-groups">
+	<ul class="nav-groups h-full">
 		{
 			Object.entries(sidebar).map(([header, children]) => (
 				<li>
@@ -60,8 +60,7 @@ const sidebar = SIDEBAR;
 	.nav-groups {
 		height: 100%;
 		overflow-x: visible;
-		overflow-y: auto;
-		max-height: 100vh;
+		overflow-y: visible;
 	}
 
 	.nav-groups > li + li {

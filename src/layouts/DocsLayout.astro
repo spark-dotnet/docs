@@ -36,24 +36,6 @@ const { title } = Astro.props;
 
 
 <style is:global>
-pre {
-    @apply -mx-6 p-6 mb-12 rounded-lg bg-gray-900 !important;
-}
-
-pre code {
-    font-size: .9rem;
-    font-weight: 500;
-    line-height: 1.9;
-    @apply bg-gray-900 px-0 border-none !important;
-}
-
-code {
-    font-size: .9rem;
-    font-weight: 500;
-    line-height: 1.9;
-    @apply bg-gray-100 border border-gray-400 text-purple-800 px-2 py-1 rounded;
-}
-
 .markdown h1 {
     @apply text-4xl sm:text-5xl mb-8 font-bold text-gray-800;
 }
@@ -63,7 +45,7 @@ code {
 }
 
 .markdown ul {
-    @apply list-disc list-inside mb-6 ml-4;
+    @apply list-disc list-inside mb-6 ml-4 space-y-2;
 }
 
 .markdown blockquote {
@@ -82,10 +64,64 @@ code {
 }
 
 .markdown img {
-    @apply mb-6 w-full mx-auto rounded-lg;
+    @apply mb-6 w-full mx-auto rounded-lg ;
 }
 
 .markdown a {
     @apply font-bold text-lg text-purple-700 border-b-2 border-purple-700;
+}
+pre {
+    @apply -mx-6 py-6 px-2 mb-12 rounded-lg bg-gray-900 overflow-x-auto !important;
+}
+
+pre code {
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.9;
+    @apply bg-gray-900 px-0 border-none text-sm sm:text-base !important;
+}
+
+code {
+    font-size: .9rem;
+    font-weight: 500;
+    line-height: 1.9;
+    @apply bg-gray-100 border border-gray-400 text-purple-800 px-2 py-1 rounded;
+}
+pre code .line {
+    /* padding-left: 1rem;
+    padding-right: 1rem;
+    border-left-width: 3px;
+    border-left-style: solid;
+    border-left-color: transparent; */
+    line-height: 2;
+    @apply py-1 pr-2;
+}
+
+.highlighted {
+    background-color: rgb(117, 255, 149, .3);
+    /* border-left-color: #7beea4 !important;
+    border-left-width: 3px;
+    border-left-style: solid; */
+}
+
+code > .line.highlighted::before {
+  content: "+";
+  color:#7beea4 !important;
+  /* Other styling */
+  display: inline-block;
+  width: 1rem;
+  text-align: left;
+  margin-left: .5rem;
+}
+code > .line::before {
+  content: "";
+  /* Other styling */
+  display: inline-block;
+  width: 1rem;
+  text-align: left;
+  margin-left: .5rem;
+}
+[data-rehype-pretty-code-title] {
+    @apply bg-gray-900 w-fit px-4 py-1 rounded-t-lg text-yellow-200 border-b border-b-gray-700;
 }
 </style>

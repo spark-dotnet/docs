@@ -1,0 +1,93 @@
+---
+title: "Blazor Spark Tutorial: Creating Posts"
+description: "How to create blog posts with Blazor Spark."
+---
+
+# <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#608CF9] to-[#AC48FE]">03.</span> Creating Blog Posts
+
+You're now ready to start building your new application! Let's allow our users to create blog posts.
+
+## Pages and routing
+To create a Blog Post, we first need a new Blazor page with an assigned url.
+
+We can do this by running the following command in the console:
+```bash
+spark make page Posts/Create
+```
+
+This command will create your Blazor page at `/Pages/Posts/Create.razor` and have a page url already setup for us.
+
+Lets now add an authorize attribute. This will make sure the user is logged in before accessing this page and show an error if not.
+
+```csharp showLineNumbers {2} title="/Pages/Posts/Create.razor"
+@page "/posts/create"
+@attribute [Authorize]
+
+<h1>My Page</h1>
+
+@code {
+
+    protected override void OnInitialized()
+    {
+        
+    }
+}
+```
+
+Go ahead and logout of your app. Go to /posts/create in your browser and you will see an error message telling you to login.
+<div class="border shadow-lg -mt-4">![Blazor Spark auth message](/myblog_noaccess.png)</div>
+
+Lets update our page some more. We will add:
+- New class called NewPost
+- EditForm with a model and submit handler called HandleValidSubmit. 
+- Set our forms model to an instance of the NewPost class.
+
+```csharp {4-13, 16, 21-24, 26-30} title="/Pages/Posts/Create.razor"
+@page "/posts/create"
+@attribute [Authorize]
+
+<section class="max-w-5xl mx-auto py-28 min-h-screen px-4">
+	<h1 class="text-2xl font-bold mb-6">Create a Post</h1>
+	<EditForm Model="@newPost" OnValidSubmit="@HandleValidSubmit" class="flex flex-col max-w-lg space-y-2">
+		<label>Title</label>
+		<InputText @bind-Value="newPost.Title" required class="border border-black px-2" />
+		<label>Content</label>
+		<InputTextArea @bind-Value="newPost.Content" rows="16" required class="border border-black px-2"></InputTextArea>
+		<button class="mr-auto p-2 bg-yellow-400" type="submit">Create post</button>
+	</EditForm>
+</section>
+
+@code {
+	private NewPost newPost = new NewPost();
+
+	protected override void OnInitialized()
+	{}
+
+	private async Task HandleValidSubmit()
+	{
+		// TODO
+	}
+
+	public class NewPost
+	{
+		public string Title { get; set; }
+		public string Content { get; set; }
+	}
+}
+```
+<div class="border shadow-lg -mt-4 mb-12">![Blazor Spark auth message](/myblog_createpostform.png)</div>
+
+Now we have our page setup for the most part, lets move on to how we will store the data when the form is submitted.
+
+## Models, database context, and migrations
+To allow users to create posts, we will need to create models and migrations. We will also need to take advantage of our database context Spark created for us. Blazor Spark takes advantage of EF Core to handle it's data access.
+- **Models** are the data models of our application. They are made up of entity classes and represent our database tables and relationships.
+- **Database context** represents a session with the database. It allows us to query and save data.
+- **Migrations** provide a way to incrementally update the database schema to keep it in sync with your apps Models while preserving existing data in the database.
+
+Lets create a new model to represent our Blog Posts. We will call it Post and can use the following command to create it:
+```bash
+spark make model Post
+```
+
+This command will create the model file for at `/Application/Models/Post.cs`.

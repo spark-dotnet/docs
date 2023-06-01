@@ -14,5 +14,8 @@
     "@astrojs/tailwind": "^3.1.1",
     "astro": "^2.1.7",
     "tailwindcss": "^3.2.7"
+  },
+  "devDependencies": {
+    "rehype-pretty-code": "^0.9.6"
   }
 }

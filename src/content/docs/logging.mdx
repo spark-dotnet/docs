@@ -36,7 +36,7 @@ It is recommended to set your logs to `warning` in production to avoid noise in 
 The Spark logger is added to the DI container for you. You simply need to inject the Spark `ILogger` interface into your Blazor component or service. 
 
 From there, you can write logging messages where needed.
-```csharp
+```razor
 @page "/"
 @inject ILogger logger
 

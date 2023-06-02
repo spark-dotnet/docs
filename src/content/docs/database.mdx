@@ -4,11 +4,9 @@ description: "Blazor Spark database"
 ---
 
 # Database
+Blazor Spark sets up your database connections for you. The only thing you have to worry about is setting up your configurations for which database type to use and its connection details.
 
-Most web applications interact with a database in some way. Blazor Spark utilizes EF Core to make interacting with your database as simple as possible.
-If you've never used EF Core before, you can check out Microsofts documentation [here](https://learn.microsoft.com/en-us/ef/core/).
-
-Spark currently supports the following databases out of the box.
+Blazor Spark Supported database types:
 - SQLite
 - PostgreSQL
 - MySQL
@@ -47,14 +45,20 @@ DB_USERNAME=your_user
 DB_PASSWORD=your_user_password
 ```
 
+## EF Core
+Blazor Spark utilizes **EF Core** to make interacting with your database as simple as possible. If you've never used EF Core before, you can check out Microsofts documentation [here](https://learn.microsoft.com/en-us/ef/core/).
+
+To learn more about how Blazor Spark utilizes **EF Core migrations** go [here](/docs/models-and-migrations).
+
+To learn more about how Blazor Spark utilizes **EF Core data access**1 go [here](/docs/data-access).
+
 ## Database Context
 When a Blazor Spark app starts, a DB Context Factory is created and added to your apps DI container via Sparks internal service registration.
 
-
-> Spark uses a DB Context Facory because Blazor applications do not create a service scope that aligned with the desired DB Context lifetime and will result in errors in your Blazor app.
+> Spark uses a DB Context Factory because Blazor applications do not create a service scope that aligned with the desired DB Context lifetime and will result in errors in your Blazor app.
 > You can read more about this [here](https://learn.microsoft.com/en-us/ef/core/dbcontext-configuration/#using-a-dbcontext-factory-eg-for-blazor).
 
-You can inject the DB Context Factory in your services like the following:
+You can inject the DB Context Factory in your services like this:
 
 ```csharp
 public class UsersService

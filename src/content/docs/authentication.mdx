@@ -7,7 +7,7 @@ description: "Blazor Spark Authentication"
 Most web applications require some form of authentication. Spark provides this out of the box with it's own custom cookie auth implementation.
 
 ## User Model
-Every Spark app comes with a `User` model in the `Application\Models` directory. This acts as your schema for your users table and also the class that is used during authentication.
+Every Spark app comes with a `User.cs` class in the `Application/Models` directory. This acts as your schema for your users table and also the class that is used during authentication.
 
 Users also have Roles tied to them for authorization. You can read more about that on the [Authorization page](/docs/authorization).
 ```csharp
@@ -50,7 +50,7 @@ Located at `Pages/Auth/Register.cshtml`
 
 ## Requiring Authentication for Blazor pages
 If you have pages in your app you only want logged in users to see, use the `Authorize` attribute in your Blazor page.
-```csharp
+```razor
 @page "/dashboard"
 @attribute [Authorize]
 <section class="max-w-5xl mx-auto py-28 min-h-screen px-4">
@@ -61,3 +61,21 @@ If you have pages in your app you only want logged in users to see, use the `Aut
     </article>
 </section>
 ```
+
+## Authorize View
+Sometimes you want a user to see different content from a Blazor component based on if they are authenticated or not.
+
+We can accomplish this by using the `<AuthorizeView>` tag helper that comes with Blazor.
+```razor
+<nav>
+    <AuthorizeView>
+        <Authorized>
+            <a href="/logout">Logout</a>
+        </Authorized>
+        <NotAuthorized>
+            <a href="/login">Login</a>
+        </NotAuthorized>
+    </AuthorizeView>
+</nav>
+```
+

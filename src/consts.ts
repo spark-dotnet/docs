@@ -15,7 +15,7 @@ export const SIDEBAR: Sidebar = {
         { text: 'Frontend', link: 'frontend' },
         { text: 'Database', link: 'database' },
         { text: 'Models & Migrations', link: 'models-and-migrations' },
-        { text: 'Data Access', link: 'data-access' },
+        { text: 'Services & Data Access', link: 'services-and-data-access' },
         { text: 'Authentication', link: 'authentication' },
         { text: 'Authorization', link: 'authorization' },
         { text: 'Logging', link: 'logging' },

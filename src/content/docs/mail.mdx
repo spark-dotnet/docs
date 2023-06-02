@@ -10,7 +10,7 @@ Sending email should be easy. Blazor Spark provides a clean, simple email interf
 Blazor Spark comes with multiples drivers that change how e-mails are sent.
 
 ### File Log Driver
-This driver will log emails to the `\Storage\Mail\mail.log` file. It's perfect to use for development and testing.
+This driver will log emails to the `Storage/Mail/mail.log` file. It's perfect to use for development and testing.
 
 To use this driver, configure your `.env` file to use the file driver:
 
@@ -116,7 +116,7 @@ The following methods are available in a fluent interface:
 Inject the `IMailer` interface into your Blazor components or service and pass a **Mailable** to the `SendAsync` method:
 
 ### Blazor
-```csharp
+```razor
 @page "/subscribe"
 @inject IMailer _mailer
 

@@ -7,7 +7,7 @@ description: "Blazor Spark Authorization"
 Spark utilizes role based authorization and it is already scaffolded for you.
 
 ## Role Models
-Every Spark app comes with a `Role` model in the `Application\Models` directory. Roles can control what pages logged in users see. A user can be assigned a role through the `UserRole` relationship.
+Every Spark app comes with a `Role` model in the `Application/Models` directory. Roles can control what pages logged in users see. A user can be assigned a role through the `UserRole` relationship.
 ```csharp
 public class Role : BaseModel
 {
@@ -25,7 +25,7 @@ public class Role : BaseModel
 
 ## Using Authorization in Blazor pages
 You can use roles to determine what users can access Blazor pages by using the `Authorize` attribute and passing in a custom role.
-```csharp
+```razor
 @page "/admin/dashboard"
 @attribute [Authorize(Roles = CustomRoles.Admin)]
 <section class="max-w-5xl mx-auto py-28 min-h-screen px-4">
@@ -37,8 +37,30 @@ You can use roles to determine what users can access Blazor pages by using the `
 </section>
 ```
 
+You can also combine `<AuthorizeView>` with roles to display different content on a page based on a User's role.
+```razor
+@page "/admin/dashboard"
+@attribute [Authorize]
+<section>
+    <article>
+        <AuthorizeView Roles="@CustomRoles.Admin">
+            <Authorized>
+                <h1>
+                    Admin Dashboard
+                </h1>
+            </Authorized>
+            <NotAuthorized>
+                <h1>
+                    No soup for you!
+                </h1>
+            </NotAuthorized>
+        </AuthorizeView>
+    </article>
+</section>
+```
+
 ## Adding More Custom Roles
-By default, a Spark app comes with 2 roles out of the box. `Admin` and `User`. You can add more roles in the `/Application/Models/CustomRoles.cs` class.
+By default, a Spark app comes with 2 roles out of the box. `Admin` and `User`. You can add more roles in the `Application/Models/CustomRoles.cs` class.
 ```csharp
 public static class CustomRoles
 {

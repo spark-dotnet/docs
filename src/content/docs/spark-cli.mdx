@@ -36,7 +36,7 @@ Create a EF Core migration.
 ```bash
 spark make migration [migrationName]
 ```
-The new migration will be under `./Application/Database/Migrations`.
+The new migration will be under `Application/Database/Migrations`.
 
 ## Run Migration
 Runs outstanding migrations.
@@ -49,54 +49,54 @@ Create an new Event and Listener.
 ```bash
 spark make event [eventName] [listenerName]
 ```
-The new event will be under `./Application/Events`. The new listener will be under `./Application/Events/Listeners`
+The new event will be under `Application/Events`. The new listener will be under `./Application/Events/Listeners`
 
 ## Create Mail
 Create an new mailable.
 ```bash
 spark make mail [mailableName]
 ```
-The new mailable will be under `./Application/Mail`.
+The new mailable will be under `Application/Mail`.
 
 ## Create Model
 Create an new database model.
 ```bash
 spark make model [modelName]
 ```
-The new mailable will be under `./Application/Models`.
+The new mailable will be under `Application/Models`.
 
 ## Create Service
 Create an new Service.
 ```bash
 spark make service [serviceName]
 ```
-The new service will be under `./Application/Services`.
+The new service will be under `Application/Services`.
 
 ## Create Task
 Create an new Invocable Task.
 ```bash
 spark make task [taskName]
 ```
-The new Task will be under `./Application/Tasks`.
+The new Task will be under `Application/Tasks`.
 
 ## Create Page
 Create an new Blazor Page.
 ```bash
 spark make page [pageName]
 ```
-The new Blazor Page will be under `./Pages`. This command supports subdirectories. The following command:
+The new Blazor Page will be under `Pages`. This command supports subdirectories. The following command:
 ```bash
 spark make page Users/Index
 ```
-Would create a new Blazor page at `./Pages/Users/Index.razor`
+Would create a new Blazor page at `Pages/Users/Index.razor`
 
 ## Create Component
 Create an new Blazor component.
 ```bash
 spark make component [componentName]
 ```
-The new Blazor component will be under `./Pages/Shared`. This command supports subdirectories. The following command:
+The new Blazor component will be under `Pages/Shared`. This command supports subdirectories. The following command:
 ```bash
 spark make component Users/UserPreview
 ```
-Would create a new Blazor component at `./Pages/Shared/Users/UserPreview.razor`
+Would create a new Blazor component at `Pages/Shared/Users/UserPreview.razor`

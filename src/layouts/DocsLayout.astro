@@ -18,6 +18,11 @@ const { title } = Astro.props;
         <link rel="shortcut icon" href="/logo.png">
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
+		<style>
+			[x-cloak] {
+				display: none !important;
+			}
+		</style>
 	</head>
 	<body>
 		<DocsNav />
@@ -36,6 +41,10 @@ const { title } = Astro.props;
 
 
 <style is:global>
+[x-cloak] {
+    display: none !important;
+}
+
 pre {
     @apply -mx-6 p-6 mb-12 rounded-lg bg-gray-900 !important;
 }

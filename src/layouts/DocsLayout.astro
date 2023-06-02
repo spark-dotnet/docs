@@ -1,5 +1,6 @@
 ---
 import LeftSideBar from '../components/LeftSideBar.astro';
+import DocsDropDown from '../components/DocsDropDown.astro';
 import DocsNav from '../components/DocsNav.astro';
 import Footer from '../components/Footer.astro';
 import StayUpdated from '../components/StayUpdated.astro';
@@ -27,11 +28,14 @@ const { title } = Astro.props;
 	<body>
 		<DocsNav />
         <div class="flex-col md:flex-row flex px-2 max-w-7xl mx-auto pt-12 pb-12">
-            <aside class="relative min-h-0 flex flex-col px-4 lg:w-80 items-start">
+            <aside class="hidden relative min-h-0 md:flex flex-col px-4 lg:w-80 items-start">
                 <LeftSideBar currentPage={Astro.url.pathname} />
             </aside>
-            <div class="flex-1 px-8 markdown max-w-3xl">
-                <slot />
+            <div class="flex-1 px-8 max-w-3xl">
+                <DocsDropDown currentPage={Astro.url.pathname} title={title} />
+                <div class="markdown">
+                    <slot />
+                </div>
             </div>
         </div>
 		<StayUpdated />

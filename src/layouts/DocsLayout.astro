@@ -33,9 +33,7 @@ const { title } = Astro.props;
             </aside>
             <div class="flex-1 px-8 max-w-3xl">
                 <DocsDropDown currentPage={Astro.url.pathname} title={title} />
-                <div class="markdown">
-                    <slot />
-                </div>
+                <slot />
             </div>
         </div>
 		<StayUpdated />

@@ -30,7 +30,7 @@ This class will include a `DBContextFactory` which allows you to query your EF C
 > Spark uses a DB Context Factory because Blazor applications do not create a service scope that aligned with the desired DB Context lifetime and will result in errors in your Blazor app.
 > You can read more about this [here](https://learn.microsoft.com/en-us/ef/core/dbcontext-configuration/#using-a-dbcontext-factory-eg-for-blazor).
 
-## Registering Services
+### Registering Services
 Before you're able to dependency inject a new service into a Blazor page, you need to register it in the DI container. Spark makes this very simple. 
 
 Simply add your service to the `AddCustomServices` method in the  `Application/Startup/AppServiceRegistration.cs` class.
@@ -44,6 +44,51 @@ private static IServiceCollection AddCustomServices(this IServiceCollection serv
 ```
 
 That's it!
+
+### Injecting Services
+Once a service is registered, it can be injected into any Blazor component or another registered service.
+
+**Injecting a Service in a Blazor component**
+
+Use the `@inject` attribute in a Blazor component to inject your services.
+```razor
+@page "/developers"
+@inject DeveloperService developerService
+
+<p>Developer page</p>
+
+@code {
+	private List<Developer> developers;
+
+	protected override async Task OnInitializedAsync()
+	{
+		developers = await developerService.GetAll();
+	}
+}
+```
+
+**Injecting a service into another service**
+
+Use standard dependency injection.
+```csharp
+public class DeveloperService
+{
+    private readonly ProjectService _projectService;
+
+    public DeveloperService(ProjectService projectService)
+    {
+        this._projectService = projectService;
+    }
+
+    public List<projects> GetDevelopersProjects(int developerId) {
+        return this._projectService.GetProjectsByDeveloperId(developerId);
+    }
+}
+```
+
+>
+> For this to work, both the `DeveloperService` and `ProjectService` must be registered in your apps DI container.
+>
 
 ## Querying Data
 In your service classes, you can use LINQ to query data from your database.

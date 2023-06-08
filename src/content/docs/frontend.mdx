@@ -55,6 +55,54 @@ spark make page Users/Index
 
 A new Blazor Page named `Index.razor` will be created in the `Pages/Users` directory.
 
+### Route Parameters
+The Blazor router uses route parameters to populate corresponding component parameters with the same name. Route parameter names are case insensitive.
+
+```razor
+@page "/developers/{Id:int}"
+
+@if (developer != null) {
+    <h1>@developer.Name</h1>
+}
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+	private Developer developer { get; set; }
+    
+	protected override async Task OnInitializedAsync()
+	{
+		developer = await _developerService.Get(Id);
+	}
+}
+```
+
+### Page title and metadata
+You can set a Blazor pages `<title>` element by using the `PageTitle` component.
+```razor
+@page "/developers"
+
+<PageTitle>This is the developers page</PageTitle>
+```
+
+To set metadata, like the pages description, use the `HeadContent` component.
+```razor
+@page "/developers"
+
+<PageTitle>This is the developers page</PageTitle>
+<HeadContent>
+    <meta name="description" content="This is a page that shows all the developers.">
+</HeadContent>
+```
+
+### Navigation
+Blazor pages use standard html anchor elements to navigate to other Blazor pages.
+```razor
+@page '/developers'
+
+<a href="/">Go to home page</a>
+```
+
 ## Layouts
 Layout files define a top level template for pages in Blazor Spark apps.
 

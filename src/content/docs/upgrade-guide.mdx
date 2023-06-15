@@ -1,0 +1,144 @@
+---
+title: "Upgrade Guide"
+description: "Blazor Spark upgrade guide"
+---
+
+## Upgrading Blazor Spark
+
+### Spark CLI
+Spark CLI is the command line tool that lets you create projects and code in Spark projects.
+
+To update your Spark CLI to the most recent version, simply uninstall and re-install it.
+```bash
+dotnet tool uninstall -g BlazorSpark.Console
+dotnet tool install -g BlazorSpark.Console
+```
+
+### Spark Templates
+Spark templates are what generates a new project when running the `spark new [myProject]` command.
+
+To update your templates to the most recent version, simply run the spark update command:
+```bash
+spark update
+```
+
+### Spark Library
+The Blazor Spark library is where the core code of Blazor Spark resides.
+
+Every Spark project comes with the BlazorSpark.Library nuget package installed already. To update this, simply use the Nuget package manager in Visual Studio or change the version in your .csproj file.
+
+## Upgrading Existing Projects to 0.4.0+
+Blazor Spark 0.4.0 came with breaking changes in the form of how it handles settings and .env variables.
+
+To upgrade a pre 0.4.0 Spark project, you will need to do a few things
+
+### 1. Update BlazorSpark.Library Nuget version
+
+In Visual Studios Nuget manager, update the BlazorSpark.Library Nuget to 0.4.0 or the latest stable build.
+![Upgrade Nuget](/spark-4-0-upgrade.png)
+
+An alternative method is to update your .csproj reference to BlazorSpark.Library to 0.4.0 and then build your project.
+
+### 2. Add SetupSparkConfig method in program.cs
+Replace lin 7 in `program.cs`: 
+```csharp
+builder.Configuration.AddEnvironmentVariables();
+```
+
+with 
+
+```csharp
+builder.Configuration.SetupSparkConfig();
+```
+
+### 3. Add new appsettings.json
+Replace the contents of your appsettings.json file with the json below. Don't get spooked, it's a lot but most of this you will never have to touch.
+```json
+{
+    "Spark": {
+        "App": {
+            "Name": "ENV_APP_NAME",
+            "Environment": "ENV_ENVIRONMENT"
+        },
+        "Auth": {
+            // Auth settings are not yet implemented, these are just placeholders
+            "EmailConfirmation": false,
+            "Password": {
+                "RequiredLength": 8,
+                "RequireDigit": true,
+                "RequireUppercase": false,
+                "RequireNonAlphanumeric": false,
+                "ResetExpires": 60
+            }
+        },
+        "Database": {
+            "Default": "ENV_DB_CONNECTION",
+            "Drivers": {
+                "Sqlite": {
+                    "Database": "ENV_DB_DATABASE"
+                },
+                "Mysql": {
+                    "Database": "ENV_DB_DATABASE",
+                    "Host": "ENV_DB_HOST",
+                    "Port": "ENV_DB_PORT",
+                    "Username": "ENV_DB_USERNAME",
+                    "Pasword": "ENV_DB_PASSWORD"
+                },
+                "Postgres": {
+                    "Database": "ENV_DB_DATABASE",
+                    "Host": "ENV_DB_HOST",
+                    "Port": "ENV_DB_PORT",
+                    "Username": "ENV_DB_USERNAME",
+                    "Pasword": "ENV_DB_PASSWORD"
+                },
+                "Sqlserver": {
+                    "Database": "ENV_DB_DATABASE",
+                    "Host": "ENV_DB_HOST",
+                    "Port": "ENV_DB_PORT",
+                    "Username": "ENV_DB_USERNAME",
+                    "Pasword": "ENV_DB_PASSWORD",
+                    "DbTrustCertificate": false,
+                    "DbIntegratedSecurity": false
+                }
+            }
+
+        },
+        "Log": {
+            "Default": "ENV_LOG_CHANNEL",
+            "Level": "ENV_LOG_LEVEL",
+            "Channels": {
+                "File": {
+                    "Path": "Storage/Logging/Spark.log"
+                },
+                "Console": {
+                }
+            }
+        },
+        "Mail": {
+            "Default": "ENV_MAIL_MAILER",
+            "Mailers": {
+                "Smpt": {
+                    "Host": "ENV_MAIL_HOST",
+                    "Port": "ENV_MAIL_Port",
+                    "Username": "ENV_MAIL_USERNAME",
+                    "Password": "ENV_MAIL_PASSWORD"
+                },
+                "File": {
+                    "Path": "Storage/Mail/mail.log"
+                }
+            },
+            "From": {
+                "Address": "ENV_MAIL_FROM_ADDRESS",
+                "Name": "ENV_MAIL_FROM_NAME"
+            }
+        }
+    },
+    "Logging": {
+        "LogLevel": {
+            "Default": "Information",
+            "Microsoft.AspNetCore": "Warning"
+        }
+    },
+    "AllowedHosts": "*"
+}
+```

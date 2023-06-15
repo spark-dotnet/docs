@@ -9,6 +9,7 @@ export const SIDEBAR: Sidebar = {
         { text: 'Introduction', link: 'introduction' },
         { text: 'Installation', link: 'installation' },
         { text: 'Directory Structure', link: 'directory-structure' },
+        { text: 'Upgrade Guide', link: 'upgrade-guide' },
     ],
     'The Basics': [
         { text: 'Configuration', link: 'configuration' },

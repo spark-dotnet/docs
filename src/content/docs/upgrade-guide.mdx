@@ -28,6 +28,11 @@ The Blazor Spark library is where the core code of Blazor Spark resides.
 Every Spark project comes with the BlazorSpark.Library nuget package installed already. To update this, simply use the Nuget package manager in Visual Studio or change the version in your .csproj file.
 
 ## Upgrading Existing Projects to 0.4.0+
+
+>
+> Blazor Spark **0.4.0 has been deprecated** due to some bugs found after publishing. Please use 0.4.1+
+>
+
 Blazor Spark 0.4.0 came with breaking changes in the form of how it handles settings and .env variables.
 
 To upgrade a pre 0.4.0 Spark project, you will need to do a few things
@@ -82,21 +87,21 @@ Replace the contents of your appsettings.json file with the json below. Don't ge
                     "Host": "ENV_DB_HOST",
                     "Port": "ENV_DB_PORT",
                     "Username": "ENV_DB_USERNAME",
-                    "Pasword": "ENV_DB_PASSWORD"
+                    "Password": "ENV_DB_PASSWORD"
                 },
                 "Postgres": {
                     "Database": "ENV_DB_DATABASE",
                     "Host": "ENV_DB_HOST",
                     "Port": "ENV_DB_PORT",
                     "Username": "ENV_DB_USERNAME",
-                    "Pasword": "ENV_DB_PASSWORD"
+                    "Password": "ENV_DB_PASSWORD"
                 },
                 "Sqlserver": {
                     "Database": "ENV_DB_DATABASE",
                     "Host": "ENV_DB_HOST",
                     "Port": "ENV_DB_PORT",
                     "Username": "ENV_DB_USERNAME",
-                    "Pasword": "ENV_DB_PASSWORD",
+                    "Password": "ENV_DB_PASSWORD",
                     "DbTrustCertificate": false,
                     "DbIntegratedSecurity": false
                 }
@@ -117,7 +122,7 @@ Replace the contents of your appsettings.json file with the json below. Don't ge
         "Mail": {
             "Default": "ENV_MAIL_MAILER",
             "Mailers": {
-                "Smpt": {
+                "Smtp": {
                     "Host": "ENV_MAIL_HOST",
                     "Port": "ENV_MAIL_Port",
                     "Username": "ENV_MAIL_USERNAME",
@@ -141,4 +146,5 @@ Replace the contents of your appsettings.json file with the json below. Don't ge
     },
     "AllowedHosts": "*"
 }
+
 ```

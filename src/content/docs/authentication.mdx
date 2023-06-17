@@ -62,8 +62,54 @@ If you have pages in your app you only want logged in users to see, use the `Aut
 </section>
 ```
 
+## Accessing User Data
+Spark comes with out of the box methods to make it easy to query the authenticated users data.
+
+The `Application/Services/Auth/UsersService.cs` class comes with a `GetAuthenticatedUser()` method. This will return the User model if the person is logged in or null otherwise.
+
+By default, Spark runs this method and passes down the authenticated `User` model from it's `MainLayout.razor` file.
+
+```razor
+<CascadingValue Value="this">
+    <NavMenu />
+    <main class="container">
+        @Body
+    </main>
+
+    <Footer />
+</CascadingValue>
+
+@code {
+    public User? User = new User();
+
+    protected override async Task OnInitializedAsync()
+    {
+        User = await userService.GetAuthenticatedUser();
+    }
+}
+```
+
+This means you can access the authenticated User model from any Razor component or page by passing the MainLayout class as a `CascadingParameter`.
+```razor
+@page "/dashboard"
+@attribute [Authorize]
+<section>
+    <article>
+        <h1>
+            User Dashboard for @user.Name
+        </h1>
+    </article>
+</section>
+
+@code {
+    [CascadingParameter]
+    public MainLayout? Layout { get; set; }
+    private User? user => Layout.User;
+}
+```
+
 ## Authorize View
-Sometimes you want a user to see different content from a Blazor component based on if they are authenticated or not.
+Sometimes you want a user to see different content from a Razor component based on if they are authenticated or not.
 
 We can accomplish this by using the `<AuthorizeView>` tag helper that comes with Blazor.
 ```razor

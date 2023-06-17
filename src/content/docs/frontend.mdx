@@ -4,9 +4,9 @@ description: "Blazor Spark Frontend"
 ---
 
 ## Introduction
-Blazor Spark utilizes Blazor components to compose it's frontend markup and logic. Spark uses **Blazor Server** under the hood, so everything is rendered on the server.
+Blazor Spark utilizes Razor components to compose it's frontend markup and logic. Spark uses **Blazor Server** under the hood, so everything is rendered on the server.
 
-Blazor components let you mix in HTML markup with C#, allowing you to quickly create dynamic components to use in your app.
+Razor components let you mix in HTML markup with C#, allowing you to quickly create dynamic components to use in your app.
 
 ```razor
 @inject DeveloperService _developerService
@@ -29,17 +29,17 @@ Blazor components let you mix in HTML markup with C#, allowing you to quickly cr
 }
 ```
 ## Components
-Blazor components are re-usable elements you can use anywhere in your application.
+Razor components are re-usable elements you can use anywhere in your application.
 
-Your Blazor components should be created in the `Pages/Shared` directory.
+Your components should be created in the `Pages/Shared` directory.
 
-### Creating Blazor Components
-To create a new Blazor component, simply run the Spark make component command.
+### Creating Razor Components
+To create a new Razor component, simply run the Spark make component command.
 
 ```bash
 spark make component SomeComponent
 ```
-A new Blazor component named `SomeComponent.razor` will be created in the `Pages/Shared` directory.
+A new Razor component named `SomeComponent.razor` will be created in the `Pages/Shared` directory.
 
 ### Props
 TODO
@@ -50,7 +50,7 @@ TODO
 ## Pages
 Your Blazor pages should be created in the `Pages` directory.
 
-A Blazor page is a Blazor component with a `@page "/some-url"` attribute at the top that represents the url it's located at.
+A Blazor page is a Razor component with a `@page "/some-url"` attribute at the top that represents the url it's located at.
 
 ### Creating Blazor Pages
 To create a new Blazor page, simply run the Spark make page command.
@@ -109,6 +109,9 @@ Blazor pages use standard html anchor elements to navigate to other Blazor pages
 <a href="/">Go to home page</a>
 ```
 
+### Authentication
+To read about how to authenticate and access User data from your Razor components and pages, check out Spark's [Authentication guide](/docs/authentication).
+
 ## Layouts
 Layout files define a top level template for pages in Blazor Spark apps.
 
@@ -140,9 +143,8 @@ To use the new layout on a page, add the `@layout` attribute.
 <h2>Episodes</h2>
 ```
 
-
 ## Component Naming Conventions
-Blazor Spark has conventions you should follow when creating your Blazor components.
+Blazor Spark has conventions you should follow when creating your Razor components.
 
 ### File names
 Most applications have standard CRUD pages for resources.
@@ -154,7 +156,7 @@ For instance, if you app stored developers in the database, your CRUD pages shou
 - **Pages/Developers/Delete.razor** (delete 1 developer)
 - **Pages/Developers/Edit.razor** (edit 1 developer)
 
-Blazor components files should also use **PascalCase** naming.
+Razor components files should also use **PascalCase** naming.
 
 ### Route names
 When setting your `@page` attribute in a Blazor page, the following conventions should be followed:
@@ -165,23 +167,23 @@ When setting your `@page` attribute in a Blazor page, the following conventions 
 
 **3.** CRUD routes should follow this naming convention:
 
-A Blazor component with a path of `Pages/Users/Index` will have a route of:
+A Razor component with a path of `Pages/Users/Index` will have a route of:
 
  `@page "/users"`
 
-A Blazor component with a path of `Pages/Users/Show` will have a route of:
+A Razor component with a path of `Pages/Users/Show` will have a route of:
 
  `@page "/users/{id}"`
 
-A Blazor component with a path of `Pages/Users/Create` will have a route of:
+A Razor component with a path of `Pages/Users/Create` will have a route of:
 
  `@page "/users/create"`
 
-A Blazor component with a path of `Pages/Users/Delete` will have a route of:
+A Razor component with a path of `Pages/Users/Delete` will have a route of:
 
  `@page "/users/delete/{id}"`
 
-A Blazor component with a path of `Pages/Users/Edit` will have a route of:
+A Razor component with a path of `Pages/Users/Edit` will have a route of:
 
  `@page "/users/edit/{id}"`
 

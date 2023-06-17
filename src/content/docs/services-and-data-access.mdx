@@ -46,11 +46,11 @@ private static IServiceCollection AddCustomServices(this IServiceCollection serv
 That's it!
 
 ### Injecting Services
-Once a service is registered, it can be injected into any Blazor component or another registered service.
+Once a service is registered, it can be injected into any Razor component or another registered service.
 
-**Injecting a Service in a Blazor component**
+**Injecting a Service in a Razor component**
 
-Use the `@inject` attribute in a Blazor component to inject your services.
+Use the `@inject` attribute in a Razor component to inject your services.
 ```razor
 @page "/developers"
 @inject DeveloperService developerService

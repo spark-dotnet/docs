@@ -5,11 +5,15 @@ export const SITE = {
 
 export type Sidebar = Record<string, { text: string; link: string }[]>;
 export const SIDEBAR: Sidebar = {
+    'Tutorials': [
+        { text: 'Build a Twitter Clone', link: 'spark-tutorial' },
+    ],
     'Getting Started': [
         { text: 'Introduction', link: 'introduction' },
         { text: 'Installation', link: 'installation' },
         { text: 'Directory Structure', link: 'directory-structure' },
         { text: 'Upgrade Guide', link: 'upgrade-guide' },
+        { text: 'Contribution Guide', link: 'contribution-guide' },
     ],
     'The Basics': [
         { text: 'Configuration', link: 'configuration' },
@@ -26,7 +30,4 @@ export const SIDEBAR: Sidebar = {
         { text: 'Task Scheduling', link: 'task-scheduling' },
         { text: 'Spark CLI', link: 'spark-cli' },
     ],
-    'Tutorials': [
-        { text: 'Blog Tutorial', link: 'blog-tutorial' },
-    ]
 };

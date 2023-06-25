@@ -6,6 +6,23 @@ description: "Blazor Spark Models & Migrations"
 ## Introduction
 Blazor Spark uses EF Core models and migrations to query your data and maintain your apps database.
 
+## Models in Spark
+A model in Spark is a representation of the data in 1 database table.
+
+Spark uses Entity Framework, so models in Spark are no different than models in Entity Framework.
+
+The only caveat to this is the `BaseModel` class.
+
+### BaseModel
+All models in Spark extend the `BaseModel` class. The `BaseModel` class has 3 properties.
+- Id
+- CreatedAt
+- UpdatedAt
+
+This means you don't need to create these properties on your models, they will always be created and usable provided you are extending the `BaseModel` class.
+
+Your models should always extend the `BaseModel` class to avoid issues with the Spark Library internal code.
+
 ## Creating a Model
 To create a new model, simply run the Spark  `make model` command.
 
@@ -18,8 +35,6 @@ A new class in the `Application/Models` folder will be created.
 ```csharp
 public class Developer : BaseModel
 {
-    public int Id { get; set; }
-
     public string Name { get; set; }
 
     public string Title { get; set; }

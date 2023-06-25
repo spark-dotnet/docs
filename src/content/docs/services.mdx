@@ -1,13 +1,13 @@
 ---
-title: "Services & Data Access"
-description: "Blazor Spark Data Access"
+title: "Services"
+description: "Blazor Spark Services"
 ---
 
 ## Introduction
-Since Blazor Spark uses EF Core, querying and saving data is straight forward. You can combine that with service classes to make simple, re-usable data access code throughout your application.
+Spark includes Service classes. Services are regular C# classes where you can tuck away business logic or data access methods to make them re-usable throughout your application.
 
 ## Services
-It is advised to use service classes to interact with your data. To create a Service, simply use the Spark `make service` command.
+To create a Service, simply use the Spark `make service` command.
 
 ```bash
 spark make service DeveloperService
@@ -25,10 +25,7 @@ public class DeveloperService
     }
 }
 ```
-This class will include a `DBContextFactory` which allows you to query your EF Core models.
-
-> Spark uses a DB Context Factory because Blazor applications do not create a service scope that aligned with the desired DB Context lifetime and will result in errors in your Blazor app.
-> You can read more about this [here](https://learn.microsoft.com/en-us/ef/core/dbcontext-configuration/#using-a-dbcontext-factory-eg-for-blazor).
+This class will include a `DBContextFactory` which allows you to query your applications models.
 
 ### Registering Services
 Before you're able to dependency inject a new service into a Blazor page, you need to register it in the DI container. Spark makes this very simple. 
@@ -80,7 +77,8 @@ public class DeveloperService
         this._projectService = projectService;
     }
 
-    public List<projects> GetDevelopersProjects(int developerId) {
+    public List<projects> GetDevelopersProjects(int developerId) 
+    {
         return this._projectService.GetProjectsByDeveloperId(developerId);
     }
 }
@@ -90,8 +88,8 @@ public class DeveloperService
 > For this to work, both the `DeveloperService` and `ProjectService` must be registered in your apps DI container.
 >
 
-## Querying Data
-In your service classes, you can use LINQ to query data from your database.
+## Data Access from a service
+In your service classes, you can use the injected Db Context Factory to create a Database Context and save, update, or delete models.
 
 ```csharp
 public class DeveloperService
@@ -114,8 +112,7 @@ public class DeveloperService
     public async Task<Developer> GetDeveloper(int id)
     {
         using var context = _factory.CreateDbContext();
-        return await context.Developers
-            .SingleAsync(d => d.Id == id);
+        return await context.Developers.FindAsync(id);
     }
 
     // Filter data
@@ -125,61 +122,6 @@ public class DeveloperService
         return await context.Developers
             .Where(d => d.Name.Contains(name))
             .ToListAsync();
-    }
-}
-```
-
-Once you add the `DeveloperService` to the DI container in your `Application/Startup/AppServiceRegistration.cs` class, you can call your service from any Blazor Page or component by injecting it.
-```razor
-@page "/developers"
-@inject DeveloperService developerService
-
-<div class="">
-    @if (developers == null)
-    {
-        <p>Loading...</p>
-    }
-    else
-    {
-        <ul>
-        @foreach (var developer in Developers)
-        {
-            <li>developer.Name</li>
-        }
-        </ul>
-    }
-</div>
-
-@code {
-	private List<Developer> developers;
-
-	protected override async Task OnInitializedAsync()
-	{
-		developers = await developerService.GetAll();
-	}
-}
-```
-
-## Storing Data
-Data can be stored using EFCore's `Add` method.
-
-```csharp
-public class DeveloperService
-{
-    private readonly IDbContextFactory<DatabaseContext> _factory;
-
-    public DeveloperService(IDbContextFactory<DatabaseContext> factory)
-    {
-        this._factory = factory;
-    }
-
-    // Save data
-    public async Task<Developer> Store(Developer developer)
-    {
-        using var context = _factory.CreateDbContext();
-        context.Developers.Add(company);
-        context.SaveChanges();
-        return developer;
     }
 }
 ```

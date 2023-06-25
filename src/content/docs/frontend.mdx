@@ -101,6 +101,27 @@ To set metadata, like the pages description, use the `HeadContent` component.
 </HeadContent>
 ```
 
+### SEO
+By default, Spark apps use the `render-mode` of `server`. This means any code in your razor pages and components isn't ran until the SignalR connection is setup by the browser.
+
+This has 1 downside, search engines will not be able to index your content. If SEO is important in your app, you will want to update the `render-mode` to `ServerPrerendered`.
+
+You can do this by updating the render mode in `Pages/_Layout.cshtml` to:
+```razor
+<component type="typeof(HeadOutlet)" render-mode="ServerPrerendered" />
+```
+
+and updating the render mode in `Pages/_Host.cshtml` to: 
+```razor
+<component type="typeof(App)" render-mode="ServerPrerendered" />
+```
+
+>
+> Using the render mode of `ServerPrerendered` has 1 side effect.
+>
+> Any code in your razor pages or components will be ran twice. Once on the server and once when the page is loaded in the browser.
+>
+
 ### Navigation
 Blazor pages use standard html anchor elements to navigate to other Blazor pages.
 ```razor

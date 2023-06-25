@@ -10,6 +10,7 @@ Blazor Spark Supported database types:
 - SQLite
 - PostgreSQL
 - MySQL
+- SqlServer
 
 ## Configuration
 By default, when a new Blazor Spark app is created, it comes with a SQLite already wired up. Databases configurations are setup in your `.env` file.
@@ -29,7 +30,7 @@ DB_PASSWORD=
 ### PostgreSQL ENV Example
 ```ini
 DB_CONNECTION=postgres
-DB_HOST=127.0.0.1
+DB_HOST=localhost
 DB_PORT=5432
 DB_DATABASE=your_db_name
 DB_USERNAME=your_user
@@ -38,12 +39,28 @@ DB_PASSWORD=your_user_password
 ### MySQL ENV Example
 ```ini
 DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
+DB_HOST=localhost
 DB_PORT=3306
 DB_DATABASE=your_db_name
 DB_USERNAME=your_user
 DB_PASSWORD=your_user_password
 ```
+### SqlServer ENV Example
+```ini
+DB_CONNECTION=sqlserver
+DB_HOST=localhost
+# if using sqlexpress locally, this is what your DB_HOST will look like
+# DB_HOST=localhost\SQLEXPRESS 
+DB_PORT=1433
+DB_DATABASE=your_db_name
+DB_USERNAME=your_user
+DB_PASSWORD=
+
+# SQL Server Only
+DB_TRUST_CERTIFICATE=true
+DB_INTEGRATED_SECURITY=true
+```
+If you set `DB_INTEGRATED_SECURITY` to true, SQL Server will use your windows login to connect to the DB. This is great for local developement. If it is false, use a dedicated SQL Server user.
 
 ## EF Core
 Blazor Spark utilizes **EF Core** to make interacting with your database as simple as possible. If you've never used EF Core before, you can check out Microsofts documentation [here](https://learn.microsoft.com/en-us/ef/core/).
@@ -63,11 +80,29 @@ You can inject the DB Context Factory in your services like this:
 ```csharp
 public class UsersService
 {
-    private readonly IDbContextFactory<ApplicationDbContext> _factory;
+    private readonly IDbContextFactory<DatabaseContext> _factory;
 
-    public UsersService(IDbContextFactory<ApplicationDbContext> factory)
+    public UsersService(IDbContextFactory<DatabaseContext> factory)
     {
         _factory = factory;
+    }
+}
+```
+
+And in your Razor components or pages like this:
+```razor
+@page "/"
+@inject IDbContextFactory<DatabaseContext> factory
+<section>
+    <h1>
+        Some page
+    </h1>
+</section>
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        using var db = factory.CreateDbContext();
+        // query some data with db context
     }
 }
 ```

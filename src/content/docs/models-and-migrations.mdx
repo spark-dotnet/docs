@@ -26,11 +26,11 @@ public class Developer : BaseModel
 }
 ```
 
-Then, register your model in the `ApplicationDbContext` class in the `Application/Database` folder:
+Then, register your model in the `DatabaseContext` class in the `Application/Database` folder:
 ```csharp
-public class ApplicationDbContext : DbContext
+public class DatabaseContext : DbContext
 {
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+    public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
     { }
 
     public virtual DbSet<Developer> Developers { set; get; }
@@ -39,7 +39,7 @@ public class ApplicationDbContext : DbContext
 
 ## Migrations
 ### Create Migrations
-Once your models are registered in your `ApplicationDbContext`, you can create a migration. This essentially acts as source control for your database schema. 
+Once your models are registered in your `DatabaseContext`, you can create a migration. This essentially acts as source control for your database schema. 
 
 To create a new migration, simply run the Spark  `make migration` command.
 

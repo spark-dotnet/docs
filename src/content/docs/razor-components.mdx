@@ -1,6 +1,6 @@
 ---
-title: "Frontend"
-description: "Blazor Spark Frontend"
+title: "Razor Components"
+description: "Blazor Spark Razor Components"
 ---
 
 ## Introduction
@@ -41,11 +41,85 @@ spark make component SomeComponent
 ```
 A new Razor component named `SomeComponent.razor` will be created in the `Pages/Shared` directory.
 
-### Props
-TODO
+```razor
+<p>My Component</p>
+
+@code {
+
+    protected override async Task OnInitializedAsync()
+    {
+        
+    }
+}
+```
+
+### Rendering Components
+To display a component, you may use a Razor component tag within another Razor component or page. Razor component tags are just the name of it's source file.
+```razor
+<SomeComponent />
+```
+
+### Passing Data To Components
+You can pass data to a Razor component or page by using **Component Paramaters**.
+
+Component parameters are defined using public C# properties on the component class with the `[Parameter]` attribute.
+
+For example, below is a razor component called `ChildComponent.razor`. It accepts a parameter of `Title`.
+```razor
+<h1>@Title</h1>
+
+@code {
+    [Parameter]
+    public string Title { get; set; } = "";
+}
+```
+
+Then, in a parent Razor component called `ParentComponent.razor`, you can render the child component and pass the `Title` parameter value.
+```razor
+<div>
+    <SomeComponent Title="This is my title" />
+</div>
+
+@code {
+}
+```
+
+In this example, the following markup would ultimately be rendered to the browser.
+```html
+<div>
+    <h1>This is my title</h1>
+</div>
+```
 
 ### Child Content
-TODO
+You will often need to pass additional content to your razor components via a `RenderFragment`. RenderFragments can be HTML markup or even other Razor Components.
+
+For example, the below `ChildComponent.razor` component has a `ChildContent` parameter of type `RenderFragment`. This represents a segment of UI to render.
+```razor
+<h1>
+    @ChildContent
+</h1>
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+}
+```
+
+Then, in a parent Razor component, you can render the child component while passing content between it's opening and closing tags.
+```razor
+<ChildComponent>
+    Blazor Spark is <span class="text-yellow-600">Awesome!</span>
+</ChildComponent>
+```
+
+In this example, the following markup would ultimately be rendered to the browser. 
+```html
+<h1>
+    Blazor Spark is <span class="text-yellow-600">Awesome!</span>
+</h1>
+```
+
 
 ## Pages
 Your Blazor pages should be created in the `Pages` directory.
@@ -211,37 +285,3 @@ A Razor component with a path of `Pages/Users/Edit` will have a route of:
 >
 > If you use the Spark CLI commands to create your Pages and Components, all of the route naming conventions will automatically be setup for you.
 >
-
-## Assets
-
-### CSS
-Blazor Spark projects come with Tailwind CSS by default. You can learn more about Tailwind [here](https://tailwindcss.com/).
-
-When creating a new Spark project, you can use other CSS frameworks by passing the `--css` option when running the `spark new [projectName]` command.
-```bash
-spark new MyApp --css bootstrap
-```
-
-### CSS Framework Options
-
-**Tailwind CSS**
-```bash
-spark new MyApp --css tailwind
-```
-
-**Bootstrap CSS**
-```bash
-spark new MyApp --css bootstrap
-```
-
-**Pico CSS**
-```bash
-spark new MyApp --css pico
-```
-
-### Javascript
-Blazor Spark project come with AlpineJS by default. 
-
-AlpineJS is a javascript library that helps you create simple page interactions like mobile menus and toggling elements.
-
-You can learn more about Alpine [here](https://alpinejs.dev/).

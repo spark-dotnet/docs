@@ -60,7 +60,7 @@ To display a component, you may use a Razor component tag within another Razor c
 ```
 
 ### Passing Data To Components
-You can pass data to a Razor component or page by using **Component Paramaters**.
+You can pass data to a Razor component or page by using **Component Parameters**.
 
 Component parameters are defined using public C# properties on the component class with the `[Parameter]` attribute.
 
@@ -74,7 +74,7 @@ For example, below is a razor component called `ChildComponent.razor`. It accept
 }
 ```
 
-Then, in a parent Razor component called `ParentComponent.razor`, you can render the child component and pass the `Title` parameter value.
+Then, in a parent Razor component, you can render the child component and pass the `Title` parameter value.
 ```razor
 <div>
     <SomeComponent Title="This is my title" />

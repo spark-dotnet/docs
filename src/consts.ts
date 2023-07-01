@@ -31,6 +31,7 @@ export const SIDEBAR: Sidebar = {
         { text: 'Events', link: 'events' },
         { text: 'Queues', link: 'queues' },
         { text: 'Task Scheduling', link: 'task-scheduling' },
+        { text: 'Extension Methods', link: 'extension-methods' },
         { text: 'Spark CLI', link: 'spark-cli' },
     ],
 };

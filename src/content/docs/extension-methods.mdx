@@ -1,0 +1,48 @@
+---
+title: "Extension Methods"
+description: "Blazor Spark Extension Methods"
+---
+
+## Introduction
+Spark includes a variety of C# extension methods to extend base functionality.
+
+## DbSet Extensions
+
+### DbSet.Save()
+The `DbSet.Save()` method saves a model to the database through entity framework.
+```csharp
+using var db = factory.CreateDbContext();
+db.Developers.Save(newDeveloper);
+```
+
+If the model doesn't exist in the database yet, the `Save()` method sets the `CreatedAt` property to the current datetime and creates a new record.
+
+
+If the model does exist in the database, the `Save()` method sets the `UpdatedAt` property to the current datetime and updates the existing record.
+
+### DbSet.Delete()
+The `DbSet.Delete()` method deletes a model from the database.
+```csharp
+using var db = factory.CreateDbContext();
+db.Developers.Delete(developer);
+```
+
+## Navigation Manager Extensions
+
+### NavigationManager.Route()
+The `NavigationManager.Route()` method provides the route of the current page.
+```razor
+@page "/developers"
+@inject NavigationManager NavigationManager
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        var route = NavigationManager.Route();
+        
+        // route = "developers"
+    }
+}
+```
+
+## String Extensions

@@ -7,6 +7,7 @@ export type Sidebar = Record<string, { text: string; link: string }[]>;
 export const SIDEBAR: Sidebar = {
     'Tutorials': [
         { text: 'Build a Twitter Clone', link: 'spark-tutorial' },
+        { text: 'Build a Blog in 25 min', link: 'blog-tutorial' },
     ],
     'Getting Started': [
         { text: 'Introduction', link: 'introduction' },

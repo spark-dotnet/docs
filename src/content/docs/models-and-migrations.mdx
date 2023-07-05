@@ -62,11 +62,11 @@ To create a new migration, simply run the Spark  `make migration` command.
 spark make migration AddDeveloperTable
 ```
 
-A new file with your schema changes is created in the `Application/Migrations` folder.
+A new file with your schema changes is created in the `Application/Database/Migrations` folder.
 
 >
 > ### Changing database types and migrations
-> If you ever find your self in a scenario where you have created migrations and then decide to switch database types, you will need to clear your migration files out of the `Application/Migrations` folder.
+> If you ever find your self in a scenario where you have created migrations and then decide to switch database types, you will need to clear your migration files out of the `Application/Database/Migrations` folder.
 >
 > Then, create and run your migrations again. This is because migration files for one database type might not work for another due to different feature sets in those databases.
 

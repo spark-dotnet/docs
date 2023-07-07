@@ -24,6 +24,15 @@ const { title } = Astro.props;
 				display: none !important;
 			}
 		</style>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-PZ2NL51HFG"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-PZ2NL51HFG');
+        </script>
 	</head>
 	<body>
 		<DocsNav />

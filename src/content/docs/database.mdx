@@ -1,19 +1,19 @@
 ---
 title: "Database"
-description: "Blazor Spark database"
+description: "Spark database"
 ---
 
 ## Introduction
-Blazor Spark sets up your database connections for you. The only thing you have to worry about is setting up your configurations for which database type to use and its connection details.
+Spark sets up your database connections for you. The only thing you have to worry about is setting up your configurations for which database type to use and its connection details.
 
-Blazor Spark Supported database types:
+Spark Supported database types:
 - SQLite
 - PostgreSQL
 - MySQL
 - SqlServer
 
 ## Configuration
-By default, when a new Blazor Spark app is created, it comes with a SQLite already wired up. Databases configurations are setup in your `.env` file.
+By default, when a new Spark app is created, it comes with a SQLite already wired up. Databases configurations are setup in your `.env` file.
 
 You can switch your database type by changing the `DB_CONNECTION` value to one of our other supported databases.
 
@@ -63,14 +63,14 @@ DB_INTEGRATED_SECURITY=true
 If you set `DB_INTEGRATED_SECURITY` to true, SQL Server will use your windows login to connect to the DB. This is great for local developement. If it is false, use a dedicated SQL Server user.
 
 ## EF Core
-Blazor Spark utilizes **EF Core** to make interacting with your database as simple as possible. If you've never used EF Core before, you can check out Microsofts documentation [here](https://learn.microsoft.com/en-us/ef/core/).
+Spark utilizes **EF Core** to make interacting with your database as simple as possible. If you've never used EF Core before, you can check out Microsofts documentation [here](https://learn.microsoft.com/en-us/ef/core/).
 
-To learn more about how Blazor Spark utilizes **EF Core migrations** go [here](/docs/models-and-migrations).
+To learn more about how Spark utilizes **EF Core migrations** go [here](/docs/models-and-migrations).
 
-To learn more about how Blazor Spark utilizes **EF Core data access** go [here](/docs/data-access).
+To learn more about how Spark utilizes **EF Core data access** go [here](/docs/data-access).
 
 ## Database Context
-When a Blazor Spark app starts, a DB Context Factory is created and added to your apps DI container via Sparks internal service registration.
+When a Spark app starts, a DB Context Factory is created and added to your apps DI container via Sparks internal service registration.
 
 > Spark uses a DB Context Factory because Blazor applications do not create a service scope that aligned with the desired DB Context lifetime and will result in errors in your Blazor app.
 > You can read more about this [here](https://learn.microsoft.com/en-us/ef/core/dbcontext-configuration/#using-a-dbcontext-factory-eg-for-blazor).

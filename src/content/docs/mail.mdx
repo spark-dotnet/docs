@@ -1,13 +1,13 @@
 ---
 title: "Mail"
-description: "Blazor Spark Mail"
+description: "Spark Mail"
 ---
 
 ## Introduction
-Sending email should be easy. Blazor Spark provides a clean, simple email interface powered by the popular [Mailkit](https://github.com/jstedfast/MailKit) library.
+Sending email should be easy. Spark provides a clean, simple email interface powered by the popular [Mailkit](https://github.com/jstedfast/MailKit) library.
 
 ## Configuration
-Blazor Spark comes with multiples drivers that change how e-mails are sent.
+Spark comes with multiples drivers that change how e-mails are sent.
 
 ### File Log Driver
 This driver will log emails to the `Storage/Mail/mail.log` file. It's perfect to use for development and testing.
@@ -67,7 +67,7 @@ namespace BlazorSpark.Example.Application.Mail
 			var recipient = new MailRecipient(this._user.Email);
 			this.To(recipient)
                 .From("wes@blazorspark.com")
-				.Subject("Confirm your Blazor Spark Subscription")
+				.Subject("Confirm your Spark Subscription")
 				.Html(@"
 					<p>Confirm your subscription by clicking the link</p>
 					<a href=""blazorspark.com/confirm""></a>
@@ -154,7 +154,7 @@ public SendConfirmation(User user) {
 ```
 
 ## Generic Mailable
-Blazor Spark comes with a generic mailable for scenarios where you don't want to create your own custom **Mailable**.
+Spark comes with a generic mailable for scenarios where you don't want to create your own custom **Mailable**.
 ```csharp
 var mail = new GenericMailable()
     .To("hello@example.com")

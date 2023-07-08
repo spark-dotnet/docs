@@ -1,11 +1,11 @@
 ---
 title: "Directory Structure"
-description: "Learn how directories are setup in Blazor Spark."
+description: "Learn how directories are setup in Spark."
 ---
 
 ## Introduction
 
-The Blazor Spark application structure is setup to give a consistant, organized project structure for your web application. 
+The Spark application structure is setup to give a consistant, organized project structure for your web application. 
 
 ## Application
 The `Application` directory contains the core code of you application. 
@@ -26,7 +26,7 @@ The `Models` directory contains your efcore model classes. Each database table f
 The `Services` directory contains your services that can be Dependency Injected on startup. Services are typically used to abstract away business logic or database calls.
 
 ### Startup
-The `Startup` directory contains Registration classes. These classes are where Blazor Sparks core services, custom services, events, or tasks are registered to the DI container. Scheduled jobs can also be registered here.
+The `Startup` directory contains Registration classes. These classes are where Sparks core services, custom services, events, or tasks are registered to the DI container. Scheduled jobs can also be registered here.
 
 ### Tasks
 The `Tasks` directory contains queueable jobs for your application. Tasks can be scheduled or added to a background queue.

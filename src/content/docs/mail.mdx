@@ -41,7 +41,7 @@ MAIL_FROM_NAME="George Constanza"
 ## Mailables
 Spark uses **Mailables** to send emails. They are a C# class that represents a specific email you can send. Such as "Confirm subscription" or "New user signup".
 
-Mailables inherit from `BlazorSpark.Library.Mail.Mailable` and accept a generic type you want associated with sending your mail.
+Mailables inherit from `Spark.Library.Mail.Mailable` and accept a generic type you want associated with sending your mail.
 
 To create a mailable, simply run the Spark `make mail` command.
 
@@ -52,10 +52,10 @@ spark make mail ConfirmSubscriptionMailable
 A new mailable will be created in the `Application/Mail` directory.
 
 ```csharp
-using BlazorSpark.Example.Application.Models;
-using BlazorSpark.Library.Mail;
+using Spark.Example.Application.Models;
+using Spark.Library.Mail;
 
-namespace BlazorSpark.Example.Application.Mail
+namespace Spark.Example.Application.Mail
 {
 	public class ConfirmSubscriptionMailable : Mailable<User>
     {
@@ -66,11 +66,11 @@ namespace BlazorSpark.Example.Application.Mail
 		{
 			var recipient = new MailRecipient(this._user.Email);
 			this.To(recipient)
-                .From("wes@blazorspark.com")
+                .From("wes@Spark.com")
 				.Subject("Confirm your Spark Subscription")
 				.Html(@"
 					<p>Confirm your subscription by clicking the link</p>
-					<a href=""blazorspark.com/confirm""></a>
+					<a href=""spark.com/confirm""></a>
 				");
 		}
 	}
@@ -158,7 +158,7 @@ Spark comes with a generic mailable for scenarios where you don't want to create
 ```csharp
 var mail = new GenericMailable()
     .To("hello@example.com")
-    .From("wes@blazorspark.com")
+    .From("wes@spark.com")
     .Html("<h1>Hi!</h1>");
 
 await this._mailer.SendAsync(mail);

@@ -41,11 +41,10 @@ dotnet tool install -g Spark.CLI
 Once the new Spark CLI is installed, simply run the `spark install` command to add the new Spark templates.
 
 ### Upgrade Existing Projects Library
-Projects before 0.6.0 referenced the `BlazorSpark.Library` Nuget package.
-
-You can uninstall that Nuget and install Spark.Library.
-
-The only other updates you will need to make is replace `using` statements throughout your project to reference the new Nuget namespace.
+Projects before 0.6.0 referenced the `BlazorSpark.Library` Nuget package. 3 steps are required to upgrade.
+- Uninstall **BlazorSpark.Library** nuget in your project.
+- Install **Spark.Library** nuget in your project.
+- Replace `using` statements throughout your project to reference the new Nuget namespace.
 ```csharp
 // old
 using BlazorSpark.Library;

@@ -6,6 +6,7 @@ export const SITE = {
 export type Sidebar = Record<string, { text: string; link: string }[]>;
 export const SIDEBAR: Sidebar = {
     'Tutorials': [
+        { text: 'Spark.NET for beginners', link: 'beginner-tutorial' },
         { text: 'Build a Twitter Clone', link: 'spark-tutorial' },
         { text: 'Build a Blog in 25 min', link: 'blog-tutorial' },
     ],

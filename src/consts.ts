@@ -15,7 +15,9 @@ export const SIDEBAR: Sidebar = {
         { text: 'Installation', link: 'installation' },
         { text: 'Directory Structure', link: 'directory-structure' },
         { text: 'Upgrade Guide', link: 'upgrade-guide' },
-        { text: 'Contribution Guide', link: 'contribution-guide' },
+    ],
+    'Project Types': [
+        { text: 'Overview', link: 'project-types' },
     ],
     'The Basics': [
         { text: 'Configuration', link: 'configuration' },

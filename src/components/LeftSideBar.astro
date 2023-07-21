@@ -22,7 +22,7 @@ const sidebar = SIDEBAR;
 								const url = child.link;
 								let fonts = '';
 								if ('docs/'+url == currentPageMatch) {
-									fonts = 'font-bold bg-gray-100 rounded';
+									fonts = "font-bold bg-gray-100 rounded before:content-['•'] before:text-purple-600";
 								} else {
 									fonts = 'font-light rounded';
 								}

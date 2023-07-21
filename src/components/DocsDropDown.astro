@@ -1,72 +1,80 @@
 ---
 import { SIDEBAR } from "../consts";
 type Props = {
-	currentPage: string;
-	title: string
+  currentPage: string;
+  title: string;
 };
 const { currentPage, title } = Astro.props;
 const currentPageMatch = currentPage.endsWith("/")
-	? currentPage.slice(1, -1)
-	: currentPage.slice(1);
+  ? currentPage.slice(1, -1)
+  : currentPage.slice(1);
 const dropdownContents = SIDEBAR;
 ---
 
-<div class="relative md:hidden inline-block text-left mb-12"  x-data="{ tocOpen: false}">
-	<p class="text-base font-semibold text-gray-900 mb-2">Documentation Menu</p>
-	<div>
-		<button
-			type="button"
-			class="inline-flex w-56 justify-between gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-			x-on:click="tocOpen = true"
-		>
-			{title}
-			<svg
-				class="-mr-1 h-5 w-5 text-gray-400"
-				viewBox="0 0 20 20"
-				fill="currentColor"
-				aria-hidden="true"
-			>
-				<path
-					fill-rule="evenodd"
-					d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-					clip-rule="evenodd"></path>
-			</svg>
-		</button>
-	</div>
-	<div
-		class="absolute left-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-		role="menu"
-		aria-orientation="vertical"
-		aria-labelledby="menu-button"
-		tabindex="-1"
-		x-cloak
-		x-on:click.outside="tocOpen = false"
-		x-show="tocOpen"
-	>
-		<div class="py-1" role="none">
-			
-			{
-				Object.entries(dropdownContents).map(([header, children]) =>
-					children.map((child) => {
-						const url = child.link;
-						let fonts = "";
-						if ("docs/" + url == currentPageMatch) {
-							fonts = "font-bold";
-						}
-						return (
-							<a
-							href={'/docs/'+url}
-								class={'text-gray-700 hover:text-gray-800 hover:bg-gray-50 block px-4 py-2 text-sm ' + fonts}
-								role="menuitem"
-								tabindex="-1"
-								id="menu-item-0"
-							>
-							{child.text}
-							</a>
-						);
-					})
-				)
-			}
-		</div>
-	</div>
+<div
+  class="relative md:hidden inline-block text-left mb-12"
+  x-data="{ tocOpen: false}"
+>
+  <p class="text-base font-semibold text-gray-900 mb-2">Documentation Menu</p>
+  <div>
+    <button
+      type="button"
+      class="inline-flex w-56 justify-between gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+      x-on:click="tocOpen = true"
+    >
+      {title}
+      <svg
+        class="-mr-1 h-5 w-5 text-gray-400"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+        aria-hidden="true"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+          clip-rule="evenodd"></path>
+      </svg>
+    </button>
+  </div>
+  <div
+    class="absolute left-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+    role="menu"
+    aria-orientation="vertical"
+    aria-labelledby="menu-button"
+    tabindex="-1"
+    x-cloak
+    x-on:click.outside="tocOpen = false"
+    x-show="tocOpen"
+  >
+    <div class="py-1" role="none">
+      {
+        Object.entries(dropdownContents).map(([header, children]) => (
+          <div class="first:mt-3 mt-4">
+			<h2 class="ml-3 font-bold text-sm">{header}</h2>
+            {children.map((child) => {
+              const url = child.link;
+              let fonts = "";
+              if ("docs/" + url == currentPageMatch) {
+                fonts = "before:content-['•'] before:text-purple-600";
+              }
+              return (
+                <a
+                  href={"/docs/" + url}
+                  class={
+                    "text-gray-700 hover:text-gray-800 hover:bg-gray-50 block px-4 py-2 text-sm " +
+                    fonts
+                  }
+                  role="menuitem"
+                  tabindex="-1"
+                  id="menu-item-0"
+                >
+                  {child.text}
+                </a>
+              );
+            })}
+          </h2>
+        ))
+      }
+    </div>
+  </div>
 </div>

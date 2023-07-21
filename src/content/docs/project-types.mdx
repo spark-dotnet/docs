@@ -6,6 +6,7 @@ description: "Project Types"
 ## Introduction
 Spark comes with several project types. This gives you the flexibility to use whatever ASP.NET project type you'd like while also taking advantage of all the functionality Spark provides.
 
+## Types
 ### Blazor
 The Blazor project type sets up a Blazor Server project for you.
 
@@ -16,22 +17,44 @@ To create a Spark Blazor project, simply run the following command.
 spark new MyAppName -t blazor
 ```
 
+To read more about Spark Blazor projects, check out our documentation [here](/blazor)
+
 ### MVC
 The MVC project type sets up a ASP.NET MVC project for you.
 
-MVC projects follow the conventional Model-View-Controller architecture. For it's frontend, it uses the Razor templating engine and server side generation.
+MVC projects follow the conventional Model-View-Controller pattern. For it's frontend, it uses the Razor templating engine and server side generation.
+
+Every page in a MVC app is made up of a razor view file that corresponds to a controller method for it's logic.
 
 To create a Spark MVC project, simply run the following command.
 ```bash
 spark new MyAppName -t mvc
 ```
 
-### Razor Pages
-The Razor Pages project type sets up a ASP.NET Razor pages project for you.
+To read more about Spark MVC projects, check out our documentation [here](/mvc)
 
-For it's frontend, it uses the Razor templating engine and server side generation.
+### Razor Pages
+The Razor Pages project type sets up a ASP.NET Razor Pages project for you.
+
+For it's frontend, it uses the Razor templating engine and server side generation. It differs from MVC in that it doesn't use controllers.
+
+Instead, every razor view file can have a `PageModel` class to define that pages logic.
 
 To create a Spark Razor Pages project, simply run the following command.
 ```bash
 spark new MyAppName -t razor
 ```
+
+To read more about Spark Razor Pages projects, check out our documentation [here](/razor-pages)
+
+## What project type should I use?
+
+The choice is entirely up to you.
+
+Some devs choose **MVC** because they like the code seperation it provides.
+
+Some devs choose **Razor Pages** because they like the simplicity is provides with views and thier corresponding models.
+
+Some devs choose **Blazor** because of the user experience it provides and being able to componetize markup.
+
+In the end, the choice is yours and all 3 work very well. Our advice is just pick one and start building.

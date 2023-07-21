@@ -7,11 +7,15 @@ description: "Learn how directories are setup in Spark."
 
 The Spark application structure is setup to give a consistant, organized project structure for your web application. 
 
+Because Spark provides a defined structure for you, there are no suprises when starting work on new or existing Spark project.
+
+However, you are still free to create classes wherever you'd like if you choose to.
+
 ## Application
 The `Application` directory contains the core code of you application.
 
 ### Controllers
-The `Controllers` directory contains your Controller classes. This directoy is only generated for MVC project types.
+The `Controllers` directory contains your Controller classes. This directory is only generated for MVC project types.
 
 ### Database
 The `Database` directory contains your `DbContext` and `Migrations` for EF Core.
@@ -34,14 +38,11 @@ The `Startup` directory contains Registration classes. These classes are where S
 ### Tasks
 The `Tasks` directory contains queueable jobs for your application. Tasks can be scheduled or added to a background queue.
 
-## Pages
-The `Pages` directory contains your Razor pages and Razor components. This is where your sites frontend markdown and page logic will be contained. The inner `Shared` directory contains your re-usable Razor components and partials. This directory is only generated for Blazor and Razor Pages project types.
+## Pages / Views
+This is where your sites frontend markdown will be contained. If using the Blazor or Razor pages project types, the `Pages` directory contains your Razor pages and Razor components. If using the Mvc project type, The `Views` directory contains your Razor templates.
 
 ## Storage
 The `Storage` directory contains your application logs if the Spark logger is setup to log to files. It also contains mail logs if your mailer is setup to log to files.
-
-## Views
-The `Views` directory contains your Razor templates. This is where your sites frontend markdown will be contained. The inner `Shared` directory contains your re-usable Razor partials. This directory is only generated for MVC project types.
 
 ## wwwroot
 The `wwwroot` directory contains your compiled CSS, images, and other frontend public dependancies you want to use.

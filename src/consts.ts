@@ -13,15 +13,17 @@ export const SIDEBAR: Sidebar = {
     'Getting Started': [
         { text: 'Introduction', link: 'introduction' },
         { text: 'Installation', link: 'installation' },
+        { text: 'Project Types', link: 'project-types' },
         { text: 'Directory Structure', link: 'directory-structure' },
         { text: 'Upgrade Guide', link: 'upgrade-guide' },
     ],
     'Project Types': [
-        { text: 'Overview', link: 'project-types' },
+        { text: 'Blazor', link: 'blazor' },
+        { text: 'MVC', link: 'mvc' },
+        { text: 'Razor Pages', link: 'razor-pages' },
     ],
-    'The Basics': [
+    'Essentials': [
         { text: 'Configuration', link: 'configuration' },
-        { text: 'Razor Components', link: 'razor-components' },
         { text: 'Frontend Assets', link: 'frontend-assets' },
         { text: 'Database', link: 'database' },
         { text: 'Models & Migrations', link: 'models-and-migrations' },

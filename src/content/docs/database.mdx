@@ -4,7 +4,9 @@ description: "Spark database"
 ---
 
 ## Introduction
-Spark sets up your database connections for you. The only thing you have to worry about is setting up your configurations for which database type to use and its connection details.
+Most modern web applications interact with a database. Spark makes this simple by setting up Entity Framework for you, making querying and saving models to your database straight forward.
+
+The only thing you have to worry about is setting up your configurations for which database type to use and its connection details.
 
 Spark Supported database types:
 - SQLite
@@ -17,7 +19,7 @@ By default, when a new Spark app is created, it comes with a SQLite already wire
 
 You can switch your database type by changing the `DB_CONNECTION` value to one of our other supported databases.
 
-### SQlite ENV Example
+**SQlite ENV Example**
 ```ini
 DB_CONNECTION=sqlite
 DB_HOST=null
@@ -27,7 +29,7 @@ DB_USERNAME=root
 DB_PASSWORD=
 ```
 
-### PostgreSQL ENV Example
+**PostgreSQL ENV Example**
 ```ini
 DB_CONNECTION=postgres
 DB_HOST=localhost
@@ -36,7 +38,7 @@ DB_DATABASE=your_db_name
 DB_USERNAME=your_user
 DB_PASSWORD=your_user_password
 ```
-### MySQL ENV Example
+**MySQL ENV Example**
 ```ini
 DB_CONNECTION=mysql
 DB_HOST=localhost
@@ -45,7 +47,7 @@ DB_DATABASE=your_db_name
 DB_USERNAME=your_user
 DB_PASSWORD=your_user_password
 ```
-### SqlServer ENV Example
+**SqlServer ENV Example**
 ```ini
 DB_CONNECTION=sqlserver
 DB_HOST=localhost
@@ -62,34 +64,40 @@ DB_INTEGRATED_SECURITY=true
 ```
 If you set `DB_INTEGRATED_SECURITY` to true, SQL Server will use your windows login to connect to the DB. This is great for local developement. If it is false, use a dedicated SQL Server user.
 
-## EF Core
-Spark utilizes **EF Core** to make interacting with your database as simple as possible. If you've never used EF Core before, you can check out Microsofts documentation [here](https://learn.microsoft.com/en-us/ef/core/).
+## Entity Framework
+Spark utilizes **Entity Framework** to make interacting with your database as simple as possible. If you've never used  Entity Framework before, you can check out Microsofts documentation [here](https://learn.microsoft.com/en-us/ef/core/).
 
 To learn more about how Spark utilizes **EF Core migrations** go [here](/docs/models-and-migrations).
 
 To learn more about how Spark utilizes **EF Core data access** go [here](/docs/data-access).
 
 ## Database Context
-When a Spark app starts, a DB Context Factory is created and added to your apps DI container via Sparks internal service registration.
+When a Spark app starts, a Database Context is created and added to your apps DI container via Sparks internal service registration.
 
-> Spark uses a DB Context Factory because Blazor applications do not create a service scope that aligned with the desired DB Context lifetime and will result in errors in your Blazor app.
-> You can read more about this [here](https://learn.microsoft.com/en-us/ef/core/dbcontext-configuration/#using-a-dbcontext-factory-eg-for-blazor).
-
-You can inject the DB Context Factory in your services like this:
+You can inject the Database Context in your services like this:
 
 ```csharp
-public class UsersService
+public class DeveloperService
 {
-    private readonly IDbContextFactory<DatabaseContext> _factory;
+    private readonly DatabaseContext _db;
 
-    public UsersService(IDbContextFactory<DatabaseContext> factory)
+    public DeveloperService(DatabaseContext db)
     {
-        _factory = factory;
+        _db = db;
     }
 }
 ```
+>
+> **Important!**
+>
+> Blazor Server cannot use the normal DatabaseContext class. 
+>
+> Instead, you must use a DB Context Factory because Blazor applications do not create a service scope that aligned with the desired DB Context lifetime and will result in errors in your Blazor app.
+> You can read more about this [here](https://learn.microsoft.com/en-us/ef/core/dbcontext-configuration/#using-a-dbcontext-factory-eg-for-blazor).
+>
 
-And in your Razor components or pages like this:
+
+Here is an example of how to use a Database Context Factory in your Blazor app.
 ```razor
 @page "/"
 @inject IDbContextFactory<DatabaseContext> factory
@@ -103,6 +111,7 @@ And in your Razor components or pages like this:
     {
         using var db = factory.CreateDbContext();
         // query some data with db context
+        var developers = db.Developers.ToList();
     }
 }
 ```

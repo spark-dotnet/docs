@@ -8,7 +8,7 @@ Most modern web applications interact with a database. Spark makes this simple b
 
 The only thing you have to worry about is setting up your configurations for which database type to use and its connection details.
 
-Spark Supported database types:
+Spark supports the following database types:
 - SQLite
 - PostgreSQL
 - MySQL
@@ -67,14 +67,13 @@ If you set `DB_INTEGRATED_SECURITY` to true, SQL Server will use your windows lo
 ## Entity Framework
 Spark utilizes **Entity Framework** to make interacting with your database as simple as possible. If you've never used  Entity Framework before, you can check out Microsofts documentation [here](https://learn.microsoft.com/en-us/ef/core/).
 
-To learn more about how Spark utilizes **EF Core migrations** go [here](/docs/models-and-migrations).
-
-To learn more about how Spark utilizes **EF Core data access** go [here](/docs/data-access).
-
 ## Database Context
-When a Spark app starts, a Database Context is created and added to your apps DI container via Sparks internal service registration.
+Entity Framework uses a Database Context class to manage your database connections, models, and allow you query the data in your database.
 
-You can inject the Database Context in your services like this:
+When a Spark app starts, a Database Context is created and added to your apps DI container via Sparks internal service registration. You can find the `DatabaseContext.cs` class in `Application/Database` folder.
+
+### Using the Database Context
+You can inject the Database Context into your services like this:
 
 ```csharp
 public class DeveloperService
@@ -92,12 +91,12 @@ public class DeveloperService
 >
 > Blazor Server cannot use the normal DatabaseContext class. 
 >
-> Instead, you must use a DB Context Factory because Blazor applications do not create a service scope that aligned with the desired DB Context lifetime and will result in errors in your Blazor app.
+> Instead, you must use a DB Context Factory because Blazor applications do not create a service scope that aligns with the desired DB Context lifetime and will result in errors in your Blazor app.
 > You can read more about this [here](https://learn.microsoft.com/en-us/ef/core/dbcontext-configuration/#using-a-dbcontext-factory-eg-for-blazor).
 >
 
 
-Here is an example of how to use a Database Context Factory in your Blazor app.
+Here is an example of how to use a Database Context Factory in a Spark Blazor app.
 ```razor
 @page "/"
 @inject IDbContextFactory<DatabaseContext> factory
@@ -113,5 +112,230 @@ Here is an example of how to use a Database Context Factory in your Blazor app.
         // query some data with db context
         var developers = db.Developers.ToList();
     }
+}
+```
+
+## Models
+Spark uses Entity Frameworks models and migrations to query your data and maintain your applications database.
+
+A model in Spark is a representation of the data in 1 database table.
+
+The only caveat to this is the `BaseModel` class.
+
+### BaseModel
+All models in Spark should extend the `BaseModel` class. The `BaseModel` class has 3 properties.
+- Id
+- CreatedAt
+- UpdatedAt
+
+This means you don't need to create these properties on your models, they will always be created and usable provided you are extending the `BaseModel` class.
+
+Your models should always extend the `BaseModel` class to avoid issues with the Spark Library internal code.
+
+## Creating a Model
+To create a new model, simply run the Spark  `make model` command.
+
+```bash
+spark make model Developer
+```
+
+A new class in the `Application/Models` folder will be created.
+
+```csharp
+public class Developer : BaseModel
+{
+    public string Name { get; set; }
+
+    public string Title { get; set; }
+}
+```
+
+Then, register your model in the `DatabaseContext` class as a DbSet:
+```csharp
+public class DatabaseContext : DbContext
+{
+    public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
+    { }
+
+    public virtual DbSet<Developer> Developers { set; get; }
+    ...
+```
+
+## Migrations
+
+### Create Migrations
+Once your models are registered in your `DatabaseContext`, you can create a migration. This essentially acts as source control for your database schema. 
+
+To create a new migration, simply run the Spark  `make migration` command.
+
+```bash
+spark make migration AddDeveloperTable
+```
+
+A new file with your schema changes is created in the `Application/Database/Migrations` folder.
+
+>
+> ### Changing database types and migrations
+> If you ever find your self in a scenario where you have created migrations and then decide to switch database types, you will need to clear your migration files out of the `Application/Database/Migrations` folder.
+>
+> Then, create and run your migrations again. This is because migration files for one database type might not work for another due to different feature sets in those databases.
+
+### Run Migrations
+You can run your migration to apply the changes to your database with the Spark `migrate` command.
+```bash
+spark migrate
+```
+
+## Querying Models
+Once you have created a model, added it to your Database Context, and migrated it, you are ready to start retrieving data from your database.
+
+Each model registered as a DbSet in `DatabaseContext.cs` is a powerful query builder, allowing you to use LINQ queries to pull data from the underlying database table.
+
+To start querying models, you simply need to inject your `DatabaseContext` and run a linq query on your registered models.
+
+```csharp
+public class DeveloperService
+{
+    private readonly DatabaseContext _db;
+
+    public DeveloperService(DatabaseContext db)
+    {
+        _db = db;
+    }
+
+    public List<Developer> All() {
+        return _db.Developers.ToList();
+    }
+}
+```
+
+As mentioned above, in Blazor Server, it is required to use the `DbContextFactory` to get a new instance of the `DatabaseContext`.
+
+```razor
+@page "/developers"
+@inject IDbContextFactory<DatabaseContext> factory
+
+<ul>
+    @foreach (var developer in Developers) {
+        <li>@developer.Name</li>
+    }
+</ul>
+
+@code {
+    private List<Developer> Developers = new List<Developer>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var db = factory.CreateDbContext();
+        
+        Developers = await db.Developers.ToListAsync();
+    }
+}
+```
+
+## Saving, Updating, and Deleting Data
+Of course, when using Entity Framework, we don't only need to retrieve models from the database. We also need to insert, update, or delete records.
+
+### Saving Models
+Spark comes with handy extension method called `Save` to help you save a record in 1 line.
+
+```csharp
+public class DeveloperService
+{
+    private readonly DatabaseContext _db;
+
+    public DeveloperService(DatabaseContext db)
+    {
+        _db = db;
+    }
+
+    public void CreateDeveloper() {
+        var developer = new Developer();
+        developer.Name = "Kramer";
+        _db.Developers.Save(developer);
+    }
+}
+```
+
+The `Save` method is the equivalent to this code if you were using Entity Framework normally.
+```csharp
+private void CreateDeveloper()
+{
+    // Using the Save() extension method
+    _db.Developers.Save(developer);
+
+    // Is Equivalent to this
+    developer.CreatedAt = DateTime.UtcNow;
+    _db.Developers.Add(developer);
+    _db.SaveChanges();
+}
+```
+
+### Updating Models
+Updating models is similar to saving models. It can also take advantage of the `Save()` extension method, which will detect if it's an existing record for you.
+
+```csharp
+public class DeveloperService
+{
+    private readonly DatabaseContext _db;
+
+    public DeveloperService(DatabaseContext db)
+    {
+        _db = db;
+    }
+
+    public void UpdateDeveloper() {
+        var developer = await db.Developers.FindAsync(1)
+        developer.Name = "Kramer";
+        _db.Developers.Save(developer);
+    }
+}
+```
+
+The `Save` method is the equivalent to this code if you were updating an existing record with Entity Framework out of the box.
+```csharp
+private void UpdateDeveloper()
+{
+    // Using the Save() extension method
+    _db.Developers.Save(ExistingDeveloper);
+
+    // Is Equivalent to this in standard Entity Framework
+    ExistingDeveloper.UpdatedAt = DateTime.UtcNow;
+    _db.Developers.Update(ExistingDeveloper);
+    _db.SaveChanges();
+}
+```
+
+### Deleting Models
+To delete a model, you can call the `Delete` extension method provided by Spark on a Database Context instance.
+
+
+```csharp
+public class DeveloperService
+{
+    private readonly DatabaseContext _db;
+
+    public DeveloperService(DatabaseContext db)
+    {
+        _db = db;
+    }
+
+    public void DeleteDeveloper() {
+        var developer = await db.Developers.FindAsync(1)
+        _db.Developers.Delete(developer);
+    }
+}
+```
+
+The `Delete` method is the equivalent to this code if you were deleting an existing record with Entity Framework out of the box.
+```csharp
+private void DeleteDeveloper()
+{
+    // Using the Delete() extension method
+    db.Developers.Delete(ExistingDeveloper);
+
+    // Is Equivalent to this in standard Entity Framework
+    db.Developers.Remove(ExistingDeveloper);
+    db.SaveChanges();
 }
 ```

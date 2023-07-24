@@ -17,18 +17,14 @@ A new class in the `Application/Services` folder will be created.
 ```csharp
 public class DeveloperService
 {
-    private readonly IDbContextFactory<DatabaseContext> _factory;
-
-    public DeveloperService(IDbContextFactory<DatabaseContext> factory)
+    public DeveloperService()
     {
-        this._factory = factory;
     }
 }
 ```
-This class will include a `DBContextFactory` which allows you to query your applications models.
 
 ### Registering Services
-Before you're able to dependency inject a new service into a Blazor page, you need to register it in the DI container. Spark makes this very simple. 
+Before you're able to dependency inject a new service, you need to register it in the DI container. Spark makes this very simple. 
 
 Simply add your service to the `AddCustomServices` method in the  `Application/Startup/AppServiceRegistration.cs` class.
 ```csharp
@@ -43,7 +39,29 @@ private static IServiceCollection AddCustomServices(this IServiceCollection serv
 That's it!
 
 ### Injecting Services
-Once a service is registered, it can be injected into any Razor component or another registered service.
+Once a service is registered, it can be injected into any Razor component, controller, or other registered services.
+
+**Injecting a Service in a controller**
+
+Use standard dependency injection.
+```csharp
+    public class DevelopersController : Controller
+    {
+        private readonly DeveloperService _developerService;
+
+        public DevelopersController(DeveloperService developerService) {
+            _developerService = developerService;
+        }
+
+        [Route("developers")]
+        public IActionResult Index()
+        {
+            List<Developer> developers = _developerService.GetAll();
+            ViewBag.Developers = developers;
+            return View();
+        }
+    }
+```
 
 **Injecting a Service in a Razor component**
 
@@ -89,37 +107,34 @@ public class DeveloperService
 >
 
 ## Data Access from a service
-In your service classes, you can use the injected Db Context Factory to create a Database Context and save, update, or delete models.
+In your service classes, you can inject the `DatabaseContext` to save, update, or delete models.
 
 ```csharp
 public class DeveloperService
 {
-    private readonly IDbContextFactory<DatabaseContext> _factory;
+    private readonly DatabaseContext _db;
 
-    public DeveloperService(IDbContextFactory<DatabaseContext> factory)
+    public DeveloperService(DatabaseContext db)
     {
-        this._factory = factory;
+        _db = db;
     }
 
     // Get all data
     public async Task<List<Developer>> GetAll()
     {
-        using var context = _factory.CreateDbContext();
-        return await context.Developers.ToListAsync();
+        return await _db.Developers.ToListAsync();
     }
     
     // Get a single entity
     public async Task<Developer> GetDeveloper(int id)
     {
-        using var context = _factory.CreateDbContext();
-        return await context.Developers.FindAsync(id);
+        return await _db.Developers.FindAsync(id);
     }
 
     // Filter data
     public async Task<List<Developer>> GetDevelopersByName(string name)
     {
-        using var context = _factory.CreateDbContext();
-        return await context.Developers
+        return await _db.Developers
             .Where(d => d.Name.Contains(name))
             .ToListAsync();
     }

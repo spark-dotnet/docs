@@ -35,21 +35,35 @@ public class User : BaseModel
 ```
 
 ## Scafolded Auth Pages
-Spark builds the login, logout, and register pages for you. Feel free to customize their look and feel how you see fit. 
+Spark builds the login, logout, register and profile edit pages for you. 
 
-These pages aren't Blazor pages but Razor pages instead. This is because Blazor pages do not have access to the `HttpContext` methods required to authenticate.
-
-### Login Page
-Located at `Pages/Auth/Login.cshtml`
-
-### Logout Page
-Located at `Pages/Auth/Logout.cshtml`
-
-### Register Page
-Located at `Pages/Auth/Register.cshtml`
+Feel free to customize their look and feel how you see fit. 
 
 ## Requiring Authentication for Blazor pages
-If you have pages in your app you only want logged in users to see, use the `Authorize` attribute in your Blazor page.
+If you have routes in your app you only want logged in users to see, use the `Authorize` attribute.
+
+**MVC Controller**
+```csharp
+[Authorize]
+[Route("dashboard")]
+public IActionResult Dashboard()
+{
+    return View();
+}
+```
+
+**Razor Pages Model**
+```csharp
+[Authorize]
+public class DashboardModel : PageModel
+{
+    public void OnGet()
+    {
+    }
+}
+```
+
+**Blazor**
 ```razor
 @page "/dashboard"
 @attribute [Authorize]
@@ -65,50 +79,19 @@ If you have pages in your app you only want logged in users to see, use the `Aut
 ## Accessing User Data
 Spark comes with out of the box methods to make it easy to query the authenticated users data.
 
-The `Application/Services/Auth/UsersService.cs` class comes with a `GetAuthenticatedUser()` method. This will return the User model if the person is logged in or null otherwise.
+The `Application/Services/Auth/AuthService.cs` class comes with a `GetAuthenticatedUser()` method. This will return the User model if the person is logged in or null otherwise.
 
-By default, Spark runs this method and passes down the authenticated `User` model from it's `MainLayout.razor` file.
+The `AuthService` can be dependency injected in your controllers, services, or Razor components.
+```csharp
+private readonly AuthService _authService;
 
-```razor
-<CascadingValue Value="this">
-    <NavMenu />
-    <main class="container">
-        @Body
-    </main>
+...
 
-    <Footer />
-</CascadingValue>
-
-@code {
-    public User? User = new User();
-
-    protected override async Task OnInitializedAsync()
-    {
-        User = await userService.GetAuthenticatedUser();
-    }
-}
+var user = await _authService.GetAuthenticatedUser(User);
 ```
 
-This means you can access the authenticated User model from any Razor component or page by passing the MainLayout class as a `CascadingParameter`.
-```razor
-@page "/dashboard"
-@attribute [Authorize]
-<section>
-    <article>
-        <h1>
-            User Dashboard for @user.Name
-        </h1>
-    </article>
-</section>
+## Blazor Authorize View
 
-@code {
-    [CascadingParameter]
-    public MainLayout? Layout { get; set; }
-    private User? user => Layout.User;
-}
-```
-
-## Authorize View
 Sometimes you want a user to see different content from a Razor component based on if they are authenticated or not.
 
 We can accomplish this by using the `<AuthorizeView>` tag helper that comes with Blazor.

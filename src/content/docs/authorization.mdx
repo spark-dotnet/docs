@@ -23,8 +23,75 @@ public class Role : BaseModel
 }
 ```
 
-## Using Authorization in Blazor pages
-You can use roles to determine what users can access Blazor pages by using the `Authorize` attribute and passing in a custom role.
+## Custom Roles
+By default, a Spark app comes with 2 roles out of the box. `Admin` and `User`.
+```csharp
+public static class CustomRoles
+{
+    public const string Admin = nameof(Admin);
+    public const string User = nameof(User);
+}
+```
+### Adding More Custom Roles
+You can add more custom roles if needed.
+
+First, add the new custom role to the `Application/Models/CustomRoles.cs` class.
+```csharp
+public static class CustomRoles
+{
+    public const string Admin = nameof(Admin);
+    public const string User = nameof(User);
+    public const string NewRole = nameof(NewRole);
+}
+```
+
+Second, add the new custom role record to the `Roles` database table.
+
+The easiest way to do this is utilizing the `OnModelCreating` method in the `DatabaseContext` class. In it, you can make entity framework insert the record when running a migration.
+
+Spark does this for you already with the Admin and User roles. Just add your new Role to it.
+```csharp
+protected override void OnModelCreating(ModelBuilder builder) {
+    
+    ...
+
+    builder.Entity<Role>().HasData(
+        new Role { Id = 1, Name = CustomRoles.User },
+        new Role { Id = 2, Name = CustomRoles.Admin },
+        new Role { Id = 3, Name = CustomRoles.NewRole }
+    );
+}
+```
+
+## Using Authorization to gate content
+You can use Roles to determine what type of users can access what content. Simply use the `Authorize` attribute and pass in a custom role.
+
+### Using Authorization in MVC Controllers
+```csharp
+public class AdminController : Controller
+{
+    [HttpGet]
+    [Authorize(Policy = CustomRoles.Admin)]
+    [Route("admin/dashboard")]
+    public IActionResult Dashboard()
+    {
+        return View();
+    }
+}
+```
+
+### Using Authorization in Razor Pages
+```csharp
+[Authorize(Policy = CustomRoles.Admin)]
+public class DashboardModel : PageModel
+{
+    public void OnGet()
+    {
+    }
+}
+```
+
+### Using Authorization in Razor Components
 ```razor
 @page "/admin/dashboard"
 @attribute [Authorize(Roles = CustomRoles.Admin)]
@@ -57,14 +124,4 @@ You can also combine `<AuthorizeView>` with roles to display different content o
         </AuthorizeView>
     </article>
 </section>
-```
-
-## Adding More Custom Roles
-By default, a Spark app comes with 2 roles out of the box. `Admin` and `User`. You can add more roles in the `Application/Models/CustomRoles.cs` class.
-```csharp
-public static class CustomRoles
-{
-    public const string Admin = nameof(Admin);
-    public const string User = nameof(User);
-}
 ```

@@ -9,6 +9,7 @@ export const SIDEBAR: Sidebar = {
         { text: 'Introduction', link: 'introduction' },
         { text: 'Installation', link: 'installation' },
         { text: 'Project Types', link: 'project-types' },
+        { text: 'Frontend Assets', link: 'frontend-assets' },
         { text: 'Directory Structure', link: 'directory-structure' },
         { text: 'Upgrade Guide', link: 'upgrade-guide' },
     ],
@@ -19,7 +20,6 @@ export const SIDEBAR: Sidebar = {
     ],
     'Essentials': [
         { text: 'Configuration', link: 'configuration' },
-        { text: 'Frontend Assets', link: 'frontend-assets' },
         { text: 'Database', link: 'database' },
         { text: 'Services', link: 'services' },
         { text: 'Authentication', link: 'authentication' },

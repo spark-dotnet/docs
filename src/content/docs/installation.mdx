@@ -19,7 +19,7 @@ After you have installed the required dependencies, you will need to install the
 # Install the Spark CLI
 dotnet tool install --global Spark.CLI
 
-# Install the Spark.NET project templates
+# Install Spark's project templates
 spark install
 ```
 
@@ -29,10 +29,10 @@ spark new MyApp
 ```
 
 >
-> Spark comes with several project types. You can choose to generate your project with a certain type by providing the `-t` option.
+> Spark comes with several project templates to choose from. You can choose to generate your project with a certain template by providing the `-t` option.
 > 
 > Blazor
-> Example: `spark new MyApp` or `spark new MyApp -t blazor`
+> Example: `spark new MyApp -t blazor`
 >
 > Mvc
 > Example: `spark new MyApp -t mvc`
@@ -40,20 +40,20 @@ spark new MyApp
 > Razor
 > Example: `spark new MyApp -t razor`
 >
-> To read more about project types, check out our documentation [here](/docs/project-types)
+> To read more about project templates, check out our documentation [here](/docs/project-types)
 >
 
 >
-> Spark projects come setup with Tailwind CSS. You can choose a different CSS framework by providing the `--css` option.
+> Spark projects come setup with Tailwind CSS. You can choose a different CSS framework by providing the `-c` option.
 >
 > Tailwind
-> Example: `spark new MyApp --css tailwind`
+> Example: `spark new MyApp -c tailwind`
 >
 > Bootstrap
-> Example: `spark new MyApp --css bootstrap`
+> Example: `spark new MyApp -c bootstrap`
 >
 > Pico CSS
-> Example: `spark new MyApp --css pico`
+> Example: `spark new MyApp -c pico`
 >
 > To read more about CSS options, check out our documentation [here](/docs/frontend#css-framework-options)
 >
@@ -82,8 +82,8 @@ dotnet tool uninstall -g Spark.CLI
 dotnet tool install -g Spark.CLI
 ```
 
-## Updating the Spark Project Template
-To update the Spark project template, simply run the spark update command in your console.
+## Updating Spark's Project Templates
+To update Spark's project templates, simply run the spark update command in your console.
 ```bash
 spark update
 ```

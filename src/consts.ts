@@ -13,7 +13,7 @@ export const SIDEBAR: Sidebar = {
         { text: 'Directory Structure', link: 'directory-structure' },
         { text: 'Upgrade Guide', link: 'upgrade-guide' },
     ],
-    'Project Types': [
+    'Project Templates': [
         { text: 'Blazor', link: 'blazor' },
         { text: 'MVC', link: 'mvc' },
         { text: 'Razor Pages', link: 'razor-pages' },

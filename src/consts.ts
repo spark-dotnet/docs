@@ -8,7 +8,7 @@ export const SIDEBAR: Sidebar = {
     'Getting Started': [
         { text: 'Introduction', link: 'introduction' },
         { text: 'Installation', link: 'installation' },
-        { text: 'Project Types', link: 'project-types' },
+        { text: 'Project Templates', link: 'project-templates' },
         { text: 'Frontend Assets', link: 'frontend-assets' },
         { text: 'Directory Structure', link: 'directory-structure' },
         { text: 'Upgrade Guide', link: 'upgrade-guide' },

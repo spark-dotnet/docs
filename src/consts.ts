@@ -11,6 +11,7 @@ export const SIDEBAR: Sidebar = {
         { text: 'Project Templates', link: 'project-templates' },
         { text: 'Frontend Assets', link: 'frontend-assets' },
         { text: 'Directory Structure', link: 'directory-structure' },
+        { text: 'Spark CLI', link: 'spark-cli' },
         { text: 'Upgrade Guide', link: 'upgrade-guide' },
     ],
     'Project Templates': [
@@ -30,7 +31,6 @@ export const SIDEBAR: Sidebar = {
         { text: 'Queues', link: 'queues' },
         { text: 'Task Scheduling', link: 'task-scheduling' },
         { text: 'Extension Methods', link: 'extension-methods' },
-        { text: 'Spark CLI', link: 'spark-cli' },
     ],
     'Tutorials': [
         { text: 'Spark.NET for beginners', link: 'beginner-tutorial' },

@@ -32,25 +32,40 @@ For instance, if your log level is set to `warning`, only log messages with a wa
 
 It is recommended to set your logs to `warning` in production to avoid noise in your logs.
 
-## Writing Log Messages
-The Spark logger is added to the DI container for you. You simply need to inject the `ILogger` interface into your controller, razor component or service. 
+## Setup
+The Spark logger is added to the DI container for you in `AppServiceRegistration.AddAppServices()`.
 
-From there, you can write logging messages where needed.
 ```csharp
-private readonly ILogger _logger;
+services.AddLogger(config);
+```
 
-public ClassConstructor(ILogger logger) {
-    _logger = logger;
+To use the logger, inject `Spark.Library.Logging.ILogger` via dependency injection.
+
+```csharp
+// class or controller example
+private ILogger _logger;
+
+public CacheController(ILogger logger)
+{
+    this._logger = logger;
 }
+```
 
-...
+```razor
+@* razor component example *@
+@page "/"
+@inject ILogger _logger
 
-public LogMessage(string message) {
+```
+
+
+## Writing Log Messages
+Once injected, you may call any of these methods to log a message for the corresponding level.
+
+```csharp
     _logger.Debug(message);
-    // _logger.Information(message);
-    // _logger.Warning(message);
-    // _logger.Error(message);
-    // _logger.Fatal(message);
-}
-
+    _logger.Information(message);
+    _logger.Warning(message);
+    _logger.Error(message);
+    _logger.Fatal(message);
 ```

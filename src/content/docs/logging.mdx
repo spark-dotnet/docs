@@ -32,23 +32,28 @@ For instance, if your log level is set to `warning`, only log messages with a wa
 
 It is recommended to set your logs to `warning` in production to avoid noise in your logs.
 
-## Using the Logger
-The Spark logger is added to the DI container for you. You simply need to inject the Spark `ILogger` interface into your Razor component or service. 
+## Setup
+
+
+## Writing Log Messages
+The Spark logger is added to the DI container for you. You simply need to inject the `ILogger` interface into your controller, razor component or service. 
 
 From there, you can write logging messages where needed.
-```razor
-@page "/"
-@inject ILogger logger
+```csharp
+private readonly ILogger _logger;
 
-<h1 class="">
-    Build something beautiful
-</h1>
-
-@code {
-
-    protected override void OnInitialized()
-    {
-        logger.Information($"Initialized at {DateTime.Now}");
-    }
+public ClassConstructor(ILogger logger) {
+    _logger = logger;
 }
+
+...
+
+public LogMessage(string message) {
+    _logger.Debug(message);
+    // _logger.Information(message);
+    // _logger.Warning(message);
+    // _logger.Error(message);
+    // _logger.Fatal(message);
+}
+
 ```

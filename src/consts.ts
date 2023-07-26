@@ -14,11 +14,11 @@ export const SIDEBAR: Sidebar = {
         { text: 'Spark CLI', link: 'spark-cli' },
         { text: 'Upgrade Guide', link: 'upgrade-guide' },
     ],
-    'Project Templates': [
-        { text: 'Blazor', link: 'blazor' },
-        { text: 'MVC', link: 'mvc' },
-        { text: 'Razor Pages', link: 'razor-pages' },
-    ],
+    // 'Project Templates': [
+    //     { text: 'Blazor', link: 'blazor' },
+    //     { text: 'MVC', link: 'mvc' },
+    //     { text: 'Razor Pages', link: 'razor-pages' },
+    // ],
     'Essentials': [
         { text: 'Configuration', link: 'configuration' },
         { text: 'Database', link: 'database' },

@@ -4,7 +4,20 @@ description: "Spark CLI"
 ---
 
 ## Introduction
-Spark provides a custom command line interface which is installed when installing the `Spark.CLI` tool globally. See the [Installation page](/docs/installation) if you have not done this yet.
+Spark provides a custom command line interface to improve your developer experience.
+
+To install the Spark CLI, simply run the following command:
+```bash
+dotnet tool install -g Spark.CLI
+```
+
+### Updating Spark CLI
+The Spark CLI is constantly being updated. To update to the newest version, simply uninstall and reinstall it.
+```bash
+dotnet tool uninstall -g Spark.CLI
+dotnet tool install -g Spark.CLI
+```
+
 
 
 ## Install
@@ -79,7 +92,7 @@ spark make task [taskName]
 ```
 The new Task will be under `Application/Tasks`.
 
-## Create Page
+{/* ## Create Page
 Create an new Blazor Page.
 ```bash
 spark make page [pageName]
@@ -99,4 +112,4 @@ The new Razor component will be under `Pages/Shared`. This command supports subd
 ```bash
 spark make component Users/UserPreview
 ```
-Would create a new Razor component at `Pages/Shared/Users/UserPreview.razor`
+Would create a new Razor component at `Pages/Shared/Users/UserPreview.razor` */}

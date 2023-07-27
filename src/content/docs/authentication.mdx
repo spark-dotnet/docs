@@ -25,13 +25,13 @@ Authentication settings can be configured in your `appsettings.json` file.
 ```
 
 ## Setup
-Spark's authentication is added to the DI container for you in `AppServiceRegistration.AddAppServices()`.
+Spark's authentication is setup for you in `AppServiceRegistration.AddAppServices()`.
 
 ```csharp
 services.AddAuthentication<IAuthValidator>(config);
 ```
 
-The implementation for `IAuthValidator` is the `Application.Services.Auth.AuthValidator.cs` class. This service comes with 1 method that is called whenever an authentication check needs to occur, `ValidateAsync()`.
+The implementation for `IAuthValidator` is the `Application.Services.Auth.AuthValidator.cs` class. This service comes with 1 method that is called behind the scenes whenever an authentication check needs to occur, `ValidateAsync()`.
 
 
 ## User Data

@@ -6,6 +6,13 @@ description: "Spark Authorization"
 ## Introduction
 Spark utilizes role based authorization and it is already scaffolded for you.
 
+## Setup
+Spark’s authorization is setup for you in `AppServiceRegistration.AddAppServices()`.
+
+```csharp
+services.AddAuthorization(config, new string[] { CustomRoles.Admin, CustomRoles.User });
+```
+
 ## Role Models
 Every Spark app comes with a `Role` model in the `Application/Models` directory. Roles can control what pages logged in users see. A user can be assigned a role through the `UserRole` relationship.
 ```csharp
@@ -49,7 +56,7 @@ Second, add the new custom role record to the `Roles` database table.
 
 The easiest way to do this is utilizing the `OnModelCreating` method in the `DatabaseContext` class. In it, you can make entity framework insert the record when running a migration.
 
-Spark does this for you already with the Admin and User roles. Just add your new Role to it.
+Spark does this for you already with the Admin and User roles. Just add your new Role as a new entry.
 ```csharp
 protected override void OnModelCreating(ModelBuilder builder) {
     
@@ -63,10 +70,23 @@ protected override void OnModelCreating(ModelBuilder builder) {
 }
 ```
 
-## Using Authorization to gate content
-You can use Roles to determine what type of users can access what content. Simply use the `Authorize` attribute and pass in a custom role.
+Finally, add the custom role when Spark registers authorization in `AppServiceRegistration.AddAppServices()`.
+```csharp
+...
 
-### Using Authorization in MVC Controllers
+services.AddAuthorization(config, new string[] { 
+    CustomRoles.Admin,
+    CustomRoles.User,
+    CustomRoles.NewRole
+});
+
+...
+```
+
+## Protecting Routes & Pages
+You can use Roles to determine what type of users can access what content. Simply use the `Authorize` attribute and pass in a custom role as a Policy.
+
+**MVC Controller**
 ```csharp
 public class AdminController : Controller
 {
@@ -80,7 +100,7 @@ public class AdminController : Controller
 }
 ```
 
-### Using Authorization in Razor Pages
+**Razor Pages**
 ```csharp
 [Authorize(Policy = CustomRoles.Admin)]
 public class DashboardModel : PageModel
@@ -91,20 +111,27 @@ public class DashboardModel : PageModel
 }
 ```
 
-### Using Authorization in Razor Components
+**Blazor**
 ```razor
 @page "/admin/dashboard"
 @attribute [Authorize(Roles = CustomRoles.Admin)]
-<section class="max-w-5xl mx-auto py-28 min-h-screen px-4">
-    <article>
-        <h1 class="text-2xl font-bold text-gray-800">
-            Admin Dashboard
-        </h1>
-    </article>
+
+<section>
+    <h1>
+        Admin Dashboard
+    </h1>
 </section>
 ```
 
-You can also combine `<AuthorizeView>` with roles to display different content on a page based on a User's role.
+### Access Denied Route
+In MVC and Razor Pages, Spark sets up an access denied route for you.
+
+Anytime a Authorize attribute with a Role check fails, the user will be redirected to the `/access-denied` route.
+
+### Blazor AuthorizeView
+In Blazor, you can combine the `<AuthorizeView>` tag helper with Roles to display different content.
+
+This is helpful when you want to display the page but show different content based on the User's Roles.
 ```razor
 @page "/admin/dashboard"
 @attribute [Authorize]
@@ -118,7 +145,7 @@ You can also combine `<AuthorizeView>` with roles to display different content o
             </Authorized>
             <NotAuthorized>
                 <h1>
-                    No soup for you!
+                    You are not authorized to see this content!
                 </h1>
             </NotAuthorized>
         </AuthorizeView>

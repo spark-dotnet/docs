@@ -39,7 +39,7 @@ Spark builds the login, logout, register and profile edit pages for you.
 
 Feel free to customize their look and feel how you see fit. 
 
-## Requiring Authentication for Routes & Pages
+## Protecting Routes & Pages
 If you have routes in your app you only want logged in users to see, use the `Authorize` attribute.
 
 **MVC Controller**
@@ -99,11 +99,28 @@ public IActionResult Dashboard()
 }
 ```
 
-## Blazor Authorize View
+## Protecting Page Content
+Sometimes you need more granular control than protecting an entire route or page.
 
-Sometimes you want a user to see different content from a Razor component based on if they are authenticated or not.
+For instance, lets say you want to show a page regardless if the user is authenticated or not. But you want to show the login button if they aren't authenticated. Likewise, you want to show the logout button if they are authenticated.
 
-You can accomplish this by using the `<AuthorizeView>` tag helper that comes with Blazor.
+### Protecting Content in MVC & Razor Pages
+In MVC and Razor Pages, you can do this by utilizing the `ClaimsPrincipal.User` object that is accessible in every view.
+```razor
+<nav>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <a href="/logout">Logout</a>
+    }
+    else 
+    {
+        <a href="/login">Login</a>
+    }
+</nav>
+```
+
+### Protecting Content in Blazor
+In Blazor you can accomplish this by using the `<AuthorizeView>` tag helper that comes with Blazor.
 ```razor
 <nav>
     <AuthorizeView>

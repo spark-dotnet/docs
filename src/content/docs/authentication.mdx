@@ -39,7 +39,7 @@ Spark builds the login, logout, register and profile edit pages for you.
 
 Feel free to customize their look and feel how you see fit. 
 
-## Requiring Authentication for Blazor pages
+## Requiring Authentication for Routes & Pages
 If you have routes in your app you only want logged in users to see, use the `Authorize` attribute.
 
 **MVC Controller**
@@ -79,22 +79,31 @@ public class DashboardModel : PageModel
 ## Accessing User Data
 Spark comes with out of the box methods to make it easy to query the authenticated users data.
 
-The `Application/Services/Auth/AuthService.cs` class comes with a `GetAuthenticatedUser()` method. This will return the User model if the person is logged in or null otherwise.
+The `Application/Services/Auth/AuthService.cs` class comes with a `GetAuthenticatedUser()` method. This will return the User model if the person logged in or null otherwise.
 
 The `AuthService` can be dependency injected in your controllers, services, or Razor components.
 ```csharp
 private readonly AuthService _authService;
 
-...
+public DevelopersController(AuthService authService) {
+    this._authService = authService;
+}
 
-var user = await _authService.GetAuthenticatedUser(User);
+[Authorize]
+[Route("dashboard")]
+public IActionResult Dashboard()
+{
+    var user = await _authService.GetAuthenticatedUser(User);
+
+    ...
+}
 ```
 
 ## Blazor Authorize View
 
 Sometimes you want a user to see different content from a Razor component based on if they are authenticated or not.
 
-We can accomplish this by using the `<AuthorizeView>` tag helper that comes with Blazor.
+You can accomplish this by using the `<AuthorizeView>` tag helper that comes with Blazor.
 ```razor
 <nav>
     <AuthorizeView>

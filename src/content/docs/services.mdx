@@ -4,9 +4,11 @@ description: "Spark Services"
 ---
 
 ## Introduction
-Spark includes Service classes. Services are regular C# classes where you can tuck away business logic or data access methods to make them re-usable throughout your application.
+Services are regular C# classes where you can tuck away business logic or data access methods to make them re-usable throughout your application.
 
-## Services
+On top of this, Spark makes it easy to add your services to the DI Container.
+
+## Creating Services
 To create a Service, simply use the Spark `make service` command.
 
 ```bash
@@ -23,8 +25,8 @@ public class DeveloperService
 }
 ```
 
-### Registering Services
-Before you're able to dependency inject a new service, you need to register it in the DI container. Spark makes this very simple. 
+## Registering Services
+Before you're able to dependency inject a new service, you need to register it in the DI container. Spark makes this easy. 
 
 Simply add your service to the `AddCustomServices` method in the  `Application/Startup/AppServiceRegistration.cs` class.
 ```csharp
@@ -38,7 +40,7 @@ private static IServiceCollection AddCustomServices(this IServiceCollection serv
 
 That's it!
 
-### Injecting Services
+## Injecting Services
 Once a service is registered, it can be injected into any Razor component, controller, or other registered services.
 
 **Injecting a Service in a controller**
@@ -105,38 +107,3 @@ public class DeveloperService
 >
 > For this to work, both the `DeveloperService` and `ProjectService` must be registered in your apps DI container.
 >
-
-## Data Access from a service
-In your service classes, you can inject the `DatabaseContext` to save, update, or delete models.
-
-```csharp
-public class DeveloperService
-{
-    private readonly DatabaseContext _db;
-
-    public DeveloperService(DatabaseContext db)
-    {
-        _db = db;
-    }
-
-    // Get all data
-    public async Task<List<Developer>> GetAll()
-    {
-        return await _db.Developers.ToListAsync();
-    }
-    
-    // Get a single entity
-    public async Task<Developer> GetDeveloper(int id)
-    {
-        return await _db.Developers.FindAsync(id);
-    }
-
-    // Filter data
-    public async Task<List<Developer>> GetDevelopersByName(string name)
-    {
-        return await _db.Developers
-            .Where(d => d.Name.Contains(name))
-            .ToListAsync();
-    }
-}
-```

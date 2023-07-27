@@ -7,30 +7,7 @@ description: "Spark configuration"
 
 Spark utilizes `.env` files to store and control most of its configurations. For example, your apps database credentials should be stored in this file, since Spark will look for them when starting the application.
 
-This is helpful for when you have different configuration values based on the environment hte application is running in.
-
-## Security
-The `.env` file should never be committed to your apps source control. They contain sensitive information like database credentials and should be created when setting up a new environment.
-
-The `.env.example` file acts as an example of what your `.env` file should look like. This should be commited to source control with sensitive values removed. It acts as a guide for other developers when setting up their app.
-
-## Retrieving Environment Variables
-Spark adds all environment variables to your apps configuration, just like variables in your appsettings.json. This means any variable in your `.env` can be accessed via the `IConfiguration` interface. 
-```csharp
-using Microsoft.Extensions.Configuration;
-
-public class Developer(IConfiguration config)
-{
-    var something = config.GetValue<string>("SOME_ENV_VARIABLE");
-}
-```
-Environment variables can also be accessed through the static `Env` class.
-
-```csharp
-using Spark.Library.Environment;
-
-var something = Env.Get("SOME_ENV_VARIABLE");
-```
+This is helpful for when you have different configuration values based on the environment the application is running in.
 
 ## What about Appsettings?
 All of the configurations for the Spark framework are pulled from the appsettings.json file.
@@ -42,8 +19,7 @@ For example:
 {
     "Spark": {
         "App": {
-            "Name": "ENV_APP_NAME",
-            "Environment": "ENV_ENVIRONMENT"
+            "Name": "ENV_APP_NAME"
         },
     }
 }
@@ -57,3 +33,42 @@ This makes changing variables simple between environments. You don't have to cre
 >
 > Instead, update the corresponding variable in your `.env` file.
 >
+
+## Setup
+Because all of your configuraiton values end up in the `appsettings.json` file, they can be accessed by the `IConfiguration` interface.
+
+This is accessed via dependency injection.
+
+```csharp
+// class or controller example
+private IConfiguration _config;
+
+public CacheController(IConfiguration config)
+{
+    this._config = config;
+}
+```
+
+```razor
+@* razor component example *@
+@page "/"
+@inject IConfiguration _config
+```
+
+## Retrieving Environment Variables
+Once injected, you can access your config values.
+```csharp
+_config.GetValue<string>("Spark:App:Name")!;
+```
+
+Environment variables can also be accessed through the static `Spark.Library.Environment.Env` class.
+```csharp
+using Spark.Library.Environment;
+
+var appName = Env.Get("APP_NAME");
+```
+
+## Security
+The `.env` file should never be committed to your apps source control. They contain sensitive information like database credentials and should be created when setting up a new environment.
+
+The `.env.example` file acts as an example of what your `.env` file should look like. This should be commited to source control with sensitive values removed. It acts as a guide for other developers when setting up their app.

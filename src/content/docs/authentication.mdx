@@ -6,10 +6,38 @@ description: "Spark Authentication"
 ## Introduction
 Most web applications require some form of authentication. Spark provides this out of the box with it's own custom cookie auth implementation.
 
-## User Model
+Spark also builds the login, logout, register and profile edit pages for you. Feel free to customize their look and feel how you see fit. 
+
+## Configuration
+Authentication settings can be configured in your `appsettings.json` file.
+
+```json
+{
+    "Spark": {
+        "Auth": {
+            "LoginPath": "/login",
+            "LogoutPath": "/logout",
+            "AccessDeniedPath": "/access-denied",
+            "CookieExpirationDays": 5,
+        },
+    }
+}
+```
+
+## Setup
+Spark's authentication is added to the DI container for you in `AppServiceRegistration.AddAppServices()`.
+
+```csharp
+services.AddAuthentication<IAuthValidator>(config);
+```
+
+The implementation for `IAuthValidator` is the `Application.Services.Auth.AuthValidator.cs` class. This service comes with 1 method that is called whenever an authentication check needs to occur, `ValidateAsync()`.
+
+
+## User Data
+### The User Model
 Every Spark app comes with a `User.cs` class in the `Application/Models` directory. This acts as your schema for your users table and also the class that is used during authentication.
 
-Users also have Roles tied to them for authorization. You can read more about that on the [Authorization page](/docs/authorization).
 ```csharp
 public class User : BaseModel
 {
@@ -33,9 +61,11 @@ public class User : BaseModel
     public virtual ICollection<UserRole> UserRoles { get; set; }
 }
 ```
+Users also have Roles tied to them for authorization. You can read more about that on the [Authorization page](/docs/authorization).
 
-## Accessing User Data
-Spark comes with out of the box methods to make it easy to query the authenticated users data.
+
+### Accessing User Data
+Spark comes with out of the box methods to make it easy to query the authenticated User's model.
 
 The `Application/Services/Auth/AuthService.cs` class comes with a `GetAuthenticatedUser()` method. This will return the User model if the person logged in or null otherwise.
 
@@ -56,11 +86,6 @@ public IActionResult Dashboard()
     ...
 }
 ```
-
-## Scafolded Auth Pages
-Spark builds the login, logout, register and profile edit pages for you. 
-
-Feel free to customize their look and feel how you see fit. 
 
 ## Protecting Routes & Pages
 If you have routes in your app you only want logged in users to see, use the `Authorize` attribute.
@@ -100,7 +125,7 @@ public class DashboardModel : PageModel
 ```
 
 ## Protecting Page Content
-Sometimes you need more granular control than protecting an entire route or page.
+Sometimes you need more granular control when protecting a route or page.
 
 For instance, lets say you want to show a page regardless if the user is authenticated or not. But you want to show the login button if they aren't authenticated. Likewise, you want to show the logout button if they are authenticated.
 

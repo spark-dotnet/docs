@@ -61,17 +61,12 @@ pre {
 }
 
 pre code {
-    font-size: .9rem;
     font-weight: 500;
-    line-height: 1.9;
-    @apply bg-gray-900 px-0 border-none !important;
+    @apply bg-gray-900 px-0 border-none text-base leading-[1.9em] !important;
 }
 
 code {
-    font-size: .9rem;
-    font-weight: 500;
-    line-height: 1.9;
-    @apply bg-gray-100 border border-gray-400 text-purple-800 px-2 py-1 rounded;
+    @apply bg-gray-100 border border-gray-400 text-purple-800 px-1 py-0.5 rounded text-base leading-[1.9em] font-medium;
 }
 
 .markdown h1 {
@@ -79,7 +74,7 @@ code {
 }
 
 .markdown p {
-    @apply text-lg mb-6 leading-[1.8em] text-gray-800;
+    @apply text-base mb-6 leading-[1.9em] text-gray-800;
 }
 
 .markdown ul {
@@ -94,11 +89,14 @@ code {
 }
 
 .markdown h2 {
-    @apply text-3xl sm:text-4xl mt-20 mb-8 font-bold text-gray-800;
+    @apply text-4xl mt-20 mb-8 font-medium text-gray-800;
 }
 
 .markdown h3 {
-    @apply text-xl mb-4 font-bold text-gray-800;
+    @apply text-2xl mt-12 mb-4 font-bold text-gray-800;
+}
+.markdown h4 {
+    @apply text-lg mb-4 font-bold text-gray-800;
 }
 
 .markdown img {

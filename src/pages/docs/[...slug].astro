@@ -14,7 +14,7 @@ export async function getStaticPaths() {
 type Props = CollectionEntry<'docs'>;
 const post = Astro.props;
 const { Content, headings } = await post.render();
-console.log(headings)
+console.log(headings);
 ---
 
 <DocsLayout {...post.data}>
@@ -25,7 +25,11 @@ console.log(headings)
 		{headings.map((item) => (
 			item.depth <=2 ? 
 			<li class="font-medium"><a href={'#'+item.slug}><span class="text-purple-600"># </span>{item.text}</a></li> 
-			: <li class="font-light pl-6"><a href={'#'+item.slug}><span class="text-purple-600"># </span>{item.text}</a></li> 
+			:
+			item.depth < 4 ? 
+			<li class="font-light pl-6"><a href={'#'+item.slug}><span class="text-purple-600"># </span>{item.text}</a></li> 
+			:
+			''
 		))}
 	</ul>
 	<div class="markdown">

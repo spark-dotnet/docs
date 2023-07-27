@@ -72,6 +72,9 @@ code {
 .markdown h1 {
     @apply text-4xl sm:text-5xl mb-8 font-bold text-gray-800;
 }
+.markdown p + ul {
+    @apply -mt-4;
+}
 
 .markdown p {
     @apply text-base mb-6 leading-[1.9em] text-gray-800;
@@ -79,6 +82,10 @@ code {
 
 .markdown ul {
     @apply list-disc list-inside mb-6 ml-4;
+}
+
+.markdown li {
+    @apply leading-[1.9em];
 }
 
 .markdown blockquote {

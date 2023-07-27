@@ -26,7 +26,7 @@ public class DeveloperService
 ```
 
 ## Registering Services
-Before you're able to dependency inject a new service, you need to register it in the DI container. Spark makes this easy. 
+Before you're able to inject and use your service, you need to register it in the DI container. Spark makes this easy. 
 
 Simply add your service to the `AddCustomServices` method in the  `Application/Startup/AppServiceRegistration.cs` class.
 ```csharp
@@ -40,10 +40,38 @@ private static IServiceCollection AddCustomServices(this IServiceCollection serv
 
 That's it!
 
+### Service Lifetimes
+Services can be registered with one of the following lifetimes:
+
+- Transient
+- Scoped
+- Singleton
+
+#### Transient
+Transient lifetime services create a new instance each time the service is requested.
+
+```csharp
+services.AddTransient<MyService>();
+```
+
+### Scoped
+Scoped lifetime service get create a new instance 1 time per web request.
+
+```csharp
+services.AddScoped<MyService>();
+```
+
+### Singleton
+Singleton lifetime services will last the entire lifetime of the application. For web apps, that means after the first request of the service, every subsequent request will use the same instance.
+
+```csharp
+services.AddSingleton<MyService>();
+```
+
 ## Injecting Services
 Once a service is registered, it can be injected into any Razor component, controller, or other registered services.
 
-**Injecting a Service in a controller**
+#### Injecting a Service in a controller
 
 Use standard dependency injection.
 ```csharp
@@ -65,7 +93,7 @@ Use standard dependency injection.
     }
 ```
 
-**Injecting a Service in a Razor component**
+#### Injecting a Service in a Razor component
 
 Use the `@inject` attribute in a Razor component to inject your services.
 ```razor
@@ -84,7 +112,7 @@ Use the `@inject` attribute in a Razor component to inject your services.
 }
 ```
 
-**Injecting a service into another service**
+#### Injecting a service into another service
 
 Use standard dependency injection.
 ```csharp

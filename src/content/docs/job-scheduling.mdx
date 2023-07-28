@@ -1,34 +1,68 @@
 ---
-title: "Scheduling Jobs"
+title: "Job Scheduling"
 description: "Spark Job Scheduling"
 ---
 
 ## Introduction
 Configuring a cron job or windows task is common for web apps. Spark utilizes Coravel's [scheduler](https://docs.coravel.net/Scheduler/) to accomplish this.
 
-## Creating Jobs
-To create a new job, simply run the Spark  `make job` command.
-
-```bash
-spark make job ExampleJob
+## Setup
+Spark registers the scheduler in the `Application.Startup.AppServiceRegistration.AddAppServices()` method for you.
+```csharp
+services.AddScheduler();
 ```
 
-A new job will be create in the `Application/Jobs` directory.
-
-## Registering Scheduled Jobs
-All scheduled jobs must be registered in the `Application/Startup/Scheduler.cs` class.
+You can schedule jobs in the `Application.Startup.Scheduler.RegisterScheduledJobs()` method.
 ```csharp
-public static IServiceProvider RegisterScheduledJobs(this IServiceProvider services)
+public static class Scheduler
 {
-    services.UseScheduler(scheduler =>
+    public static IServiceProvider RegisterScheduledJobs(this IServiceProvider services)
     {
-        scheduler
-            .Schedule<ExampleJob>()
-            .EveryFiveMinutes();
-    });
-    return services;
+        services.UseScheduler(scheduler =>
+        {
+            // example scheduled job
+            scheduler
+               .Schedule<ExampleJob>()
+               .EveryFiveMinutes();
+        });
+        return services;
+    }
 }
 ```
 
 ## Scheduling Jobs
-More documentation coming soon. In the meantime, read about Coravels Scheduling [here](https://docs.coravel.net/Scheduler/).
+Before scheduling a job, you need to do ensure it is registered in the service container as a scoped or transient service. You can read more about this [here](/docs/jobs).
+
+Then you are ready to schedule your job.
+
+As mentioned earlier, this is done in the `Application.Startup.Scheduler.RegisterScheduledJobs()` method.
+
+### Scheduling Job With Paramaters
+If you have a Job that expects parameters, you can use the `ScheduleWithParams<T>()` method.
+
+```csharp 
+public class ExampleJob : IInvocable
+{
+    private string _someParm;
+
+    public WeatherJob(string param)
+    {
+        this._someParm = param;
+    }
+
+    public Task Invoke()
+    {
+        // lookup states weather data
+        return Task.CompletedTask;
+    }
+}
+```
+
+You can then configure this job in your scheduler like this.
+```csharp
+scheduler
+    .ScheduleWithParams<ExampleJob>("some string param")
+    .EveryHour();
+```
+
+## Intervals

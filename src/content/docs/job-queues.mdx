@@ -6,4 +6,56 @@ description: "Spark Background Job Queues"
 ## Introduction
 Offloading long running jobs to the background is a great way to increase performance in you web app. Spark utilizes Coravel's [queuing](https://docs.coravel.net/Queuing/) to accomplish this.
 
-More documentation coming soon. In the meantime, read about Coravels Queuing [here](https://docs.coravel.net/Queuing/).
+For example, lets say when a user signs up to your app, you send a welcome email to them.
+
+Instead of waiting for that email to send while the user waits for their HTTP request to finish, you could offload that email sending to a job in Spark's Queue.
+
+## Setup
+Spark registers the Queue in the `Application.Startup.AppServiceRegistration.AddAppServices()` method for you.
+```csharp
+services.AddQueue();
+```
+
+To use the Queue, you can inject an instance of `Coravel.Queueing.Interface.IQueue` inteface into a controller, razor component, or another registered service.
+```csharp
+IQueue _queue;
+
+public MyController(IQueue queue) {
+    this._queue = queue;
+}
+```
+
+## Queueing Jobs
+To queue a job, use the `QueueInvocable` method.
+```csharp
+this._queue.QueueInvocable<ExampleJob>();
+```
+
+### Queue With a Payload
+Sometimes you will have a scenario where you want to pass paramaters to your job.
+
+To accomplish this, you first need to add Coravel's `InvocableWithPayload<T>` interface to your existing job.
+
+```csharp
+public class ExampleJob : IInvocable, IInvocableWithpayload<User>
+{
+    public User User { get; set; }
+
+    public ExampleJob()
+    {
+    }
+
+    public Task Invoke()
+    {
+        // this.User is now available for you to use.
+        Console.WriteLine("Do something in the background.");
+        return Task.CompletedTask;
+    }
+}
+```
+
+Now you can queue the job with the `QueueInvocableWithPayload` method.
+```csharp
+var user = await _db.Find(userId);
+queue.QueueInvocableWithPayload<ExampleJob, User>(user);
+```

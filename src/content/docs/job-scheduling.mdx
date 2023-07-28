@@ -1,34 +1,34 @@
 ---
-title: "Task Scheduling"
-description: "Spark Task Scheduling"
+title: "Scheduling Jobs"
+description: "Spark Job Scheduling"
 ---
 
 ## Introduction
 Configuring a cron job or windows task is common for web apps. Spark utilizes Coravel's [scheduler](https://docs.coravel.net/Scheduler/) to accomplish this.
 
-## Creating Tasks
-To create a new task, simply run the Spark  `make task` command.
+## Creating Jobs
+To create a new job, simply run the Spark  `make job` command.
 
 ```bash
-spark make task ExampleTask
+spark make job ExampleJob
 ```
 
-A new task will be create in the `Application/Tasks` directory.
+A new job will be create in the `Application/Jobs` directory.
 
-## Registering Scheduled Tasks
-All scheduled tasks must be registered in the `Application/Startup/Scheduler.cs` class.
+## Registering Scheduled Jobs
+All scheduled jobs must be registered in the `Application/Startup/Scheduler.cs` class.
 ```csharp
 public static IServiceProvider RegisterScheduledJobs(this IServiceProvider services)
 {
     services.UseScheduler(scheduler =>
     {
         scheduler
-            .Schedule<ExampleTask>()
+            .Schedule<ExampleJob>()
             .EveryFiveMinutes();
     });
     return services;
 }
 ```
 
-## Scheduling Tasks
+## Scheduling Jobs
 More documentation coming soon. In the meantime, read about Coravels Scheduling [here](https://docs.coravel.net/Scheduler/).

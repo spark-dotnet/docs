@@ -1,0 +1,77 @@
+---
+title: "Jobs"
+description: "Spark Jobs"
+---
+
+## Introduction
+Jobs represent a self contained task within your system. Spark utilizes Coravel's [invocables](https://docs.coravel.net/Invocables/) to accomplish this.
+
+In most cases, a Job will either be used in a background queue or as a scheduled job.
+
+For example, using Spark's scheduler, you can schedule a job that checks for inactive user accounts every 5 minutes.
+
+```csharp
+scheduler.Schedule<FindInactiveUsersJob>()
+    .EveryFiveMinutes();
+```
+
+### Creating Jobs
+All job classes are required to use the shared interface `Coravel.Invocable.IInvocable`.
+
+To create a new job, simply run the Spark `make job` command.
+```bash
+spark make job ExampleJob
+```
+
+A new job will be created in the `Application/Jobs` directory.
+```csharp
+public class ExampleJob : IInvocable
+{
+
+    public ExampleJob()
+    {
+    }
+
+    public Task Invoke()
+    {
+        Console.WriteLine("Do something in the background.");
+        return Task.CompletedTask;
+    }
+}
+```
+### Class Structure
+Job classes are very simple, usually only containing a constructor and a `Invoke()` method that is invoked when the job is processed. This is where your logic for the job will be placed. 
+
+### Registering Jobs
+Your jobs also have to be registered in the service container.
+
+You can do this by adding your job with the transient lifetime in the `Application.Startup.AppServiceRegistration.AddJobServices()` method.
+```csharp
+private static IServiceCollection AddJobServices(this IServiceCollection services)
+{
+    services.AddTransient<ExampleJob>();
+    return services;
+}
+```
+
+Once your job is registered in the service container, you can inject other services into it.
+
+```csharp
+public class ExampleJob : IInvocable
+{
+    private readonly DatabaseContext _db;
+
+    public ExampleJob(DatabaseContext db)
+    {
+        _db = db;
+    }
+
+    public Task Invoke()
+    {
+        var users = _db.Users.ToList();
+        // do something with the users.
+
+        return Task.CompletedTask;
+    }
+}
+```

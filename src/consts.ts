@@ -28,8 +28,9 @@ export const SIDEBAR: Sidebar = {
         { text: 'Logging', link: 'logging' },
         { text: 'Mail', link: 'mail' },
         { text: 'Events', link: 'events' },
-        { text: 'Queues', link: 'queues' },
-        { text: 'Task Scheduling', link: 'task-scheduling' },
+        { text: 'Jobs', link: 'jobs' },
+        { text: 'Job Queues', link: 'job-queues' },
+        { text: 'Job Scheduling', link: 'job-scheduling' },
         { text: 'Extension Methods', link: 'extension-methods' },
     ],
     'Tutorials': [

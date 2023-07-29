@@ -1,0 +1,232 @@
+---
+title: "Models & Migrations"
+description: "Spark Models & Migrations"
+---
+
+## Introduction
+Spark uses Entity Frameworks models and migrations to query your data and maintain your applications database.
+
+A model in Spark is a representation of the data in 1 database table.
+
+The only caveat to this is the `BaseModel` class.
+
+### BaseModel
+All models in Spark should extend the `BaseModel` class. The `BaseModel` class has 3 properties.
+- Id
+- CreatedAt
+- UpdatedAt
+
+This means you don't need to create these properties on your models, they will always be created and usable provided you are extending the `BaseModel` class.
+
+Your models should always extend the `BaseModel` class to avoid issues with the Spark Library internal code.
+
+## Setup
+### Creating a Model
+To create a new model, simply run the Spark  `make model` command.
+
+```bash
+spark make model Developer
+```
+
+A new class in the `Application/Models` folder will be created.
+
+```csharp
+public class Developer : BaseModel
+{
+    public string Name { get; set; }
+
+    public string Title { get; set; }
+}
+```
+
+Then, add your model in the `DatabaseContext` class as a DbSet:
+```csharp
+public class DatabaseContext : DbContext
+{
+    public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
+    { }
+
+    public virtual DbSet<Developer> Developers { set; get; }
+    ...
+```
+
+Now that your model has been added to your DbSet, your ready to run your migrations and add the model to your database as a table.
+
+## Migrations
+
+### Create Migrations
+Once your models are registered in your `DatabaseContext`, you can create a migration. This essentially acts as source control for your database schema. 
+
+To create a new migration, simply run the Spark  `make migration` command.
+
+```bash
+spark make migration AddDeveloperTable
+```
+
+A new file with your schema changes is created in the `Application/Database/Migrations` folder.
+
+>
+> ### Changing database types and migrations
+> If you ever find your self in a scenario where you have created migrations and then decide to switch database types, you will need to clear your migration files out of the `Application/Database/Migrations` folder.
+>
+> Then, create and run your migrations again. This is because migration files for one database type might not work for another due to different feature sets in those databases.
+
+### Run Migrations
+You can run your migration to apply the changes to your database with the Spark `migrate` command.
+```bash
+spark migrate
+```
+
+Once migrated, your model now exists as a table in the database. You can query and update records of your model via the DbSet in the DatabaseContext class.
+
+## Data Access & Queries
+### Querying Models
+Once you have created a model, added it to your Database Context, and migrated it, you are ready to start retrieving data from your database.
+
+Each model registered as a DbSet in `DatabaseContext.cs` is a powerful query builder, allowing you to use LINQ queries to pull data from the underlying database table.
+
+To start querying models, you simply need to inject your `DatabaseContext` and run a linq query on your registered models.
+
+```csharp
+public class DeveloperService
+{
+    private readonly DatabaseContext _db;
+
+    public DeveloperService(DatabaseContext db)
+    {
+        _db = db;
+    }
+
+    public List<Developer> All() {
+        return _db.Developers.ToList();
+    }
+}
+```
+
+As mentioned above, in Blazor Server, it is required to use the `DbContextFactory` to get a new instance of the `DatabaseContext`.
+
+```razor
+@page "/developers"
+@inject IDbContextFactory<DatabaseContext> factory
+
+<ul>
+    @foreach (var developer in Developers) {
+        <li>@developer.Name</li>
+    }
+</ul>
+
+@code {
+    private List<Developer> Developers = new List<Developer>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var db = factory.CreateDbContext();
+        
+        Developers = await db.Developers.ToListAsync();
+    }
+}
+```
+
+### Saving Models
+Spark comes with handy extension method called `Save` to help you save a record in 1 line.
+
+```csharp
+public class DeveloperService
+{
+    private readonly DatabaseContext _db;
+
+    public DeveloperService(DatabaseContext db)
+    {
+        _db = db;
+    }
+
+    public void CreateDeveloper() {
+        var developer = new Developer();
+        developer.Name = "Kramer";
+        _db.Developers.Save(developer);
+    }
+}
+```
+
+The `Save` method is the equivalent to this code if you were using Entity Framework normally.
+```csharp
+private void CreateDeveloper()
+{
+    // Using the Save() extension method
+    _db.Developers.Save(developer);
+
+    // Is Equivalent to this
+    developer.CreatedAt = DateTime.UtcNow;
+    _db.Developers.Add(developer);
+    _db.SaveChanges();
+}
+```
+
+### Updating Models
+Updating models is similar to saving models. It can also take advantage of the `Save()` extension method, which will detect if it's an existing record for you.
+
+```csharp
+public class DeveloperService
+{
+    private readonly DatabaseContext _db;
+
+    public DeveloperService(DatabaseContext db)
+    {
+        _db = db;
+    }
+
+    public void UpdateDeveloper() {
+        var developer = await db.Developers.FindAsync(1)
+        developer.Name = "Kramer";
+        _db.Developers.Save(developer);
+    }
+}
+```
+
+The `Save` method is the equivalent to this code if you were updating an existing record with Entity Framework out of the box.
+```csharp
+private void UpdateDeveloper()
+{
+    // Using the Save() extension method
+    _db.Developers.Save(ExistingDeveloper);
+
+    // Is Equivalent to this in standard Entity Framework
+    ExistingDeveloper.UpdatedAt = DateTime.UtcNow;
+    _db.Developers.Update(ExistingDeveloper);
+    _db.SaveChanges();
+}
+```
+
+### Deleting Models
+To delete a model, you can call the `Delete` extension method provided by Spark on a Database Context instance.
+
+
+```csharp
+public class DeveloperService
+{
+    private readonly DatabaseContext _db;
+
+    public DeveloperService(DatabaseContext db)
+    {
+        _db = db;
+    }
+
+    public void DeleteDeveloper() {
+        var developer = await db.Developers.FindAsync(1)
+        _db.Developers.Delete(developer);
+    }
+}
+```
+
+The `Delete` method is the equivalent to this code if you were deleting an existing record with Entity Framework out of the box.
+```csharp
+private void DeleteDeveloper()
+{
+    // Using the Delete() extension method
+    db.Developers.Delete(ExistingDeveloper);
+
+    // Is Equivalent to this in standard Entity Framework
+    db.Developers.Remove(ExistingDeveloper);
+    db.SaveChanges();
+}
+```

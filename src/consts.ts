@@ -22,6 +22,7 @@ export const SIDEBAR: Sidebar = {
     'Essentials': [
         { text: 'Configuration', link: 'configuration' },
         { text: 'Database', link: 'database' },
+        { text: 'Models & Migrations', link: 'models-and-migrations' },
         { text: 'Services', link: 'services' },
         { text: 'Authentication', link: 'authentication' },
         { text: 'Authorization', link: 'authorization' },

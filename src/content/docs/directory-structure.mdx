@@ -33,10 +33,10 @@ The `Models` directory contains your efcore model classes. Each database table f
 The `Services` directory contains your services that can be Dependency Injected on startup. Services are typically used to abstract away business logic or database calls.
 
 ### Startup
-The `Startup` directory contains Registration classes. These classes are where Sparks core services, custom services, events, or tasks are registered to the DI container. Scheduled jobs can also be registered here.
+The `Startup` directory contains Registration classes. These classes are where Sparks core services, custom services, events, or jobs are registered to the DI container. Scheduled jobs can also be registered here.
 
-### Tasks
-The `Tasks` directory contains queueable jobs for your application. Tasks can be scheduled or added to a background queue.
+### Jobs
+The `Jobs` directory contains queueable jobs for your application. Jobs can be scheduled or added to a background queue.
 
 ## Pages / Views
 This is where your sites frontend markdown will be contained. If using the Blazor or Razor pages project types, the `Pages` directory contains your Razor pages and Razor components. If using the Mvc project type, The `Views` directory contains your Razor templates.

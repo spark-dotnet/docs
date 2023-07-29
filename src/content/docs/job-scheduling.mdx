@@ -75,61 +75,61 @@ scheduler
 When scheduling jobs, you will also need to specify the interval in which they run. There are many schedule intervals that you may assign to a job:
 
 ```csharp
-// Run the task using a Cron expression
+// Run the job using a Cron expression
 .Cron("* * * * *")
 
-// Run the task every second
+// Run the job every second
 .EverySecond()
 
-// Run the task every five seconds            
+// Run the job every five seconds            
 .EveryFiveSeconds()
 
-// Run the task every ten seconds
+// Run the job every ten seconds
 .EveryTenSeconds()
 
-// Run the task every fifteen seconds
+// Run the job every fifteen seconds
 .EveryFifteenSeconds()
 
-// Run the task every thirty seconds
+// Run the job every thirty seconds
 .EveryThirtySeconds()
 
-// 	Run the task every 3 seconds
+// 	Run the job every 3 seconds
 .EverySeconds(3)
 
-// Run the task once a minute
+// Run the job once a minute
 .EveryMinute()
 
-// Run the task every five minutes
+// Run the job every five minutes
 .EveryFiveMinutes()
 
-// Run the task every ten minutes
+// Run the job every ten minutes
 .EveryTenMinutes()
 
-// Run the task every fifteen minutes
+// Run the job every fifteen minutes
 .EveryFifteenMinutes()
 
-// Run the task every thirty minutes
+// Run the job every thirty minutes
 .EveryThirtyMinutes()
 
-// Run the task every hour
+// Run the job every hour
 .Hourly()
 
-// Run the task at 12 minutes past every hour
+// Run the job at 12 minutes past every hour
 .HourlyAt(12)
 
-// 	Run the task once a day at midnight
+// 	Run the job once a day at midnight
 .Daily()
 
-// Run the task once a day at 1 p.m. UTC
+// Run the job once a day at 1 p.m. UTC
 .DailyAtHour(13)
 
-// Run the task once a day at 1:30 p.m. UTC
+// Run the job once a day at 1:30 p.m. UTC
 .DailyAt(13, 30)
 
-// Run the task once a week
+// Run the job once a week
 .Weekly()
 
-// Run the task on the first of every month midnight
+// Run the job on the first of every month midnight
 .Monthly()
 ```
 

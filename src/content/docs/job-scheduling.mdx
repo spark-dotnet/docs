@@ -12,7 +12,19 @@ Spark registers the scheduler in the `Application.Startup.AppServiceRegistration
 services.AddScheduler();
 ```
 
-You can schedule jobs in the `Application.Startup.Scheduler.RegisterScheduledJobs()` method.
+Your individual jobs also need to be registered in the service container. This can be done in the `Application.Startup.AppServiceRegistration.AddJobServices()` method.
+```csharp
+private static IServiceCollection AddJobServices(this IServiceCollection services)
+{
+    services.AddTransient<ExampleJob>();
+    return services;
+}
+```
+
+## Defining Schedules
+Jobs are scheduled in the `Application.Startup.Scheduler.RegisterScheduledJobs()` method.
+
+Inside of that method, the `UseScheduler()` method is called. Your scheduled jobs and their intervals are defined inside of it.
 ```csharp
 public static class Scheduler
 {
@@ -30,16 +42,10 @@ public static class Scheduler
 }
 ```
 
-## Scheduling Jobs
-Before scheduling a job, you need to do ensure it is registered in the service container as a scoped or transient service. You can read more about this [here](/docs/jobs).
+### Scheduling Jobs With Parameters
+If you have a job that expects parameters, you can use the `ScheduleWithParams<T>()` method.
 
-Then you are ready to schedule your job.
-
-As mentioned earlier, this is done in the `Application.Startup.Scheduler.RegisterScheduledJobs()` method.
-
-### Scheduling Job With Paramaters
-If you have a Job that expects parameters, you can use the `ScheduleWithParams<T>()` method.
-
+For example, if you had a job that accepted a string parameter in the constructor:
 ```csharp 
 public class ExampleJob : IInvocable
 {
@@ -58,11 +64,123 @@ public class ExampleJob : IInvocable
 }
 ```
 
-You can then configure this job in your scheduler like this.
+You could pass the parameter like this:
 ```csharp
 scheduler
     .ScheduleWithParams<ExampleJob>("some string param")
-    .EveryHour();
+    .Hourly();
 ```
 
-## Intervals
+### Intervals
+When scheduling jobs, you will also need to specify the interval in which they run. There are many schedule intervals that you may assign to a job:
+
+```csharp
+// Run the task using a Cron expression
+.Cron("* * * * *")
+
+// Run the task every second
+.EverySecond()
+
+// Run the task every five seconds            
+.EveryFiveSeconds()
+
+// Run the task every ten seconds
+.EveryTenSeconds()
+
+// Run the task every fifteen seconds
+.EveryFifteenSeconds()
+
+// Run the task every thirty seconds
+.EveryThirtySeconds()
+
+// 	Run the task every 3 seconds
+.EverySeconds(3)
+
+// Run the task once a minute
+.EveryMinute()
+
+// Run the task every five minutes
+.EveryFiveMinutes()
+
+// Run the task every ten minutes
+.EveryTenMinutes()
+
+// Run the task every fifteen minutes
+.EveryFifteenMinutes()
+
+// Run the task every thirty minutes
+.EveryThirtyMinutes()
+
+// Run the task every hour
+.Hourly()
+
+// Run the task at 12 minutes past every hour
+.HourlyAt(12)
+
+// 	Run the task once a day at midnight
+.Daily()
+
+// Run the task once a day at 1 p.m. UTC
+.DailyAtHour(13)
+
+// Run the task once a day at 1:30 p.m. UTC
+.DailyAt(13, 30)
+
+// Run the task once a week
+.Weekly()
+
+// Run the task on the first of every month midnight
+.Monthly()
+```
+
+>
+> The scheduler uses UTC time by default
+>
+
+### Day Contraints
+Once you specify an interval, you can also restrict what day's the job is allowed to run on.
+```csharp
+.Monday()
+.Tuesday()
+.Wednesday()
+.Thursday()
+.Friday()
+.Saturday()
+.Sunday()
+.Weekday()
+.Weekend()
+```
+
+You can also chain these methods.
+
+For instance, the following would mean a job runs every hour on Monday and Wednesdays:
+```csharp
+scheduler.Schedule<ExampleJob>()
+    .Hourly()
+    .Monday()
+    .Wednesday();
+```
+
+### Timezones
+By default, the scheduler uses UTC time to trigger jobs.
+
+If you would like to run your schedules against a particular time zone, use the `Zoned()` method.
+```csharp
+scheduler.Schedule<ExampleJob>()
+    .Hourly()
+    .Zoned(TimeZoneInfo.Local);
+```
+
+### Preventing Job Overlap
+By default, scheduled jobs will run even if the previous instance of the job is still running.
+
+To prevent this, you may use the `PreventOverlapping()` method.
+
+```csharp
+scheduler
+    .Schedule<ExampleJob>()
+    .EveryMinute()
+    .PreventOverlapping("SomeJob");
+```
+
+This method takes in one paramater, a unique string key. The key is whats used to determine if the job has an instance running or not when the scheduler goes to trigger a job.

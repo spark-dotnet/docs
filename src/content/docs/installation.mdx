@@ -14,17 +14,21 @@ dotnet tool install --global dotnet-ef
 ```
 
 ## Your First Spark Project
-After you have installed the required dependencies, you will need to install the Spark CLI and project templates.
+After you have installed the required dependencies, you will need to install the Spark CLI.
 ```bash
 # Install the Spark CLI
 dotnet tool install --global Spark.CLI
+```
 
+Then using the Spark CLI, install the Spark project templates.
+```bash
 # Install Spark's project templates
 spark install
 ```
 
 You are now ready to create your first Spark project!
 ```bash
+# Create your first Spark project
 spark new MyApp
 ```
 

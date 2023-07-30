@@ -16,7 +16,8 @@ const sidebar = SIDEBAR;
 			Object.entries(sidebar).map(([header, children]) => (
 				<li>
 					<div class="nav-group">
-						<h2 class="nav-group-title cursor-pointer hover:-ml-0.5 transition-all duration-300	" x-on:click={`currentSection = '${header}'`}>{header}</h2>
+						<!-- cursor-pointer hover:-ml-0.5 transition-all duration-300 -->
+						<h2 class="nav-group-title" x-on:click={`currentSection = '${header}'`}>{header}</h2>
 						<!--<ul x-show={`currentSection == '${header}'`} x-cloak>-->
 						<ul>
 							{children.map((child) => {

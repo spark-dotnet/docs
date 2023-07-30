@@ -11,12 +11,13 @@ const sidebar = SIDEBAR;
 ---
 
 <div class="mb-12 lg:mb-0" aria-labelledby="grid-left">
-	<ul class="nav-groups">
+	<ul class="nav-groups" x-data="{ currentSection: 'Getting Started' }">
 		{
 			Object.entries(sidebar).map(([header, children]) => (
 				<li>
 					<div class="nav-group">
-						<h2 class="nav-group-title">{header}</h2>
+						<h2 class="nav-group-title cursor-pointer hover:-ml-0.5 transition-all duration-300	" x-on:click={`currentSection = '${header}'`}>{header}</h2>
+						<!--<ul x-show={`currentSection == '${header}'`} x-cloak>-->
 						<ul>
 							{children.map((child) => {
 								const url = child.link;
@@ -64,7 +65,7 @@ const sidebar = SIDEBAR;
 	}
 
 	.nav-groups > li + li {
-		margin-top: 2rem;
+		margin-top: 1rem;
 	}
 
 	.nav-groups > :first-child {

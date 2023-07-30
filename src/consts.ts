@@ -14,10 +14,9 @@ export const SIDEBAR: Sidebar = {
         { text: 'Spark CLI', link: 'spark-cli' },
         { text: 'Upgrade Guide', link: 'upgrade-guide' },
     ],
-    // 'Project Templates': [
-    //     { text: 'Blazor', link: 'blazor' },
-    //     { text: 'MVC', link: 'mvc' },
-    //     { text: 'Razor Pages', link: 'razor-pages' },
+    // 'Core Concepts': [
+    //     { text: 'Dependency Injection', link: 'dependency-injection' },
+    //     { text: 'Services', link: 'services' },
     // ],
     'Essentials': [
         { text: 'Configuration', link: 'configuration' },
@@ -34,6 +33,13 @@ export const SIDEBAR: Sidebar = {
         { text: 'Scheduling Jobs', link: 'job-scheduling' },
         { text: 'Extension Methods', link: 'extension-methods' },
     ],
+    // 'Entity Framework': [
+    //     { text: 'Getting Started', link: 'entity-framework' },
+    //     { text: 'Models', link: 'models' },
+    //     { text: 'Migrations', link: 'migrations' },
+    //     { text: 'Relationships', link: 'relationships' },
+    //     { text: 'Data Access', link: 'data-access' },
+    // ],
     'Tutorials': [
         { text: 'Spark.NET for beginners', link: 'beginner-tutorial' },
         { text: 'Build a Twitter Clone', link: 'spark-tutorial' },

@@ -57,6 +57,34 @@ Runs outstanding migrations.
 spark migrate
 ```
 
+## Create Page
+Create an new Blazor page.
+```bash
+spark make page [PageName]
+```
+The new page will be under `Pages`. 
+
+The command accepts subfolders as well. For instance, `spark make page Profile/Index` would make a new Blazor page at `Pages/Profile/Index.razor`.
+
+All pages are created with a code behind file as well. So the `Profile/Index.razor` page would also have a code behind file of `Profile/Index.razor.cs` created with it.
+
+
+## Create Pages
+Create a complete CRUD page sytems for an existing Model.
+```bash
+spark make pages [ModelName]
+```
+The new pages will be under `Pages`. 
+
+The model should already exist. Spark will create a folder after the model name and the following pages.
+
+- Index.razor and Index.razor.cs
+- Create.razor and Create.razor.cs
+- Edit.razor and Edit.razor.cs
+- Show.razor and Show.razor.cs
+
+All of the pages are setup with view models and automappers for the model. However, the properties are not added to the view models for you.
+
 ## Create Event
 Create an new Event and Listener.
 ```bash

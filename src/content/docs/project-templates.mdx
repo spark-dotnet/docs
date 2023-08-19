@@ -4,7 +4,9 @@ description: "Project Templates"
 ---
 
 ## Introduction
-Spark comes with several project templates. This gives you the flexibility to use whatever ASP.NET project type you'd like while also taking advantage of all the functionality Spark provides.
+Sparks primary project template is Blazor. We believe it is the future of Web UI's for ASP.NET and are supporting it as such.
+
+However, Spark comes with several project templates. This gives you the flexibility to use whatever ASP.NET project type you'd like while also taking advantage of all the functionality Spark provides.
 
 Every project template comes with the same Spark functionality and services. The main differences is how their routes, markup, and markup logic is constructed.
 
@@ -33,8 +35,6 @@ To create a Spark MVC project, simply run the following command.
 spark new MyAppName -t mvc
 ```
 
-To read more about Spark MVC projects, check out our documentation [here](/docs/mvc)
-
 ### Razor Pages
 The Razor Pages project template sets up a ASP.NET Razor Pages project for you.
 
@@ -47,16 +47,12 @@ To create a Spark Razor Pages project, simply run the following command.
 spark new MyAppName -t razor
 ```
 
-To read more about Spark Razor Pages projects, check out our documentation [here](/docs/razor-pages)
+### Api
+The Api project template sets up a ASP.NET MVC API project for you.
 
-## What project template should I use?
+For authentication and authorization, it uses JWT auth as a bearer token. It also comes setup with Swagger out of the box for easy testing.
 
-The choice is entirely up to you.
-
-Some devs choose **MVC** because they like the code seperation it provides.
-
-Some devs choose **Razor Pages** because they like the simplicity is provides with views and thier corresponding models.
-
-Some devs choose **Blazor** because of the user experience it provides and being able to componetize markup.
-
-In the end, the choice is yours and all 3 work very well. Our advice is just pick one and start building.
+To create a Spark Api project, simply run the following command.
+```bash
+spark new MyAppName -t api
+```

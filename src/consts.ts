@@ -19,9 +19,8 @@ export const SIDEBAR: Sidebar = {
     // ],
     'Project Types': [
         { text: 'Overview', link: 'project-types-overview' },
-        { text: 'Blazor', link: 'blazor-projects' },
-        { text: 'Api', link: 'api-projects' },
-        { text: 'Mvc & Razor Pages', link: 'mvc-razor' },
+        { text: 'Blazor', link: 'blazor' },
+        { text: 'Api', link: 'api' },
     ],
     'Essentials': [
         { text: 'Configuration', link: 'configuration' },

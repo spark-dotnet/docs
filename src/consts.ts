@@ -8,7 +8,6 @@ export const SIDEBAR: Sidebar = {
     'Getting Started': [
         { text: 'Introduction', link: 'introduction' },
         { text: 'Installation', link: 'installation' },
-        { text: 'Project Templates', link: 'project-templates' },
         { text: 'Frontend Assets', link: 'frontend-assets' },
         { text: 'Directory Structure', link: 'directory-structure' },
         { text: 'Spark CLI', link: 'spark-cli' },
@@ -18,6 +17,12 @@ export const SIDEBAR: Sidebar = {
     //     { text: 'Dependency Injection', link: 'dependency-injection' },
     //     { text: 'Services', link: 'services' },
     // ],
+    'Project Types': [
+        { text: 'Overview', link: 'project-types-overview' },
+        { text: 'Blazor', link: 'blazor-projects' },
+        { text: 'Api', link: 'api-projects' },
+        { text: 'Mvc & Razor Pages', link: 'mvc-razor' },
+    ],
     'Essentials': [
         { text: 'Configuration', link: 'configuration' },
         { text: 'Database', link: 'database' },

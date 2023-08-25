@@ -22,7 +22,7 @@ export const SIDEBAR: Sidebar = {
         { text: 'Blazor', link: 'blazor' },
         { text: 'Api', link: 'api' },
     ],
-    'Essentials': [
+    'Features': [
         { text: 'Configuration', link: 'configuration' },
         { text: 'Database', link: 'database' },
         { text: 'Models & Migrations', link: 'models-and-migrations' },

@@ -16,11 +16,19 @@ Spark registers the Queue in the `Application.Startup.AppServiceRegistration.Add
 services.AddQueue();
 ```
 
-To use the Queue, you can inject an instance of `Coravel.Queueing.Interface.IQueue` inteface into a controller, razor component, or another registered service.
-```csharp
-IQueue _queue;
+To use the Queue, you can inject an instance of `Coravel.Queueing.Interface.IQueue` interface into a razor component, or another registered service.
+```razor
+@* blazor example *@
+@page "/"
+@inject IQueue _queue
 
-public MyController(IQueue queue) {
+```
+
+```csharp
+// class example
+private IQueue _queue;
+
+public MyService(IQueue queue) {
     this._queue = queue;
 }
 ```

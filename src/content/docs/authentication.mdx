@@ -69,49 +69,17 @@ Spark comes with out of the box methods to make it easy to query the authenticat
 
 The `Application/Services/Auth/AuthService.cs` class comes with a `GetAuthenticatedUser()` method. This will return the User model if the person logged in or null otherwise.
 
-The `AuthService` can be dependency injected in your controllers, services, or Razor components.
-```csharp
-private readonly AuthService _authService;
+The `AuthService` can be dependency injected in your services or Razor components.
+```razor
+@page "/"
+@inject AuthService AuthService
 
-public DevelopersController(AuthService authService) {
-    this._authService = authService;
-}
-
-[Authorize]
-[Route("dashboard")]
-public IActionResult Dashboard()
-{
-    var user = await _authService.GetAuthenticatedUser(User);
-
-    ...
-}
+...
 ```
 
 ## Protecting Routes & Pages
 If you have routes in your app you only want logged in users to see, use the `Authorize` attribute.
 
-**MVC Controller**
-```csharp
-[Authorize]
-[Route("dashboard")]
-public IActionResult Dashboard()
-{
-    return View();
-}
-```
-
-**Razor Pages Model**
-```csharp
-[Authorize]
-public class DashboardModel : PageModel
-{
-    public void OnGet()
-    {
-    }
-}
-```
-
-**Blazor**
 ```razor
 @page "/dashboard"
 @attribute [Authorize]
@@ -129,23 +97,7 @@ Sometimes you need more granular control when protecting a route or page.
 
 For instance, lets say you want to show a page regardless if the user is authenticated or not. But you want to show the login button if they aren't authenticated. Likewise, you want to show the logout button if they are authenticated.
 
-### Protecting Content in MVC & Razor Pages
-In MVC and Razor Pages, you can do this by utilizing the `ClaimsPrincipal.User` object that is accessible in every view.
-```razor
-<nav>
-    @if (User.Identity.IsAuthenticated)
-    {
-        <a href="/logout">Logout</a>
-    }
-    else 
-    {
-        <a href="/login">Login</a>
-    }
-</nav>
-```
-
-### Protecting Content in Blazor
-In Blazor you can accomplish this by using the `<AuthorizeView>` tag helper that comes with Blazor.
+In Blazor you can accomplish this by using the `<AuthorizeView>` tag helper.
 ```razor
 <nav>
     <AuthorizeView>

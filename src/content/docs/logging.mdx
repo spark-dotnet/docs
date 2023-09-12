@@ -40,22 +40,21 @@ services.AddLogger(config);
 ```
 
 To use the logger, inject `Spark.Library.Logging.ILogger` via dependency injection.
-
-```csharp
-// class or controller example
-private ILogger _logger;
-
-public CacheController(ILogger logger)
-{
-    this._logger = logger;
-}
-```
-
 ```razor
-@* razor component example *@
+@* blazor example *@
 @page "/"
 @inject ILogger _logger
 
+```
+
+```csharp
+// class example
+private ILogger _logger;
+
+public MyService(ILogger logger)
+{
+    this._logger = logger;
+}
 ```
 
 

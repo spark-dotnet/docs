@@ -38,17 +38,6 @@ This makes changing variables simple between environments. You don't have to cre
 Because all of your configuration values end up in the `appsettings.json` file, they can be accessed by the `IConfiguration` interface.
 
 This is accessed via dependency injection.
-
-```csharp
-// class or controller example
-private IConfiguration _config;
-
-public CacheController(IConfiguration config)
-{
-    this._config = config;
-}
-```
-
 ```razor
 @* razor component example *@
 @page "/"

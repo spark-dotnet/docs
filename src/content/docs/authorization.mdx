@@ -86,32 +86,6 @@ services.AddAuthorization(config, new string[] {
 ## Protecting Routes & Pages
 You can use Roles to determine what type of users can access what content. Simply use the `Authorize` attribute and pass in a custom role as a Policy.
 
-**MVC Controller**
-```csharp
-public class AdminController : Controller
-{
-    [HttpGet]
-    [Authorize(Policy = CustomRoles.Admin)]
-    [Route("admin/dashboard")]
-    public IActionResult Dashboard()
-    {
-        return View();
-    }
-}
-```
-
-**Razor Pages**
-```csharp
-[Authorize(Policy = CustomRoles.Admin)]
-public class DashboardModel : PageModel
-{
-    public void OnGet()
-    {
-    }
-}
-```
-
-**Blazor**
 ```razor
 @page "/admin/dashboard"
 @attribute [Authorize(Roles = CustomRoles.Admin)]
@@ -122,11 +96,6 @@ public class DashboardModel : PageModel
     </h1>
 </section>
 ```
-
-### Access Denied Route
-In MVC and Razor Pages, Spark sets up an access denied route for you.
-
-Anytime a Authorize attribute with a Role check fails, the user will be redirected to the `/access-denied` route.
 
 ### Blazor AuthorizeView
 In Blazor, you can combine the `<AuthorizeView>` tag helper with Roles to display different content.

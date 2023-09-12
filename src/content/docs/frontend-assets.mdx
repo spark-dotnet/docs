@@ -4,33 +4,27 @@ description: "Spark Frontend Assets"
 ---
 
 ## Introduction
-Spark is primarily a backend framework that provides out of the box features to build modern web applications. However, we still want to offer a full-stack experience, including different approaches to building your apps frontend.
+Spark is primarily a backend framework that provides out of the box features to build modern web applications. However, we still want to offer a full-stack experience.
 
-All Spark projects come with a CSS framework already setup for you. Your free to remove them and use your own custom CSS if you'd like.
+All Spark projects come with Tailwind CSS setup for you. Your free to remove it and use your own custom CSS or another library if you'd like.
 
 It also comes with AlpineJS available to use. AlpineJS a light weight JavaScript framework that is great for UI interactions.
 
+## Bundling Assets
+Spark uses Vite to bundle your CSS and JS for you. It provides fast build times and Hot Module Replacement during local development.
+
+You will find a `vite.config.js` file that configures and loads Vite for you.
+
+Spark also uses the [Vite.AspNetCore](https://github.com/Eptagone/Vite.AspNetCore) Nuget package. This auto starts a Vite server for you when developing locally so you don't have to start it manually.
+
+Finally, Spark projects are also setup to build your assets for you whenever running a `dotnet build` or `dotnet publish`. You can find thses build commands in your `.csproj` file.
+
 ## CSS
-Spark projects come with Tailwind CSS by default.
+Spark projects come with Tailwind CSS installed via NPM by default.
 
-When creating a new Spark project, you can use other CSS frameworks by passing the <br class="hidden xl:block"/>`-c` option when running the `spark new [projectName]` command.
-```bash
-spark new MyApp -c bootstrap
-```
+If you need to customize Tailwind CSS, you can do so in the `tailwind.config.js` file.
 
-### CSS Framework Options
-
-**Tailwind CSS**
-```bash
-spark new MyApp -c tailwind
-```
-Learn more about Tailwind [here](https://tailwindcss.com/).
-
-**Bootstrap CSS**
-```bash
-spark new MyApp -c bootstrap
-```
-Learn more about Bootstrap [here](https://getbootstrap.com/).
+If you need to add custom CSS classes outside of the Tailwind library, you can do so by updating the `Assets/Css/app.css` file. This file is picked up by Vite, which prunes any unused Tailwind classes and bundles a minified CSS file for you.
 
 ## Javascript
 Spark project come with AlpineJS by default. 
@@ -38,3 +32,6 @@ Spark project come with AlpineJS by default.
 AlpineJS is a javascript library that helps you create simple page interactions like mobile menus and toggling elements.
 
 You can learn more about Alpine [here](https://alpinejs.dev/).
+
+### Custom Javascript
+If you need to write custom JavaScript, it is advised to do so in the `Assets/Js/app.js` file. This file is picked up by Vite, which then builds the minified Js file for you.

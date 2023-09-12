@@ -9,18 +9,13 @@ export const SIDEBAR: Sidebar = {
         { text: 'Introduction', link: 'introduction' },
         { text: 'Installation', link: 'installation' },
         { text: 'Frontend Assets', link: 'frontend-assets' },
+        { text: 'Project Templates', link: 'project-templates' },
         { text: 'Directory Structure', link: 'directory-structure' },
         { text: 'Spark CLI', link: 'spark-cli' },
         { text: 'Upgrade Guide', link: 'upgrade-guide' },
     ],
-    // 'Core Concepts': [
-    //     { text: 'Dependency Injection', link: 'dependency-injection' },
-    //     { text: 'Services', link: 'services' },
-    // ],
-    'Project Types': [
-        { text: 'Overview', link: 'project-types-overview' },
+    'Blazor Essentials': [
         { text: 'Blazor', link: 'blazor' },
-        { text: 'Api', link: 'api' },
     ],
     'Features': [
         { text: 'Configuration', link: 'configuration' },

@@ -1,19 +1,19 @@
 <nav class="w-full px-2 fixed bg-white border-b z-20">
     <div class="flex justify-between w-full px-6 py-4 max-w-7xl mx-auto">
-        <a class="inline-flex items-center" href="/">
+        <a class="hidden sm:inline-flex items-center" href="/">
             <div class="p-1 bg-yellow-400 rounded-lg mr-2">
                 <svg xmlns="http://www.w3.org/2000/svg"  class="w-6 h-auto text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
             </div>
             <h3 class="text-xl font-medium text-gray-700 hidden sm:block">Spark.NET</h3>
         </a>
         <div class="inline-flex items-center">
-            <a href="/docs/introduction" class="text-base sm:text-lg text-gray-700 font-medium mr-4 sm:mr-8 rounded-lg hover:text-gray-800 transition-colors ease-in-out duration-150 block">
+            <a href="/docs/introduction" class="text-sm sm:text-lg text-gray-700 font-medium mr-3 sm:mr-6 rounded-lg hover:text-gray-800 transition-colors ease-in-out duration-150 block">
                 Docs
             </a>
-            <button x-on:click="desktopMenuOpen = true" type="button" class="z-20 relative text-base sm:text-lg text-gray-700 font-medium mr-4 sm:mr-8 rounded-lg hover:text-gray-800 transition-colors ease-in-out duration-150 inline-flex items-center"
+            <button x-on:click="desktopMenuOpen = true" type="button" class="z-20 relative text-sm sm:text-lg text-gray-700 font-medium mr-3 sm:mr-6 rounded-lg hover:text-gray-800 transition-colors ease-in-out duration-150 inline-flex items-center"
                 x-data="{ desktopMenuOpen: false, mobileMenuOpen: false }">
                 Ecosystem
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-2" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 sm:ml-1" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                 </svg>
                 <div class="absolute top-10 -right-28 rounded shadow border bg-white w-60 sm:w-72 text-left"
@@ -74,11 +74,19 @@
                     </ul>
                 </div>
             </button>
-            <a href="/newsletter" class="text-base sm:text-lg text-gray-700 font-medium mr-4 sm:mr-8 rounded-lg hover:text-gray-800 transition-colors ease-in-out duration-150 block">
+            <a href="/newsletter" class="text-sm sm:text-lg text-gray-700 font-medium rounded-lg hover:text-gray-800 transition-colors ease-in-out duration-150 block">
                 News
             </a>
-            <a href="https://github.com/spark-dotnet/framework" target="_blank" rel="noreferrer nofollow" class="text-gray-700 hover:text-gray-800 transition-colors ease-in-out duration-150">
-                <svg class="h-6 w-6" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M11.925 0C5.366 0 0 5.366 0 11.925c0 5.218 3.429 9.69 8.199 11.33.596.149.745-.299.745-.597v-2.087c-3.28.746-4.025-1.49-4.025-1.49-.596-1.342-1.341-1.79-1.341-1.79-1.044-.744.149-.744.149-.744 1.192.149 1.789 1.192 1.789 1.192 1.043 1.938 2.832 1.342 3.428 1.044.15-.746.447-1.342.745-1.64-2.683-.298-5.366-1.342-5.366-5.963 0-1.341.447-2.385 1.193-3.13-.15-.298-.597-1.491.149-3.13 0 0 1.043-.299 3.28 1.192.894-.298 1.937-.447 2.98-.447 1.044 0 2.087.149 2.982.447 2.236-1.49 3.28-1.193 3.28-1.193.596 1.64.297 2.833.148 3.13.746.895 1.193 1.939 1.193 3.131 0 4.621-2.832 5.516-5.516 5.814.448.596.895 1.341.895 2.385v3.28c0 .297.149.745.894.596 4.77-1.64 8.199-6.112 8.199-11.33C23.85 5.366 18.485 0 11.925 0z" fill="currentColor"></path></svg>
+        </div>
+        <div class="inline-flex items-center">
+            <a href="https://github.com/spark-dotnet/framework" target="_blank" rel="noreferrer nofollow">
+                <img src="/github.min.svg" class="h-5 w-5 mr-2 sm:mr-3" alt="Github" width="24" height="24" />
+            </a>
+            <a href="https://discord.gg/TyxmQgvtDw" target="_blank" rel="noreferrer nofollow">
+                <img src="/discord.min.svg" class="h-5 w-5 mr-2 sm:mr-3" alt="Github" width="24" height="24" />
+            </a>
+            <a href="https://www.youtube.com/@sparkdotnet" target="_blank" rel="noreferrer nofollow">
+                <img src="/youtube.min.svg" class="h-5 w-5 mr-2 sm:mr-3" alt="Github" width="24" height="24" />
             </a>
         </div>
     </div>

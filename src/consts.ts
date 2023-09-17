@@ -14,8 +14,14 @@ export const SIDEBAR: Sidebar = {
         { text: 'Spark CLI', link: 'spark-cli' },
         { text: 'Upgrade Guide', link: 'upgrade-guide' },
     ],
-    'Blazor Essentials': [
-        { text: 'Blazor', link: 'blazor' },
+    'Blazor': [
+        { text: 'Components', link: 'components' },
+        { text: 'Pages', link: 'pages' },
+        { text: 'Layouts', link: 'layouts' },
+        { text: 'Properties', link: 'properties' },
+        { text: 'Events', link: 'events' },
+        { text: 'Forms', link: 'forms' },
+        { text: 'Lifecycle Methods', link: 'lifecycle-methods' },
     ],
     'Features': [
         { text: 'Configuration', link: 'configuration' },

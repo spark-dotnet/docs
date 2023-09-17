@@ -69,7 +69,9 @@ Blazer pages and components should always use **PascalCase** naming.
 
 
 ### Route Parameters
-The Blazor router uses route parameters to populate corresponding component parameters with the same name. Route parameter names are case insensitive.
+Parameters can be passed into a Blazor page through the url. For example, lets say you have a page to show the details about a developer. 
+
+You can setup a route parameter in your URL to pass in the Id. Then setup a public property in your Blazor page with the same name.
 
 ```razor
 @page "/developers/{Id:int}"
@@ -89,6 +91,8 @@ The Blazor router uses route parameters to populate corresponding component para
 	}
 }
 ```
+
+Route parameter names are case insensitive.
 
 ## Page title and metadata
 You can set a Blazor pages `<title>` element by using the `PageTitle` component.

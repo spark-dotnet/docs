@@ -17,11 +17,10 @@ export const SIDEBAR: Sidebar = {
     'Blazor': [
         { text: 'Components', link: 'components' },
         { text: 'Pages', link: 'pages' },
-        { text: 'Layouts', link: 'layouts' },
-        { text: 'Properties', link: 'properties' },
-        { text: 'Events', link: 'events' },
-        { text: 'Forms', link: 'forms' },
-        { text: 'Lifecycle Methods', link: 'lifecycle-methods' },
+        // { text: 'Layouts', link: 'layouts' },
+        // { text: 'Event Handling', link: 'event-handling' },
+        // { text: 'Forms', link: 'forms' },
+        // { text: 'Lifecycle Methods', link: 'lifecycle-methods' },
     ],
     'Features': [
         { text: 'Configuration', link: 'configuration' },

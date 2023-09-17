@@ -35,22 +35,29 @@ This makes changing variables simple between environments. You don't have to cre
 >
 
 ## Setup
-Because all of your configuration values end up in the `appsettings.json` file, they can be accessed by the `IConfiguration` interface.
+Because all of your configuration values end up in the `appsettings.json` file, they can be accessed by dependency injecting the `IConfiguration` interface.
 
-This is accessed via dependency injection.
-```razor
-@* razor component example *@
-@page "/"
-@inject IConfiguration _config
+```csharp
+namespace MyApp.Pages.Developers.Index;
+
+public partial class Index
+{
+    [Inject] public IConfiguration Config { get; set; }
+
+    protected override void OnInitialized()
+    {
+        var value = Config.GetValue<string>("Some:Variable");
+    }
+}
 ```
 
 ## Retrieving Environment Variables
 Once injected, you can access your config values.
 ```csharp
-_config.GetValue<string>("Spark:App:Name")!;
+Config.GetValue<string>("Spark:App:Name")!;
 ```
 
-Environment variables can also be accessed through the static `Spark.Library.Environment.Env` class.
+Environment variables can be accessed through the static `Spark.Library.Environment.Env` class.
 ```csharp
 using Spark.Library.Environment;
 

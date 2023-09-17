@@ -69,46 +69,25 @@ services.AddSingleton<MyService>();
 ```
 
 ## Injecting Services
-Once a service is registered, it can be injected into any Razor component, controller, or other registered services.
-
-#### Injecting a Service in a controller
-
-Use standard dependency injection.
-```csharp
-    public class DevelopersController : Controller
-    {
-        private readonly DeveloperService _developerService;
-
-        public DevelopersController(DeveloperService developerService) {
-            _developerService = developerService;
-        }
-
-        [Route("developers")]
-        public IActionResult Index()
-        {
-            List<Developer> developers = _developerService.GetAll();
-            ViewBag.Developers = developers;
-            return View();
-        }
-    }
-```
+Once a service is registered, it can be injected into any Razor component or other registered classes.
 
 #### Injecting a Service in a Razor component
 
-Use the `@inject` attribute in a Razor component to inject your services.
-```razor
-@page "/developers"
-@inject DeveloperService developerService
+Use the `[Inject]` attribute in a Razor component code behind file to inject your services.
+```csharp
 
-<p>Developer page</p>
+namespace MyApp.Pages.Developers.Index;
 
-@code {
-	private List<Developer> developers;
+public partial class Index
+{
+    [Inject] public DeveloperService DeveloperService { get; set; }
 
-	protected override async Task OnInitializedAsync()
-	{
-		developers = await developerService.GetAll();
-	}
+	private List<Developer> _developers;
+
+    protected override void OnInitialized()
+    {
+		_developers = await developerService.GetAll();
+    }
 }
 ```
 

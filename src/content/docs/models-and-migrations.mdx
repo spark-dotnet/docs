@@ -85,7 +85,7 @@ Once you have created a model, added it to your Database Context, and migrated i
 
 Each model registered as a DbSet in `DatabaseContext.cs` is a powerful query builder, allowing you to use LINQ queries to pull data from the underlying database table.
 
-To start querying models, you simply need to inject your `DatabaseContext` and run a linq query on your registered models.
+To start querying models, you simply need to inject your `DatabaseContext` and run a linq query:
 
 ```csharp
 public class DeveloperService
@@ -98,31 +98,25 @@ public class DeveloperService
     }
 
     public List<Developer> All() {
+        // Get all developers from the `developers` table in the database
         return _db.Developers.ToList();
     }
 }
 ```
 
-As mentioned above, in Blazor Server, it is required to use the `DbContextFactory` to get a new instance of the `DatabaseContext`.
+If your using Blazor Server and in a razor component, it is required to use the `DbContextFactory` to get a new instance of the `DatabaseContext`.
 
-```razor
-@page "/developers"
-@inject IDbContextFactory<DatabaseContext> factory
+```csharp
+namespace MyApp.Pages.Developers.Index;
 
-<ul>
-    @foreach (var developer in Developers) {
-        <li>@developer.Name</li>
-    }
-</ul>
+public partial class Index
+{
+    [Inject] public IDbContextFactory<DatabaseContext> Factory { get; set; }
 
-@code {
-    private List<Developer> Developers = new List<Developer>();
-
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
-        using var db = factory.CreateDbContext();
-        
-        Developers = await db.Developers.ToListAsync();
+        using var db = Factory.CreateDbContext();
+        var developers = db.Developers.ToList();
     }
 }
 ```

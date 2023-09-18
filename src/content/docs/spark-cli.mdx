@@ -57,6 +57,26 @@ Runs outstanding migrations.
 spark migrate
 ```
 
+## Create Component
+Create an new Razor component.
+```bash
+spark make component [ComponentName]
+```
+The new component will be under `Pages/Shared`. 
+
+The command accepts subfolders as well. For instance, `spark make component Profile/ProfileDetails` would make a new component at `Pages/Shared/Profile/ProfileDetails.razor`.
+
+All components are created with a code behind file as well. 
+
+So `Pages/Shared/Profile/ProfileDetails.razor` would also have a code behind file of `Pages/Shared/Profile/ProfileDetails.cs` created with it.
+
+### Inline Components
+If you prefer to combine your razor and code behind files into 1 .razor file, you can pass the `--inline` flag.
+
+```bash
+spark make page [PageName] --inline
+```
+
 ## Create Page
 Create an new Blazor page.
 ```bash
@@ -66,24 +86,14 @@ The new page will be under `Pages`.
 
 The command accepts subfolders as well. For instance, `spark make page Profile/Index` would make a new Blazor page at `Pages/Profile/Index.razor`.
 
-All pages are created with a code behind file as well. So the `Profile/Index.razor` page would also have a code behind file of `Profile/Index.razor.cs` created with it.
+All pages are created with a code behind file as well. So the `Pages/Profile/Index.razor` page would also have a code behind file of `Pages/Profile/Index.cs` created with it.
 
+### Inline Pages
+If you prefer to combine your razor and code behind files into 1 .razor file, you can pass the `--inline` flag.
 
-## Create Pages
-Create a complete CRUD page sytems for an existing Model.
 ```bash
-spark make pages [ModelName]
+spark make page [PageName] --inline
 ```
-The new pages will be under `Pages`. 
-
-The model should already exist. Spark will create a folder after the model name and the following pages.
-
-- Index.razor and Index.razor.cs
-- Create.razor and Create.razor.cs
-- Edit.razor and Edit.razor.cs
-- Show.razor and Show.razor.cs
-
-All of the pages are setup with view models and automappers for the model. However, the properties are not added to the view models for you.
 
 ## Create Event
 Create an new Event and Listener.

@@ -86,7 +86,7 @@ public partial class Index
 
     protected override void OnInitialized()
     {
-		_developers = await developerService.GetAll();
+		_developers = await DeveloperService.GetAll();
     }
 }
 ```

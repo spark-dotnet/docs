@@ -5,15 +5,15 @@ import Layout from '../layouts/Layout.astro';
 <Layout title="The .NET Web Framework for Makers">
 	<main class="text-center flex flex-col justify-center pt-16">
 		<section class="py-8 sm:py-16 lg:py-32 flex flex-col gap-y-6 sm:gap-y-12 px-6 sm:px-8 container mx-auto">
-			<h1 class="text-5xl sm:text-7xl md:text-8xl md:leading-none font-bold max-w-5xl mx-auto text-gray-800 text-left sm:text-center">The .NET Web Framework for <span class="text-yellow-400">Makers</span></h1>
+			<h1 class="text-5xl sm:text-7xl font-bold max-w-4xl mx-auto text-gray-800 text-left sm:text-center">The .NET Web Framework for <span class="text-yellow-400">Makers</span></h1>
 			<p class="text-xl sm:text-2xl text-gray-500 max-w-3xl text-left sm:text-center mx-auto leading-loose sm:leading-loose">
-				Build production ready, full-stack web applications fast without sweating the small stuff.
+				Build production ready, full-stack web applications fast with Blazor and ASP.NET.
 			</p>
 			<div class="flex flex-col sm:flex-row justify-center items-center gap-x-8">
 				<a href="/docs/introduction" class="w-full sm:w-fit text-xl px-8 py-3 bg-gradient-to-r from-[#608CF9] to-[#AC48FE] text-white font-medium rounded-md hover:bg-gray-800">
 					Documentation
 				</a>
-				<a href="#install" class="mt-6 sm:mt-0 text-xl sm:text-2xl text-gray-500 hover:text-gray-800 active:text-gray-80 border-b border-gray-500 hover:border-gray-800">
+				<a href="#install" class="mt-6 sm:mt-0 text-xl sm:text-2xl text-gray-500 hover:text-gray-800">
 					Install Spark
 				</a>
 			</div>
@@ -22,13 +22,10 @@ import Layout from '../layouts/Layout.astro';
 		<section class="py-8 sm:py-16 lg:py-32 bg-gray-900 px-6 sm:px-8">
 			<div class="max-w-4xl mx-auto text-white text-left">
 				<div class="flex flex-col gap-y-6 sm:gap-y-12">
-					<h2 id="install" class="text-4xl sm:text-6xl text-white font-bold max-w-lg">
+					<h2 id="install" class="text-4xl sm:text-5xl text-white font-bold max-w-lg">
 						Get started in under a minute
 					</h2>
-					<p class="text-xl sm:text-2xl leading-loose sm:leading-loose max-w-xl">
-						Spark's <a href="https://github.com/spark-dotnet/framework" target="_blank" class="text-yellow-300 hover:text-yellow-200">open-source</a> web framework is simple to get started with:
-					</p>
-					<h3 class="text-3xl sm:text-4xl text-white font-bold max-w-lg">
+					<h3 class="text-3xl text-white font-bold max-w-lg">
 						1. Install Spark's CLI
 					</h3>
 					<code class="relative font-mono text-white flex flex-col items-start text-base sm:text-2xl bg-gray-800 px-4 pt-8 pb-4 sm:px-6 sm:pt-12 sm:pb-6 rounded-lg">
@@ -38,7 +35,7 @@ import Layout from '../layouts/Layout.astro';
 						<p class="my-4 sm:my-6"><span class="">C:\code&#62;</span> dotnet tool install --global Spark.CLI</p>
 						<p class=""><span class="">C:\code&#62;</span> spark install</p>
 					</code>
-					<h3 class="text-3xl sm:text-4xl text-white font-bold max-w-lg">
+					<h3 class="text-3xl text-white font-bold max-w-lg">
 						2. Create your first project
 					</h3>
 					<div  x-data="{ projectType: 'blazor' }">
@@ -66,9 +63,6 @@ import Layout from '../layouts/Layout.astro';
 					<p class="text-xl sm:text-2xl leading-loose sm:leading-loose max-w-2xl">
 						You now have a full stack ASP.NET app with authentication, authorization, database, mail, scheduled jobs, and lots more! 
 					</p>
-					<p class="text-xl sm:text-2xl leading-loose sm:leading-loose max-w-xl">
-						Now check out our <a href="/docs/introduction" class="text-yellow-300 hover:text-yellow-200">documentation</a> for next steps.
-					</p>
 				</div>
 			</div>
 		</section>
@@ -83,10 +77,8 @@ import Layout from '../layouts/Layout.astro';
 				<p class="text-xl sm:text-2xl leading-relaxed sm:leading-relaxed text-gray-500 lg:col-end-8 pt-4 sm:pt-8 text-left max-w-2xl">
 					Spark embraces convention, freeing developers to build instead of deliberating mundane details.
 				</p>
-				<div class="mt-8 sm:mt-16">
-					<img class="hidden sm:block w-full h-auto -ml-6 lg:-ml-12 xl:-ml-24" src="/convention.png" alt="Spark convention over configuration" />
-					<img class="block sm:hidden w-full h-auto -ml-4" src="/convention-editor.png" alt="Spark app folders" />
-					<img class="block sm:hidden w-full h-auto -ml-4" src="/convention-browser.png" alt="Spark default app" />
+				<div class="mt-8">
+					<img class="block w-full h-auto -ml-4 max-w-3xl" src="/convention-editor.png" alt="Spark app folders" />
 				</div>
 			</div>
 			<div>
@@ -96,10 +88,8 @@ import Layout from '../layouts/Layout.astro';
 				<p class="text-xl sm:text-2xl leading-relaxed sm:leading-relaxed text-gray-500 lg:col-end-8 pt-4 sm:pt-8 text-left max-w-2xl">
 					Spark comes with features like auth, mail, and logging already setup. Freeing you to create without sweating the small things.
 				</p>
-				<div class="mt-8 sm:mt-16">
-					<img class="hidden sm:block w-full h-auto -ml-6 lg:-ml-12 xl:-ml-24" src="/auth.png" alt="Spark authentication feature" />
-					<img class="block sm:hidden w-full h-auto -ml-4" src="/auth-editor.png" alt="Spark authentication code" />
-					<img class="block sm:hidden w-full h-auto -ml-4" src="/auth-browser.png" alt="Spark authentication page" />
+				<div class="mt-8">
+					<img class="block w-full h-auto -ml-4 max-w-3xl" src="/auth-editor.png" alt="Spark authentication code" />
 				</div>
 			</div>
 			<div>
@@ -109,10 +99,8 @@ import Layout from '../layouts/Layout.astro';
 				<p class="text-xl sm:text-2xl leading-relaxed sm:leading-relaxed text-gray-500 lg:col-end-8 pt-4 sm:pt-8 text-left max-w-2xl">
 					A happy developer is a productive developer. Our CLI helps you make applications, run migrations, and generate classes. 
 				</p>
-				<div class="mt-8 sm:mt-16">
-					<img class="hidden sm:block w-full h-auto -ml-6 lg:-ml-12 xl:-ml-24" src="/cli.png" alt="Spark cli" />
-					<img class="block sm:hidden w-full h-auto -ml-4" src="/cli-editor.png" alt="Spark mailable cli command" />
-					<img class="block sm:hidden w-full h-auto -ml-4" src="/cli-app.png" alt="Spark mailable code" />
+				<div class="mt-8">
+					<img class="block w-full h-auto -ml-4 max-w-3xl" src="/cli-editor.png" alt="Spark mailable cli command" />
 				</div>
 			</div>
 		</section>

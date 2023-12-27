@@ -3,21 +3,21 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title="The .NET Web Framework for Makers">
-	<main class="text-center flex flex-col justify-center pt-16">
-		<section class="py-8 sm:py-16 lg:py-32 flex flex-col gap-y-6 sm:gap-y-12 px-6 sm:px-8 container mx-auto">
-			<h1 class="text-5xl sm:text-7xl font-bold max-w-4xl mx-auto text-gray-800 text-left sm:text-center">The .NET Web Framework for <span class="text-yellow-400">Makers</span></h1>
-			<p class="text-xl sm:text-2xl text-gray-500 max-w-3xl text-left sm:text-center mx-auto leading-loose sm:leading-loose">
+	<main class="text-center flex flex-col justify-center text-neutral">
+		<section class="flex flex-col gap-y-6 sm:gap-y-12 px-6 sm:px-8 container mx-auto py-24">
+			<h1 class="text-4xl sm:text-7xl font-black max-w-4xl mx-auto text-neutral">The .NET Web Framework for <span class="text-accent">Makers</span></h1>
+			<p class="text-lg sm:text-2xl text-neutral/80 max-w-3xl mx-auto leading-loose sm:leading-loose">
 				Build production ready, full-stack web applications fast with Blazor and ASP.NET.
 			</p>
-			<div class="flex flex-col sm:flex-row justify-center items-center gap-x-8">
-				<a href="/docs/introduction" class="w-full sm:w-fit text-xl px-8 py-3 bg-gradient-to-r from-[#608CF9] to-[#AC48FE] text-white font-medium rounded-md hover:bg-gray-800">
-					Documentation
-				</a>
-				<a href="#install" class="mt-6 sm:mt-0 text-xl text-gray-500 hover:text-gray-800 px-8 py-3 border border-gray-500 hover:border-gray-800 rounded-md">
+			<div class="flex flex-col gap-y-4 sm:gap-y-0 sm:flex-row justify-center items-center gap-x-6">
+				<a href="#install" class="btn btn-block sm:w-fit sm:btn-lg">
 					Install Spark
 				</a>
+				<a href="/docs/introduction" class="btn btn-primary btn-block sm:w-fit sm:btn-lg">
+					Documentation
+				</a>
 			</div>
-			<iframe src="https://www.youtube.com/embed/5-2ZGeN_vCs" title="YouTube video player" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="aspect-ratio: 16 / 9;width: 100%;" class="max-w-6xl mt-10 mx-auto"></iframe>
+			<!-- <iframe src="https://www.youtube.com/embed/5-2ZGeN_vCs" title="YouTube video player" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="aspect-ratio: 16 / 9;width: 100%;" class="max-w-6xl mt-10 mx-auto"></iframe> -->
 		</section>
 		<section class="py-8 sm:py-16 lg:py-32 bg-gray-900 px-6 sm:px-8">
 			<div class="max-w-4xl mx-auto text-white text-left">

@@ -16,7 +16,8 @@ module.exports = {
 			{
 				cupcake: {
 					...require("daisyui/src/theming/themes")["cupcake"],
-					"base-100": "#ECE3CA",
+					"base-content": "rgb(41 37 36)",
+					"secondary-content": "rgb(68 64 60)"
 				},
 			},
 		],

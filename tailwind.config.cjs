@@ -8,6 +8,9 @@ module.exports = {
 			fontFamily: {
 				sans: ["Inter", "InterVariable", ...defaultTheme.fontFamily.sans],
 			},
+			fontSize: {
+				smedium: '0.93rem',
+			}
 		},
 	},
 	plugins: [require("daisyui")],

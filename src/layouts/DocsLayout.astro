@@ -42,7 +42,6 @@ const { title } = Astro.props;
             <div class="px-4 sm:px-6 lg:pl-12 lg:pr-0 pt-12 w-full lg:ml-[269px]">
                 <DocsDropDown currentPage={Astro.url.pathname} title={title} />
                 <slot />
-                <StayUpdated />
                 <Footer />
             </div>
         </div>
@@ -65,38 +64,38 @@ const { title } = Astro.props;
 }
 
 pre {
-    @apply p-6 mb-12 rounded-lg bg-gray-900 !important;
+    @apply p-6 mb-12 rounded-lg bg-gray-900 text-smedium !important;
 }
 
 pre code {
-    @apply bg-gray-900 px-0 border-none text-base leading-[1.9em] !important;
+    @apply bg-gray-900 px-0 border-none text-sm tracking-wider font-normal leading-[1.9em] !important;
 }
 
 code {
-    @apply bg-gray-100 border border-gray-400 text-purple-800 px-1 py-0.5 rounded text-base leading-[1.9em] font-medium;
+    @apply bg-gray-100 font-sans px-[.35rem] py-[.1rem] rounded text-sm font-light text-gray-800 leading-[1.9em];
 }
 
 .markdown h1 {
-    @apply text-4xl sm:text-5xl mb-8 font-bold text-gray-800;
+    @apply text-4xl mb-8 font-bold text-gray-800;
 }
 .markdown p + ul {
     @apply -mt-4;
 }
 
 .markdown p {
-    @apply text-base mb-6 leading-[1.9em] text-gray-800;
+    @apply text-smedium mb-6 leading-[1.9em] text-gray-800 font-light;
 }
 
 .markdown ul {
-    @apply list-disc list-inside mb-6 ml-4;
+    @apply list-disc list-inside mb-6 ml-4 text-smedium font-light;
 }
 
 .markdown li {
-    @apply leading-[1.9em];
+    @apply leading-[1.9em] text-smedium font-light;
 }
 
 .markdown blockquote {
-    @apply p-6 mt-10 mb-12 bg-blue-50 border-l-4 border-blue-600 !important;
+    @apply p-6 mt-10 mb-12 bg-blue-50 border-l-4 border-blue-600 text-smedium !important;
 }
 .markdown blockquote pre {
     @apply mx-0 !important;
@@ -107,11 +106,11 @@ code {
 }
 
 .markdown h2 {
-    @apply text-4xl mt-20 mb-8 font-medium text-gray-800;
+    @apply text-3xl mt-20 mb-8 font-medium text-gray-800;
 }
 
 .markdown h3 {
-    @apply text-2xl mt-12 mb-4 font-bold text-gray-800;
+    @apply text-xl mt-12 mb-4 font-medium text-gray-800;
 }
 .markdown h4 {
     @apply text-lg mb-4 font-bold text-gray-800;
@@ -122,6 +121,6 @@ code {
 }
 
 .markdown a {
-    @apply font-bold text-lg text-purple-700 border-b-2 border-purple-700;
+    @apply text-accent hover:underline;
 }
 </style>

@@ -10,48 +10,44 @@ const currentPageMatch = currentPage.endsWith('/')
 const sidebar = SIDEBAR;
 ---
 
-<div class="mb-12 lg:mb-0" aria-labelledby="grid-left">
-	<ul class="nav-groups" x-data="{ currentSection: 'Getting Started' }">
-		{
-			Object.entries(sidebar).map(([header, children]) => (
-				<li>
-					<div class="nav-group">
-						<!-- cursor-pointer hover:-ml-0.5 transition-all duration-300 -->
-						<h2 class="nav-group-title" x-on:click={`currentSection = '${header}'`}>{header}</h2>
-						<!--<ul x-show={`currentSection == '${header}'`} x-cloak>-->
-						<ul>
-							{children.map((child) => {
-								const url = child.link;
-								let fonts = '';
-								if ('docs/'+url == currentPageMatch) {
-									fonts = "font-bold bg-gray-100 rounded before:content-['•'] before:text-purple-600";
-								} else {
-									fonts = 'font-light rounded';
-								}
-								return (
-									<li class="nav-link">
-										<a class={fonts} href={'/docs/'+url}>
-											{child.text}
-										</a>
-									</li>
-								);
-							})}
-						</ul>
-					</div>
-				</li>
-			))
-		}
-	</ul>
-</div>
 
-<script is:inline>
-	window.addEventListener('DOMContentLoaded', () => {
-		var target = document.querySelector('[aria-current="page"]');
-		if (target && target.offsetTop > window.innerHeight - 100) {
-			document.querySelector('.nav-groups').scrollTop = target.offsetTop;
-		}
-	});
-</script>
+<aside class="hidden lg:flex flex-col">
+	<div class="overflow-y-auto fixed max-h-[calc(100%-50px)] no-scrollbar border-r px-8 border-stone-400 pt-12">
+		<div class="" aria-labelledby="grid-left">
+			<ul class="nav-groups" x-data="{ currentSection: 'Getting Started' }">
+				{
+					Object.entries(sidebar).map(([header, children]) => (
+						<li>
+							<div class="nav-group">
+								<!-- cursor-pointer hover:-ml-0.5 transition-all duration-300 -->
+								<h2 class="nav-group-title" x-on:click={`currentSection = '${header}'`}>{header}</h2>
+								<!--<ul x-show={`currentSection == '${header}'`} x-cloak>-->
+								<ul>
+									{children.map((child) => {
+										const url = child.link;
+										let fonts = '';
+										if ('docs/'+url == currentPageMatch) {
+											fonts = "font-bold bg-gray-100 rounded before:content-['•'] before:text-purple-600";
+										} else {
+											fonts = 'font-light rounded';
+										}
+										return (
+											<li class="nav-link">
+												<a class={fonts} href={'/docs/'+url}>
+													{child.text}
+												</a>
+											</li>
+										);
+									})}
+								</ul>
+							</div>
+						</li>
+					))
+				}
+			</ul>
+		</div>
+	</div>
+</aside>
 
 <style>
 	nav {
@@ -107,11 +103,5 @@ const sidebar = SIDEBAR;
 		.nav-groups {
 			padding: 0;
 		}
-	}
-</style>
-
-<style is:global>
-	:root.theme-dark .nav-link a[aria-current='page'] {
-		color: hsla(var(--color-base-white), 100%, 1);
 	}
 </style>

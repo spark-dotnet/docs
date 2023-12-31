@@ -4,6 +4,7 @@ import DocsDropDown from '../components/DocsDropDown.astro';
 import HomePageNav from '../components/HomePageNav.astro';
 import Footer from '../components/Footer.astro';
 import StayUpdated from '../components/StayUpdated.astro';
+import DocsNav from '../components/DocsNav.astro';
 export interface Props {
 	title: string;
 }
@@ -34,15 +35,11 @@ const { title } = Astro.props;
             gtag('config', 'G-PZ2NL51HFG');
         </script>
 	</head>
-	<body>
-		<HomePageNav />
-        <div class="flex-col lg:flex-row flex px-2 max-w-7xl mx-auto pt-24 pb-12 gap-10">
-            <aside class="hidden min-h-0 lg:flex flex-col px-4 lg:w-60 items-start group">
-                <div class="overflow-y-auto fixed pr-6 max-h-[calc(100%-100px)] custom-scrollbar">
-                    <LeftSideBar currentPage={Astro.url.pathname} />
-                </div>
-            </aside>
-            <div class="flex-1 px-8 max-w-3xl">
+	<body class="bg-gray-50">
+		<DocsNav />
+        <div class="flex-col lg:flex-row flex w-full pb-12">
+            <LeftSideBar currentPage={Astro.url.pathname} />
+            <div class="px-4 sm:px-6 lg:pl-12 lg:pr-0 pt-12 w-full lg:ml-[269px]">
                 <DocsDropDown currentPage={Astro.url.pathname} title={title} />
                 <slot />
                 <StayUpdated />
@@ -57,20 +54,21 @@ const { title } = Astro.props;
 [x-cloak] {
     display: none !important;
 }
-.custom-scrollbar::-webkit-scrollbar {
-  width: .65em;
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
 }
- 
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  @apply bg-gray-300 rounded hidden group-hover:block;
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
 }
 
 pre {
-    @apply -mx-6 p-6 mb-12 rounded-lg bg-gray-900 !important;
+    @apply p-6 mb-12 rounded-lg bg-gray-900 !important;
 }
 
 pre code {
-    font-weight: 500;
     @apply bg-gray-900 px-0 border-none text-base leading-[1.9em] !important;
 }
 
@@ -98,7 +96,7 @@ code {
 }
 
 .markdown blockquote {
-    @apply -mx-6 p-6 mt-10 mb-12 bg-blue-50 border-l-4 border-blue-600 !important;
+    @apply p-6 mt-10 mb-12 bg-blue-50 border-l-4 border-blue-600 !important;
 }
 .markdown blockquote pre {
     @apply mx-0 !important;

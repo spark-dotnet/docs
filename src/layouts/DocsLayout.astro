@@ -1,12 +1,12 @@
 ---
-import LeftSideBar from '../components/LeftSideBar.astro';
-import DocsDropDown from '../components/DocsDropDown.astro';
-import HomePageNav from '../components/HomePageNav.astro';
-import Footer from '../components/Footer.astro';
-import StayUpdated from '../components/StayUpdated.astro';
-import DocsNav from '../components/DocsNav.astro';
+import LeftSideBar from "../components/LeftSideBar.astro";
+import DocsDropDown from "../components/DocsDropDown.astro";
+import HomePageNav from "../components/HomePageNav.astro";
+import Footer from "../components/Footer.astro";
+import StayUpdated from "../components/StayUpdated.astro";
+import DocsNav from "../components/DocsNav.astro";
 export interface Props {
-	title: string;
+  title: string;
 }
 
 const { title } = Astro.props;
@@ -14,113 +14,115 @@ const { title } = Astro.props;
 
 <!DOCTYPE html>
 <html lang="en" data-theme="cupcake">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-        <link rel="shortcut icon" href="/favicon.png">
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-		<style>
-			[x-cloak] {
-				display: none !important;
-			}
-		</style>
-        <!-- Google tag (gtag.js) -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-PZ2NL51HFG"></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="shortcut icon" href="/favicon.png" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <style>
+      [x-cloak] {
+        display: none !important;
+      }
+    </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PZ2NL51HFG"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
 
-            gtag('config', 'G-PZ2NL51HFG');
-        </script>
-	</head>
-	<body class="bg-gray-50">
-		<DocsNav />
-        <div class="flex-col lg:flex-row flex w-full pb-12">
-            <LeftSideBar currentPage={Astro.url.pathname} />
-            <div class="px-4 sm:px-6 lg:pl-12 lg:pr-0 pt-12 w-full lg:ml-[269px]">
-                <DocsDropDown currentPage={Astro.url.pathname} title={title} />
-                <slot />
-                <Footer />
-            </div>
-        </div>
-	</body>
+      gtag("config", "G-PZ2NL51HFG");
+    </script>
+  </head>
+  <body class="bg-gray-50">
+    <DocsNav />
+    <div class="flex-col lg:flex-row flex w-full pb-12">
+      <LeftSideBar currentPage={Astro.url.pathname} />
+      <div class="px-4 sm:px-6 lg:pl-12 lg:pr-0 pt-12 w-full lg:ml-[269px]">
+        <DocsDropDown currentPage={Astro.url.pathname} title={title} />
+        <slot />
+        <Footer />
+      </div>
+    </div>
+  </body>
 </html>
 
-
 <style is:global>
-[x-cloak] {
+  [x-cloak] {
     display: none !important;
-}
+  }
 
-.no-scrollbar::-webkit-scrollbar {
+  .no-scrollbar::-webkit-scrollbar {
     display: none;
-}
-/* Hide scrollbar for IE, Edge and Firefox */
-.no-scrollbar {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
-}
+  }
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
 
-pre {
+  pre {
     @apply p-6 mb-12 rounded-lg bg-gray-900 text-smedium !important;
-}
+  }
 
-pre code {
+  pre code {
     @apply bg-gray-900 px-0 border-none text-sm tracking-wider font-normal leading-[1.9em] !important;
-}
+  }
 
-code {
-    @apply bg-gray-100 font-sans px-[.35rem] py-[.1rem] rounded text-sm font-light text-gray-800 leading-[1.9em];
-}
+  code {
+    @apply bg-gray-100 font-sans px-[.35rem] py-[.1rem] rounded text-sm text-gray-800 leading-[1.9em];
+  }
 
-.markdown h1 {
+  .markdown h1 {
     @apply text-4xl mb-8 font-bold text-gray-800;
-}
-.markdown p + ul {
+  }
+  .markdown p + ul {
     @apply -mt-4;
-}
+  }
 
-.markdown p {
-    @apply text-smedium mb-6 leading-[1.9em] text-gray-800 font-light;
-}
+  .markdown p {
+    @apply text-smedium mb-6 leading-[1.9em] text-gray-800;
+  }
 
-.markdown ul {
-    @apply list-disc list-inside mb-6 ml-4 text-smedium font-light;
-}
+  .markdown ul {
+    @apply list-disc list-inside mb-6 ml-4 text-smedium;
+  }
 
-.markdown li {
-    @apply leading-[1.9em] text-smedium font-light;
-}
+  .markdown li {
+    @apply leading-[1.9em] text-smedium;
+  }
 
-.markdown blockquote {
+  .markdown blockquote {
     @apply p-6 mt-10 mb-12 bg-blue-50 border-l-4 border-blue-600 text-smedium !important;
-}
-.markdown blockquote pre {
+  }
+  .markdown blockquote pre {
     @apply mx-0 !important;
-}
+  }
 
-.markdown blockquote > p:last-of-type {
+  .markdown blockquote > p:last-of-type {
     @apply mb-0 !important;
-}
+  }
 
-.markdown h2 {
+  .markdown h2 {
     @apply text-3xl mt-20 mb-8 font-medium text-gray-800;
-}
+  }
 
-.markdown h3 {
+  .markdown h3 {
     @apply text-xl mt-12 mb-4 font-medium text-gray-800;
-}
-.markdown h4 {
+  }
+  .markdown h4 {
     @apply text-lg mb-4 font-bold text-gray-800;
-}
+  }
 
-.markdown img {
+  .markdown img {
     @apply mb-6 w-full mx-auto rounded-lg;
-}
+  }
 
-.markdown a {
+  .markdown a {
     @apply text-accent hover:underline;
-}
+  }
 </style>

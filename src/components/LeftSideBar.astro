@@ -20,16 +20,16 @@ const sidebar = SIDEBAR;
 						<li>
 							<div class="nav-group">
 								<!-- cursor-pointer hover:-ml-0.5 transition-all duration-300 -->
-								<h2 class="text-gray-800 font-bold text-sm -ml-4 mb-2 px-4" x-on:click={`currentSection = '${header}'`}>{header}</h2>
+								<h2 class="font-medium text-sm -ml-4 mb-2 px-4" x-on:click={`currentSection = '${header}'`}>{header}</h2>
 								<!--<ul x-show={`currentSection == '${header}'`} x-cloak>-->
 								<ul>
 									{children.map((child) => {
 										const url = child.link;
 										let fonts = '';
 										if ('docs/'+url == currentPageMatch) {
-											fonts = "font-light text-sm block py-1 px-4 text-[#EEAF3A] border-l-2 border-accent";
+											fonts = "text-sm block py-1 px-4 text-[#EEAF3A] border-l-2 border-accent";
 										} else {
-											fonts = 'font-light text-sm block  py-1 px-4';
+											fonts = 'text-sm block  py-1 px-4';
 										}
 										return (
 											<li class="nav-link">

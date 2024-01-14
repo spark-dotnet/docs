@@ -9,7 +9,7 @@ module.exports = {
 				sans: ["Inter", "InterVariable", ...defaultTheme.fontFamily.sans],
 			},
 			fontSize: {
-				smedium: '0.93rem',
+				smedium: '0.95rem',
 			}
 		},
 	},

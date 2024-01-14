@@ -31,10 +31,10 @@ const { Content, headings } = await post.render();
 				<ul class="list-none space-y-3 text-xs">
 					{headings.map((item) => (
 						item.depth <=2 ? 
-						<li class=""><a href={'#'+item.slug}>{item.text}</a></li> 
+						<li class="text-gray-600"><a href={'#'+item.slug}>{item.text}</a></li> 
 						:
 						item.depth < 4 ? 
-						<li class="font-light pl-6"><a href={'#'+item.slug}>{item.text}</a></li> 
+						<li class="font-light pl-6 text-gray-600"><a href={'#'+item.slug}>{item.text}</a></li> 
 						:
 						''
 					))}

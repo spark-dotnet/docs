@@ -4,9 +4,9 @@ description: "Spark Models & Migrations"
 ---
 
 ## Introduction
-Spark uses Entity Frameworks models and migrations to query your data and maintain your applications database.
+Spark uses Entity Frameworks models and migrations to query your data and maintain your applications database schema.
 
-A model in Spark is a representation of the data in 1 database table.
+A model in Spark is a representation of the schema of 1 database table.
 
 The only caveat to this is the `BaseModel` class.
 
@@ -69,7 +69,7 @@ A new file with your schema changes is created in the `Application/Database/Migr
 > ### Changing database types and migrations
 > If you ever find your self in a scenario where you have created migrations and then decide to switch database types, you will need to clear your migration files out of the `Application/Database/Migrations` folder.
 >
-> Then, create and run your migrations again. This is because migration files for one database type might not work for another due to different feature sets in those databases.
+> Then, create and run your migrations again. This is because migration files for one database provider might not work for another due to different feature sets in those databases.
 
 ### Run Migrations
 You can run your migration to apply the changes to your database with the Spark `migrate` command.
@@ -104,25 +104,10 @@ public class DeveloperService
 }
 ```
 
-If your using Blazor Server and in a razor component, it is required to use the `DbContextFactory` to get a new instance of the `DatabaseContext`.
-
-```csharp
-namespace MyApp.Pages.Developers.Index;
-
-public partial class Index
-{
-    [Inject] public IDbContextFactory<DatabaseContext> Factory { get; set; }
-
-    protected override void OnInitialized()
-    {
-        using var db = Factory.CreateDbContext();
-        var developers = db.Developers.ToList();
-    }
-}
-```
-
 ### Saving Models
 Spark comes with handy extension method called `Save` to help you save a record in 1 line.
+
+**1 important thing to note about the save delete extension methods. Any outstanding transactions in your database context will be applied.**
 
 ```csharp
 public class DeveloperService

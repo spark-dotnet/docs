@@ -6,65 +6,75 @@ description: "Spark Logging"
 ## Introduction
 To help you be aware of what's happening with your application, Spark provides a logging service to allow you to log messages.
 
-Under the hood, Spark uses the [Serilog](https://serilog.net/) library.
+Spark uses the [Serilog](https://serilog.net/) library to accomplish this. It is setup out of the box to use a console and file logger.
 
 ## Configuration
-Logging can be configured in your `.env` file.
-```ini
-LOG_CHANNEL=file
-LOG_LEVEL=information
+Logging is configured in your `appsettings.json` file.
+```json
+...
+"Serilog": {
+    "MinimumLevel": {
+        "Default": "Information",
+        "Override": {
+            "Microsoft": "Warning",
+            "System": "Warning"
+        }
+    },
+    "Using": [
+        "Serilog.Sinks.Console",
+        "Serilog.Sinks.File"
+    ],
+    "WriteTo": [
+        {
+            "Name": "Console"
+        },
+        {
+            "Name": "File",
+            "Args": {
+                "path": "Storage/Logging/Spark.log",
+                "rollingInterval": "Day"
+            }
+        }
+    ]
+},
 ```
 
 ### Channels
-Log channels control where your logs are written. There are currently 2 log channels..
+Log channels control where your logs are written. There are 2 log channels setup for you out of the box.
 - file
 - console
 
-### Levels
-Log levels control the minimum level of event that is logged to your channel. 
-
-For instance, if your log level is set to `warning`, only log messages with a warning level or higher will be logged. Debug and information logs would be ignored.
-- debug
-- information
-- warning
-- error
-- fatal
-
-It is recommended to set your logs to `warning` in production to avoid noise in your logs.
-
 ## Setup
-The Spark logger is added to the DI container for you in `AppServiceRegistration.AddAppServices()`.
+The Serilog logger is configured for you in `Program.cs`.
 
 ```csharp
-services.AddLogger(config);
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration).CreateLogger();
+
+builder.Host.UseSerilog();
 ```
 
-To use the logger, inject `Spark.Library.Logging.ILogger` via dependency injection.
+## Using the Logger
+To use the logger, use the static `Log` class in your razor components or classes.
 ```razor
-@* blazor example *@
 @page "/"
-@inject ILogger _logger
-
-```
-
-```csharp
-// class example
-private ILogger _logger;
-
-public MyService(ILogger logger)
-{
-    this._logger = logger;
+@code {
+    protected override void OnInitialized()
+    {
+        Log.Information("This is the homepage.");
+    }
 }
+
 ```
 
-
-## Writing Log Messages
-Once injected, you may call any of these methods to log a message for the corresponding level.
+### Writing Log Messages
+Any of these methods are available to log a message for the corresponding level.
 
 ```csharp
-    _logger.Debug(message);
-    _logger.Information(message);
-    _logger.Warning(message);
-    _logger.Error(message);
-    _logger.Fatal(message);
+    Log.Verbose(message);
+    Log.Debug(message);
+    Log.Information(message);
+    Log.Warning(message);
+    Log.Error(message);
+    Log.Fatal(message);
 ```

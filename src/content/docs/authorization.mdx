@@ -96,28 +96,3 @@ You can use Roles to determine what type of users can access what content. Simpl
     </h1>
 </section>
 ```
-
-### Blazor AuthorizeView
-In Blazor, you can combine the `<AuthorizeView>` tag helper with Roles to display different content.
-
-This is helpful when you want to display the page but show different content based on the User's Roles.
-```razor
-@page "/admin/dashboard"
-@attribute [Authorize]
-<section>
-    <article>
-        <AuthorizeView Roles="@CustomRoles.Admin">
-            <Authorized>
-                <h1>
-                    Admin Dashboard
-                </h1>
-            </Authorized>
-            <NotAuthorized>
-                <h1>
-                    You are not authorized to see this content!
-                </h1>
-            </NotAuthorized>
-        </AuthorizeView>
-    </article>
-</section>
-```

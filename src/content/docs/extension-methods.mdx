@@ -33,14 +33,30 @@ db.Developers.Delete(developer);
 The `NavigationManager.Route` method provides the route of the current page.
 ```razor
 @page "/developers"
-@inject NavigationManager NavigationManager
+@inject NavigationManager NavManager
 
 @code {
     protected override async Task OnInitializedAsync()
     {
-        var route = NavigationManager.Route();
+        var route = NavManager.Route();
         
         // route = "developers"
+    }
+}
+```
+
+### NavigationManager.XRedirect(HttpContext context, string url, bool forceLoad = false)
+The `NavigationManager.XRedirect` method allows you to do a page redirect with HTMX.
+
+```razor
+@page "/developers"
+@inject NavigationManager NavManager
+
+@code {
+    protected void OnSubmit()
+    {
+        ...
+        NavManager.XRedirect(HttpContext, "profile/edit");
     }
 }
 ```

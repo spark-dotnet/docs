@@ -4,11 +4,25 @@ description: "Spark Frontend Assets"
 ---
 
 ## Introduction
-Spark is primarily a backend framework that provides out of the box features to build modern web applications. However, we still want to offer a full-stack experience.
+Spark is a fullstack framework that extends ASP.NET and Blazor SSR. It comes with several frontend dependencies setup to make your life easier.
 
-All Spark projects come with Tailwind CSS setup for you. Your free to remove it and use your own custom CSS or another library if you'd like.
+It also comes with HTMX installed. HTMX lets you use simple server side rendering while allowing you to have partial page reloads on navigation and form submissions.
 
-It also comes with AlpineJS available to use. AlpineJS a light weight JavaScript framework that is great for UI interactions.
+## CSS
+Spark projects come with [Tailwind CSS](https://tailwindcss.com/) and [DaisyUI](https://daisyui.com/) installed via NPM.
+
+If you need to write custom CSS, you can do so in the `Assets/Css/app.css` file.
+
+If you need to customize Tailwind CSS configuration, you can do so in the `tailwind.config.js` file.
+
+If you need to add custom CSS classes outside of the Tailwind library, you can do so by updating the `Assets/Css/app.css` file. This file is picked up by Vite, which prunes any unused Tailwind classes and bundles a minified CSS file for you.
+
+## Javascript
+Spark project come with HTMX installed for you
+
+HTMX is a javascript library that super charges your HTMX markup and allows you to do page navigation and form submissions with partial page reloads, giving your app a SPA like feel.
+
+You can learn more about HTMX [here](https://htmx.org/).
 
 ## Bundling Assets
 Spark uses Vite to bundle your CSS and JS for you. It provides fast build times and Hot Module Replacement during local development.
@@ -17,21 +31,7 @@ You will find a `vite.config.js` file that configures and loads Vite for you.
 
 Spark also uses the [Vite.AspNetCore](https://github.com/Eptagone/Vite.AspNetCore) Nuget package. This auto starts a Vite server for you when developing locally so you don't have to start it manually.
 
-Finally, Spark projects are also setup to build your assets for you whenever running a `dotnet build` or `dotnet publish`. You can find thses build commands in your `.csproj` file.
-
-## CSS
-Spark projects come with Tailwind CSS installed via NPM by default.
-
-If you need to customize Tailwind CSS, you can do so in the `tailwind.config.js` file.
-
-If you need to add custom CSS classes outside of the Tailwind library, you can do so by updating the `Assets/Css/app.css` file. This file is picked up by Vite, which prunes any unused Tailwind classes and bundles a minified CSS file for you.
-
-## Javascript
-Spark project come with AlpineJS by default. 
-
-AlpineJS is a javascript library that helps you create simple page interactions like mobile menus and toggling elements.
-
-You can learn more about Alpine [here](https://alpinejs.dev/).
+Finally, Spark projects are also setup to build your assets for you whenever running a `dotnet build` or `dotnet publish`. You can find thses build commands in your `.csproj` file in the `App` folder.
 
 ### Custom Javascript
 If you need to write custom JavaScript, it is advised to do so in the `Assets/Js/app.js` file. This file is picked up by Vite, which then builds the minified Js file for you.

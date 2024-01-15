@@ -19,6 +19,14 @@ Authentication settings can be configured in your `appsettings.json` file.
             "LogoutPath": "/logout",
             "AccessDeniedPath": "/access-denied",
             "CookieExpirationDays": 5,
+            "EmailConfirmation": false,
+            "Password": {
+                "MinimumLength": 8,
+                "MaximumLength": 32,
+                "RequireDigit": true,
+                "RequireUppercase": true,
+                "RequireNonAlphanumeric": true
+            }
         },
     }
 }
@@ -31,7 +39,9 @@ Spark's authentication is setup for you in `AppServiceRegistration.AddAppService
 services.AddAuthentication<IAuthValidator>(config);
 ```
 
-The implementation for `IAuthValidator` is the `Application.Services.Auth.AuthValidator.cs` class. This service comes with 1 method that is called behind the scenes whenever an authentication check needs to occur, `ValidateAsync()`.
+The implementation for `IAuthValidator` is the `Application.Services.Auth.SparkAuthValidator.cs` class. 
+
+This service comes with 1 method that is called behind the scenes whenever an authentication check needs to occur, `ValidateAsync()`.
 
 
 ## User Data
@@ -59,6 +69,9 @@ public class User : BaseModel
     public DateTime? EmailVerifiedAt { get; set; }
 
     public virtual ICollection<UserRole> UserRoles { get; set; }
+
+    [NotMapped]
+    public bool IsAuthenticated { get; set; }
 }
 ```
 Users also have Roles tied to them for authorization. You can read more about that on the [Authorization page](/docs/authorization).
@@ -67,12 +80,22 @@ Users also have Roles tied to them for authorization. You can read more about th
 ### Accessing User Data
 Spark comes with out of the box methods to make it easy to query the authenticated User's model.
 
-The `Application/Services/Auth/AuthService.cs` class comes with a `GetAuthenticatedUser()` method. This will return the User model if the person logged in or null otherwise.
+The `Application/Services/Auth/AuthService.cs` class comes with a `GetAuthenticatedUser(ClaimsPrincipal User)` method. This will return the User model if the person logged in or null otherwise.
 
 The `AuthService` can be dependency injected in your services or Razor components.
 ```razor
 @page "/"
 @inject AuthService AuthService
+
+@code {
+	[CascadingParameter] HttpContext Context { get; set; } = default!;
+
+    protected override void OnInitialized()
+    {
+        _developers = await DeveloperService.GetAll();
+        var user = AuthService.GetAuthenticatedUser(Context.User);
+    }
+}
 
 ...
 ```
@@ -92,22 +115,13 @@ If you have routes in your app you only want logged in users to see, use the `Au
 </section>
 ```
 
-## Protecting Page Content
-Sometimes you need more granular control when protecting a route or page.
+## Custom Authentication
+You may a different authentication implementation than the one Spark provides out of the box.
 
-For instance, lets say you want to show a page regardless if the user is authenticated or not. But you want to show the login button if they aren't authenticated. Likewise, you want to show the logout button if they are authenticated.
+You can swap to your own implementation fairly easily.
 
-In Blazor you can accomplish this by using the `<AuthorizeView>` tag helper.
-```razor
-<nav>
-    <AuthorizeView>
-        <Authorized>
-            <a href="/logout">Logout</a>
-        </Authorized>
-        <NotAuthorized>
-            <a href="/login">Login</a>
-        </NotAuthorized>
-    </AuthorizeView>
-</nav>
-```
+First, you will need to add your own auth registration. You can replace Spark's auth registration in `Application/Startup/AuthServiceRegistration.cs` with your own.
 
+Then create your own implementation of the `IAuthValidator` interface. You can see Spark's implementation of this interface as a reference at `Application/Services/Auth/SparkAuthValidator.cs`.
+
+Finally, register your IAuthValidator implementation in the `AddCustomServices()` method in `Application/Startup/AppServiceRegistration.cs`.

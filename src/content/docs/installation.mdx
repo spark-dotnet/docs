@@ -4,12 +4,12 @@ description: "Spark installation"
 ---
 
 ## Requirements
-Before creating your first spark project, you should ensure that your local machine has:
+Before creating your first Spark project, you should ensure that your local machine has:
 
-- **.NET 7** - You can find the download [here](https://dotnet.microsoft.com/en-us/download/dotnet/7.0).
+- **.NET 8+** - You can find the download [here](https://dotnet.microsoft.com/en-us/download/dotnet/8.0).
 - **Node and Npm** - You can find the download [here](https://nodejs.org)
 
-Once you have the .NET 7 SDK installed, you will also need **Entity Framework Core tools**. This can be installed with a simple `dotnet` command in your terminal:
+Once you have the .NET 8 SDK installed, you will also need **Entity Framework Core tools**. This can be installed with a simple `dotnet` command in your terminal:
 ```bash
 dotnet tool install --global dotnet-ef
 ```
@@ -33,22 +33,15 @@ You are now ready to create your first Spark project!
 spark new MyApp
 ```
 
->
-> Spark comes with several project templates to choose from. You can choose to generate your project with a certain template by providing the `-t` option.
-> 
-> Blazor
-> Example: `spark new MyApp -t blazor`
->
-> Api
-> Example: `spark new MyApp -t api`
->
-> To read more about project templates, check out our documentation [here](/docs/project-templates)
->
-
-Now that your project has been created, cd into the root folder and run `npm install`.
-
+You can open your Spark solution in the console by using Spark's `open` command. This will open it with your default IDE.
 ```bash
 cd MyApp
+spark open
+```
+
+Now that your project has been created and you have it open, run `npm install`.
+
+```bash
 npm install
 ```
 
@@ -58,12 +51,7 @@ spark make migration User
 spark migrate
 ```
 
-Open your Spark project in the console by using Spark's `open` command. This will open it with your default IDE.
-```bash
-spark open
-```
-
-Finally, start .NET's local development server using the dotnet watch command:
+Finally, start your application in Visual Studio or by using the dotnet watch command:
 ```bash
 dotnet watch
 ```

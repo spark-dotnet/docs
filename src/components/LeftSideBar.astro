@@ -20,7 +20,7 @@ const sidebar = SIDEBAR;
 						<li>
 							<div class="nav-group">
 								<!-- cursor-pointer hover:-ml-0.5 transition-all duration-300 -->
-								<h2 class="font-medium text-sm -ml-4 mb-2 px-4" x-on:click={`currentSection = '${header}'`}>{header}</h2>
+								<h2 class="font-bold text-sm -ml-4 mb-2 px-4" x-on:click={`currentSection = '${header}'`}>{header}</h2>
 								<!--<ul x-show={`currentSection == '${header}'`} x-cloak>-->
 								<ul>
 									{children.map((child) => {

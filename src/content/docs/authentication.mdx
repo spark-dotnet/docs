@@ -115,6 +115,28 @@ If you have routes in your app you only want logged in users to see, use the `Au
 </section>
 ```
 
+### Protecting parts of a page
+Sometimes you need to display different content on a page depending on if a user is authenticated or not. For example, showing a login button or a users profile name in the nav bar.
+
+A cascading parameter called `PageState` is provided to your Razor components to help you do this.
+
+```razor
+@code {
+	[CascadingParameter]
+    public PageState PageState { get; set; } = default!;
+}
+<div>
+    @if (PageState.User.IsAuthenticated)
+    {
+        <div>@PageState.User.Name</div>
+    }
+    else
+    {
+        <a href="/login">Login</a>
+    }
+</div>
+```
+
 ## Custom Authentication
 You may a different authentication implementation than the one Spark provides out of the box.
 

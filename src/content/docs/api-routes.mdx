@@ -1,0 +1,55 @@
+---
+title: "API Routes"
+description: "Spark API Routes"
+---
+
+## Introduction
+
+API routes in Spark are Minimal APIs that extend the `IRoute` interface.
+
+On startup, Spark will register any of your classes implementing the `IRoute` interface as Minimal API routes. This makes it easy to setup API routes without much ceremony.
+
+## Creating API Routes
+
+To create an API route, create a class that extends the `IRoute` interface in the `Pages/Api` directory.
+
+```csharp
+// Pages/Api/Example.cs
+using Spark.Library.Routing;
+
+namespace SparkPoc.Pages.Api;
+
+public class Example : IRoute
+{
+    public void Map(WebApplication app)
+    {
+        app.MapGet("/api/example", () =>
+        {
+            return Results.Ok(new { Hello = "World" });
+        });
+    }
+}
+```
+
+Spark will automatically register this route for you on startup.
+
+### Protecting Routes
+
+You can protect routes you only want authenticated users to access using the `.RequireAuthorization()` method.
+
+```csharp
+...
+
+app.MapGet("/api/example", () =>
+{
+    return Results.Ok(new { Hello = "World" });
+}).RequireAuthorization();
+
+...
+```
+
+You can furthur restrict access by passing roles to the `.RequireAuthorization()` method.
+
+```csharp
+.RequireAuthorization("admin");
+```

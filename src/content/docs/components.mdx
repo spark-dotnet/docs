@@ -38,6 +38,7 @@ Spark integrates the popular [Htmx](https://htmx.org/) library to enhance page n
 A fresh Spark project will have the `hx-boost="true"` attribute set in the MainLayouts body tag. This will convert all regular HTML anchors and forms into AJAX requests so the browser doesn't have to do a full page reload.
 
 You can also utilize all of the other features HTMX provides. To learn more checkout out their [documentation](https://htmx.org/docs/#introduction).
+
 ## Components
 
 Razor components are re-usable elements you can use anywhere in your application.
@@ -161,11 +162,13 @@ You can take advantage of ASP.NET’s dependency injection system by adding the 
 ```
 
 ### Page State
+
 Spark exposes the `PageState` object to all Razor components as a cascading parameter.
 
 This parameter can be used in any Razor component in a Spark app.
 
 The `PageState` object has two properties.
+
 ```csharp
 public class PageState
 {
@@ -177,6 +180,7 @@ public class PageState
 These properties are set for you automatically when a route is visited, giving you access to the authenticated users data and the apps name.
 
 For example, you can display the authenticated users name on a page like this:
+
 ```razor
 @code {
 	[CascadingParameter]
@@ -187,6 +191,7 @@ For example, you can display the authenticated users name on a page like this:
 ```
 
 ### HTTP Context
+
 Because Spark use Blazor SSR, you can access the `HttpContext` in your Razor components through a cascading parameter.
 
 ```razor
@@ -240,7 +245,9 @@ To use the new layout on a page, add the `@layout` attribute.
 ```
 
 ### Default Layout
+
 The default layout used by your pages is set in the `Pages/PageRoutes.razor` file.
+
 ```razor
 ...
 <RouteView RouteData="@routeData" DefaultLayout="@typeof(Layouts.MainLayout)"/>

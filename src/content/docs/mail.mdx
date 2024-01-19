@@ -83,35 +83,38 @@ Logic for your mailable should always go in the `Build()` method.
 ### Mailable Methods
 The following methods are available in a fluent interface:
 
-`.From(string email)`
+```csharp
 
-`.From(new MailRecipient(string email, string name))`
+.From(string email)
 
-`.To(string email)`
+.From(new MailRecipient(string email, string name))
 
-`.To(new MailRecipient(string email, string name))`
+.To(string email)
 
-`.To(IEnumerable<string> emails)`
+.To(new MailRecipient(string email, string name))
 
-`.To(IEnumerable<MailRecipient> recipients)`
+.To(IEnumerable<string> emails)
 
-`.Cc(IEnumerable<string> emails)`
+.To(IEnumerable<MailRecipient> recipients)
 
-`.Cc(IEnumerable<MailRecipient> recipients)`
+.Cc(IEnumerable<string> emails)
 
-`.Bcc(IEnumerable<string> emails)`
+.Cc(IEnumerable<MailRecipient> recipients)
 
-`.Bcc(IEnumerable<MailRecipient> recipients)`
+.Bcc(IEnumerable<string> emails)
 
-`.ReplyTo(MailRecipient replyTo)`
+.Bcc(IEnumerable<MailRecipient> recipients)
 
-`.ReplyTo(string address)`
+.ReplyTo(MailRecipient replyTo)
 
-`.Subject(string subject)`
+.ReplyTo(string address)
 
-`.Attach(Attachment attachment)`
+.Subject(string subject)
 
-`.Html(string html)`
+.Attach(Attachment attachment)
+
+.Html(string html)
+```
 
 ## Sending Mail
 Inject the `IMailer` interface into your Razor components or service and pass a **Mailable** to the `SendAsync` method:
@@ -120,12 +123,6 @@ Inject the `IMailer` interface into your Razor components or service and pass a 
 ```razor
 @page "/subscribe"
 @inject IMailer _mailer
-
-<EditForm Model="emailForm" OnValidSubmit="@HandleValidSubmit">
-    <InputText @bind-Value="emailForm.Email" />
-    <button type="submit">Subscribe</button>
-</EditForm>
-
 @code {
     private EmailForm emailForm = new EmailForm();
 
@@ -136,6 +133,11 @@ Inject the `IMailer` interface into your Razor components or service and pass a 
         );
     }
 }
+
+<EditForm Model="emailForm" OnValidSubmit="@HandleValidSubmit">
+    <InputText @bind-Value="emailForm.Email" />
+    <button type="submit">Subscribe</button>
+</EditForm>
 ```
 
 ### Service

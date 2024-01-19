@@ -1,0 +1,12 @@
+```razor
+@page "/posts"
+@code {
+    [Inject] public DatabaseContext Db { get; set; }
+    private List<Post> posts = new();
+
+    protected override void OnInitialized()
+    {
+        posts = Db.Posts.ToList();
+    }
+}
+```

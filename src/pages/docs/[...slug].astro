@@ -17,21 +17,29 @@ const { Content, headings } = await post.render();
 ---
 
 <DocsLayout {...post.data}>
-	<div class="markdown">
-		<h1>{post.data.title}</h1>
-	</div>
-	<ul class="list-none space-y-3">
-		{headings.map((item) => (
-			item.depth <=2 ? 
-			<li class="font-medium"><a href={'#'+item.slug}><span class="text-purple-600"># </span>{item.text}</a></li> 
-			:
-			item.depth < 4 ? 
-			<li class="font-light pl-6"><a href={'#'+item.slug}><span class="text-purple-600"># </span>{item.text}</a></li> 
-			:
-			''
-		))}
-	</ul>
-	<div class="markdown">
-    	<Content />
+	<div class="lg:flex flex-row">
+		<div class="w-full max-w-4xl mx-auto lg:w-[75%] lg:px-6">
+			<div class="markdown">
+				<h1>{post.data.title}</h1>
+			</div>
+			<div class="markdown">
+				<Content />
+			</div>
+		</div>
+		<div class="px-6 hidden xl:flex w-[25%] sticky top-[7.5625rem] self-start">
+			<div class="">
+				<ul class="list-none space-y-3 text-xs">
+					{headings.map((item) => (
+						item.depth <=2 ? 
+						<li class="text-gray-600"><a href={'#'+item.slug}>{item.text}</a></li> 
+						:
+						item.depth < 4 ? 
+						<li class="font-light pl-6 text-gray-600"><a href={'#'+item.slug}>{item.text}</a></li> 
+						:
+						''
+					))}
+				</ul>
+			</div>
+		</div>
 	</div>
 </DocsLayout>

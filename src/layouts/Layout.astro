@@ -1,47 +1,60 @@
 ---
-import Nav from '../components/HomePageNav.astro';
-import Footer from '../components/Footer.astro';
-import StayUpdated from '../components/StayUpdated.astro';
+import Nav from "../components/HomePageNav.astro";
+import Footer from "../components/Footer.astro";
+import StayUpdated from "../components/StayUpdated.astro";
 export interface Props {
-	title: string;
+  title: string;
 }
 
 const { title } = Astro.props;
 ---
 
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-        <link rel="shortcut icon" href="/favicon.png">
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-		<style>
-			[x-cloak] {
-				display: none !important;
-			}
-		</style>
-        <!-- Google tag (gtag.js) -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-PZ2NL51HFG"></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
+<html lang="en" class="scroll-smooth" data-theme="cupcake">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="shortcut icon" href="/favicon.png" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <style>
+      [x-cloak] {
+        display: none !important;
+      }
+    </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PZ2NL51HFG"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
 
-            gtag('config', 'G-PZ2NL51HFG');
-        </script>
-	</head>
-	<body>
-		<Nav />
-		<slot />
-		<StayUpdated />
-		<Footer />
-	</body>
+      gtag("config", "G-PZ2NL51HFG");
+    </script>
+  </head>
+  <body class="bg-base-200 pt-6">
+    <Nav />
+    <slot />
+    <Footer />
+  </body>
 </html>
 
 <style is:global>
-	[x-cloak] {
-		display: none !important;
-	}
+  [x-cloak] {
+    display: none !important;
+  }
+  pre {
+    @apply p-6 font-sans rounded-lg bg-gray-900 text-2xl max-w-lg text-left mx-auto !important;
+  }
+
+  pre code {
+    @apply bg-gray-900 px-0 border-none text-base tracking-wider font-normal leading-[1.9em] !important;
+  }
+
+  code {
+    @apply font-sans bg-gray-100 px-[.35rem] py-[.1rem] rounded text-gray-800 leading-[1.9em];
+  }
 </style>

@@ -73,15 +73,11 @@ Once a service is registered, it can be injected into any Razor component or oth
 
 #### Injecting a Service in a Razor component
 
-Use the `[Inject]` attribute in a Razor component code behind file to inject your services.
-```csharp
-
-namespace MyApp.Pages.Developers.Index;
-
-public partial class Index
-{
-    [Inject] public DeveloperService DeveloperService { get; set; }
-
+Use the `Inject` directive in a Razor component to inject your services.
+```razor
+@page "/"
+@inject DeveloperService DeveloperService
+@code {
 	private List<Developer> _developers;
 
     protected override void OnInitialized()

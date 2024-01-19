@@ -4,6 +4,7 @@ description: "Spark Blazor Pages"
 ---
 
 ## Introduction
+
 Blazor allows you to assign a route directly to a component in your application. These are called Blazor pages.
 
 To assign a route to a component, use the `@page` attribute at the top of your .razor file.
@@ -17,48 +18,43 @@ To assign a route to a component, use the `@page` attribute at the top of your .
 ```
 
 ## Creating Blazor Pages
+
 You can create a new Blazor page by hand or by running the following Spark CLI command:
 
 ```bash
 spark make page Developers/Index
 ```
 
-Just like a normal component, after running this command Spark will create 2 new files in your application.
+Just like a normal component, after running this command Spark will create a new file in your application at `Pages/Developers/Index.razor`.
 
-The first will be a code behind file: `Pages/Developers/Index.cs`
-```csharp
-namespace MyApp.Pages.Developers;
-
-public partial class Index
-{
-    protected override void OnInitialized()
-    {
-        
-    }
-}
-```
-
-The second will be the Razor file: `Pages/Developers/Index.razor`
 ```razor
 @page "/developers/index"
-<div>
+@code {
+    protected override void OnInitialized()
+    {
 
-</div>
+    }
+}
+
+<h1>My Page</h1>
 ```
 
 ### Organizing Pages
+
 It is advised to create your Blazor pages in a subdirectory of the `Pages` folder and not the root of the Pages folder.
 
 For example, lets say our app has a list of developers and open source work they've done.
 
 We would want the following pages in the `Pages/Developers` directory:
-- `Pages/Developers/Index.razor`  Show a list of developers
-- `Pages/Developers/Show.razor`  Show 1 developer
-- `Pages/Developers/Create.razor`  Create developer
-- `Pages/Developers/Edit.razor`  Edit developer
-- `Pages/Developers/Delete.razor`  Delete developer
+
+-   `Pages/Developers/Index.razor` Show a list of developers
+-   `Pages/Developers/Show.razor` Show 1 developer
+-   `Pages/Developers/Create.razor` Create developer
+-   `Pages/Developers/Edit.razor` Edit developer
+-   `Pages/Developers/Delete.razor` Delete developer
 
 ### Component Naming Conventions
+
 Blazer pages and components should always use **PascalCase** naming.
 
 ```razor
@@ -67,11 +63,13 @@ Blazer pages and components should always use **PascalCase** naming.
 
 ## Routes
 
-
 ### Route Parameters
-Parameters can be passed into a Blazor page through the url. For example, lets say you have a page to show the details about a developer. 
+
+Parameters can be passed into a Blazor page through the url. For example, lets say you have a page to show the details about a developer.
 
 You can setup a route parameter in your URL to pass in the Id. Then setup a public property in your Blazor page with the same name.
+
+Route parameter names are **case insensitive**.
 
 ```razor
 @page "/developers/{Id:int}"
@@ -84,7 +82,7 @@ You can setup a route parameter in your URL to pass in the Id. Then setup a publ
     [Parameter]
     public int Id { get; set; }
 	private Developer developer { get; set; }
-    
+
 	protected override async Task OnInitializedAsync()
 	{
 		developer = await _developerService.Get(Id);
@@ -92,10 +90,10 @@ You can setup a route parameter in your URL to pass in the Id. Then setup a publ
 }
 ```
 
-Route parameter names are case insensitive.
-
 ## Page title and metadata
+
 You can set a Blazor pages `<title>` element by using the `PageTitle` component.
+
 ```razor
 @page "/developers"
 
@@ -103,6 +101,7 @@ You can set a Blazor pages `<title>` element by using the `PageTitle` component.
 ```
 
 To set metadata, like the pages description, use the `HeadContent` component.
+
 ```razor
 @page "/developers"
 
@@ -113,33 +112,23 @@ To set metadata, like the pages description, use the `HeadContent` component.
 ```
 
 ## SEO
-By default, Spark apps use the `render-mode` of `server`. This means any code in your razor pages and components isn't ran until the SignalR connection is setup by the browser.
 
-This has 1 downside, search engines will not be able to index your content. If SEO is important in your app, you will want to update the `render-mode` to `ServerPrerendered`.
+Because Spark uses Server-side Rendered Blazor, all pages are rendered on the server and the HTML is then sent to the clients browser.
 
-You can do this by updating the render mode in `Pages/_Layout.cshtml` to:
-```razor
-<component type="typeof(HeadOutlet)" render-mode="ServerPrerendered" />
-```
-
-and updating the render mode in `Pages/_Host.cshtml` to: 
-```razor
-<component type="typeof(App)" render-mode="ServerPrerendered" />
-```
-
->
-> Using the render mode of `ServerPrerendered` has 1 side effect.
->
-> Any code in your razor pages or components will be ran twice. Once on the server and once when the page is loaded in the browser.
->
+This means search engines can easily index your sites content.
 
 ## Navigation
+
 Blazor pages use standard html anchor elements to navigate to other Blazor pages.
+
 ```razor
 @page "/developers"
 
 <a href="/">Go to home page</a>
 ```
 
+HTMX will intercept the navigation and use an AJAX fetch request. The response will then be evaluated by HTMX and replace the content on the page without having to do a full page reload.
+
 ## Authentication
+
 To read about how to authenticate and access User data from your Razor components and pages, check out Spark's [Authentication guide](/docs/authentication).

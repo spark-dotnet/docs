@@ -7,21 +7,21 @@ description: "Learn how directories are setup in Spark."
 
 The Spark application structure is setup to give a consistant, organized project structure for your web application. 
 
-Because Spark provides a defined structure for you, there are no suprises when starting work on new or existing Spark project.
+Because Spark provides a defined structure for you, there are no suprises when starting work on new or existing project.
 
 However, you are still free to create classes wherever you'd like if you choose to.
 
 ## Application
 The `Application` directory contains the core code of you application.
 
-### Controllers
-The `Controllers` directory contains your Controller classes. This directory is only generated for API project types.
-
 ### Database
-The `Database` directory contains your `DbContext` and `Migrations` for EF Core.
+The `Database` directory contains your `DatabaseContext` and `Migrations` for EF Core.
 
 ### Events
 The `Events` directory contains your event and listener classes. Events are used to alert other parts of your app that a given action has occurred. This provides great flexibility and decoupling.
+
+### Jobs
+The `Jobs` directory contains queueable jobs for your application. Jobs can be scheduled or added to a background queue.
 
 ### Mail
 The `Mail` directory contains your mailable classes. Mailables are C# classes that represent a specific type of e-mail that you can send.
@@ -33,16 +33,19 @@ The `Models` directory contains your efcore model classes. Each database table f
 The `Services` directory contains your services that can be Dependency Injected on startup. Services are typically used to abstract away business logic or database calls.
 
 ### Startup
-The `Startup` directory contains Registration classes. These classes are where Sparks core services, custom services, events, or jobs are registered to the DI container. Scheduled jobs can also be registered here.
+The `Startup` directory contains Registration classes. These classes are where Sparks core services, auth, custom services, events, or jobs are registered to the DI container. Scheduled jobs can also be registered here.
 
-### Jobs
-The `Jobs` directory contains queueable jobs for your application. Jobs can be scheduled or added to a background queue.
+## Assets
+The `Assets` directory contains your Javascript and CSS assets.
 
 ## Pages
-This is where your sites frontend markdown will be contained. The `Pages` directory contains your Blazor pages and Razor components.
+The `Pages` directory contains your Blazor pages and components. You can also register Minimal API routes here.
 
 ## Storage
 The `Storage` directory contains your application logs if the Spark logger is setup to log to files. It also contains mail logs if your mailer is setup to log to files.
 
 ## wwwroot
 The `wwwroot` directory contains your compiled CSS, images, and other frontend public dependancies.
+
+## Tests
+The `Test` directory contains an XUnit project for your unit and integration tests. This directory is opened as it's own project in your apps solution.

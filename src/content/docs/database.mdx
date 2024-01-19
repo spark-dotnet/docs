@@ -72,33 +72,19 @@ Entity Framework uses a Database Context class to manage your database connectio
 
 When a Spark app starts, a Database Context is created and added to your apps DI container via Sparks internal service registration. You can find the `DatabaseContext.cs` class in `Application/Database` folder.
 
-### Using the Database Context
->
-> **Important!**
->
-> Blazor Server cannot use the normal DatabaseContext class. 
->
-> Instead, you must use a DB Context Factory because Blazor applications do not create a service scope that aligns with the desired DB Context lifetime and will result in errors in your Blazor app.
-> You can read more about this [here](https://learn.microsoft.com/en-us/ef/core/dbcontext-configuration/#using-a-dbcontext-factory-eg-for-blazor).
->
-
-Here is an example of how to use a Database Context Factory in a components code behind file.
-```csharp
-namespace MyApp.Pages.Developers.Index;
-
-public partial class Index
-{
-    [Inject] public IDbContextFactory<DatabaseContext> Factory { get; set; }
-
+Here is an example of how to use a Database Context in a Razor component.
+```razor
+@page "/developers"
+@inject DatabaseContext Db
+@code {
     protected override void OnInitialized()
     {
-        using var db = Factory.CreateDbContext();
         // query some data with db context
-        var developers = db.Developers.ToList();
+        var developers = Db.Developers.ToList();
     }
 }
 ```
-You can inject the Database Context into your services or other registered classes like normal:
+You can also inject the Database Context into your services or other registered classes like normal:
 
 ```csharp
 public class DeveloperService

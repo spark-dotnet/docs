@@ -1,188 +1,122 @@
 ---
 title: "Components"
-description: "Spark Blazor Components"
+description: "Blazor Components"
 ---
 
 ## Introduction
-Blazor projects utilize Razor components as the bulding blocks of the application. These components also have the ability to contain logic specific to themselves, creating reusable pieces of UI for your fronend.
 
-Spark uses Blazor Server under the hood, so understanding how Razor components work is crucial.
+Spark uses server-side rendereded Blazor (Blazor SSR) for it's routing and frontend views.
 
-## Creating Components
-You can create a new Razor component by hand or by running the following Spark CLI command:
+Blazor SSR utilizes Razor components to split your markdown into re-usable chunks. These components also have the ability to contain logic specific to themselves and can even have url routes invoke them.
 
-```bash
-spark make component DeveloperDetails
-```
-After running this command, Spark will create 2 new files in your application.
+Razor components let you mix in HTML markup with C#, allowing you to quickly create dynamic components to use in your app.
 
-The first will be a code behind file: `Pages/Shared/DeveloperDetails.cs`.
-
-```csharp
-namespace MyApp.Pages.Shared;
-
-public partial class DeveloperDetails
-{
+```razor
+@inject DeveloperService developerService
+@code {
+    private List<Developer> developers { get; set; }
     protected override void OnInitialized()
     {
-        
+        developers = await developerService.GetDevelopers();
+    }
+}
+
+<ul>
+    @foreach (var developer in developers)
+    {
+    <li>
+        @developer.Name
+    </li>
+    }
+</ul>
+```
+
+### Use of HTMX
+
+Spark integrates the popular [Htmx](https://htmx.org/) library to enhance page navigations and form submissions.
+
+A fresh Spark project will have the `hx-boost="true"` attribute set in the MainLayouts body tag. This will convert all regular HTML anchors and forms into AJAX requests so the browser doesn't have to do a full page reload.
+
+You can also utilize all of the other features HTMX provides. To learn more checkout out their [documentation](https://htmx.org/docs/#introduction).
+
+## Components
+
+Razor components are re-usable elements you can use anywhere in your application.
+
+Your components should be created in the `Pages/Components` directory.
+
+### Creating Razor Components
+
+To create a new Razor component, simply run the Spark make component command.
+
+```bash
+spark make component SomeComponent
+```
+
+A new Razor component named `SomeComponent.razor` will be created in the `Pages/Components` directory.
+
+```razor
+<p>My Component</p>
+
+@code {
+
+    protected override async Task OnInitializedAsync()
+    {
+
     }
 }
 ```
 
-The second will be the Razor file: `Pages/Shared/DeveloperDetails.razor`
+### Rendering Components
+
+To display a component, you may use a Razor component tag within another Razor component or page. Razor component tags are just the name of it's source file.
+
+```razor
+<SomeComponent />
+```
+
+### Passing Data To Components
+
+You can pass data to a Razor component or page by using **Component Parameters**.
+
+Component parameters are defined using public C# properties on the component class with the `[Parameter]` attribute.
+
+For example, below is a razor component called `ChildComponent.razor`. It accepts a parameter of `Title`.
+
+```razor
+<h1>@Title</h1>
+
+@code {
+    [Parameter]
+    public string Title { get; set; } = "";
+}
+```
+
+Then, in a parent Razor component, you can render the child component and pass the `Title` parameter value.
 
 ```razor
 <div>
-
-</div>
-```
-
-You can create components in subdirectories as well. For example, the following commands will create a `DeveloperDetails` component in the `Pages/Shared/Developers` subdirectory.
-```bash
-spark make component Developers/DeveloperDetails
-```
-
-### Inline Components
-If your component is fairly small, you can create an **inline** component. Inline components are a single .razor file that have an `@code` block to contain it's logic, rather than a seperate code behind file.
-```razor
-<div>
-
+    <SomeComponent Title="This is my title" />
 </div>
 
 @code {
-    protected override void OnInitialized()
-    {
-        
-    }
 }
 ```
 
-To create an inline component, run the Spark make component command and pass the `--inline` flag.
-```bash
-spark make component DeveloperDetails --inline
-```
+In this example, the following markup would ultimately be rendered to the browser.
 
-## Component Properties
-Razor components have properties that can store data and be accessed from within your code behind class or razor component markup.
-
-To add a property to a razor component, declare a property in your code behind file. For example, we can create a `string name` property in the `DeveloperDetails` component:
-```csharp
-namespace MyApp.Pages.Shared;
-
-public partial class DeveloperDetails
-{
-    private string name = 'Art Vandelay';
-
-    protected override void OnInitialized()
-    {
-        
-    }
-}
-```
-
-### Accessing Properties in Markup
-Component properties can referenced in the components markup using Microsofts razor syntax. Here we can display the value of the `name` property:
-```razor
+```html
 <div>
-    <p>Name: @name</p>
+	<h1>This is my title</h1>
 </div>
-```
-
-The resulting output of this component would be:
-```razor
-<div>
-    <p>Name: Art Vandelay</p>
-</div>
-```
-
-### Passing Data Into Components
-Component properties tagged as a parameter allow you to pass data into components.
-
-They are defined as a property in your Razor component with the `[Parameter]` attribute and must be declared as **public**.
-```csharp
-namespace MyApp.Pages.Shared;
-
-public partial class DeveloperDetails
-{
-    [Parameter] public string Name { get; set; }
-
-    protected override void OnInitialized()
-    {
-        
-    }
-}
-```
-
-When rendering a component, you can pass the parameter value as an argument in the HTML tag of the component.
-```razor
-<DeveloperDetails Name="Art Vandelay" />
-```
-
-> Tip!
->
-> You can add the attribute `EditorRequired` to a parameter. 
->
-> ```csharp
-> [Parameter, EditorRequired] public string Name { get; set; }
-> ```
->
-> This will alert you in your editor that the components property is required when referencing it.
-
-## Dependency Injection in Components
-You can take advantage of ASP.NET's dependency injection system by adding the `[Inject]` attribute to a property in your code behind class. 
-
-.NET will automatically resolve the dependency for you provided it has been registered in the apps service container.
-```csharp
-namespace MyApp.Pages.Shared;
-
-public partial class DeveloperDetails
-{
-    [Inject] public IConfiguration Config { get; set; }
-    private string name = '';
-
-    protected override void OnInitialized()
-    {
-        name = Config.GetValue<string>("Developer:Name");
-    }
-}
-```
-
-### Inline Components
-You can also take advantage of dependency injection in inline components by using the `@inject` attribute followed by the service to inject.
-```razor
-@inject IConfiguration Config
-
-<div>
-</div>
-
-@code {
-    private string name = '';
-
-    protected override void OnInitialized()
-    {
-        name = Config.GetValue<string>("Developer:Name");
-    }
-}
-```
-
-
-## Rendering Components
-To display a component, you can use a Razor component tag within another Razor component or page. Razor component tags are just the name of it's source file.
-```razor
-<DeveloperDetails />
-```
-
-As mentioned above, if you can also pass data into components if they have properties tagged with the `[Parameter]` attribute.
-
-```razor
-<DeveloperDetails Name="Art Vandelay" />
 ```
 
 ### Child Content
+
 You will often need to pass additional content to your razor components via a `RenderFragment`. RenderFragments can be HTML markup or even other Razor Components.
 
 For example, the below `ChildComponent.razor` component has a `ChildContent` parameter of type `RenderFragment`. This represents a segment of UI to render.
+
 ```razor
 <h1>
     @ChildContent
@@ -194,25 +128,136 @@ For example, the below `ChildComponent.razor` component has a `ChildContent` par
 }
 ```
 
-In a parent Razor component, you can render the child component while passing content between it's opening and closing tags.
+Then, in a parent Razor component, you can render the child component while passing content between it's opening and closing tags.
+
 ```razor
 <ChildComponent>
     Spark is <span class="text-yellow-600">Awesome!</span>
 </ChildComponent>
 ```
 
-The following markup would be rendered to the browser.
+In this example, the following markup would ultimately be rendered to the browser.
+
 ```html
-<h1>
-    Spark is <span class="text-yellow-600">Awesome!</span>
-</h1>
+<h1>Spark is <span class="text-yellow-600">Awesome!</span></h1>
 ```
 
-## Render Modes
-Blazor comes with a couple different ways to render your components.
+### Dependency Injection
 
-Currently, Spark uses the Blazor **Server** render mode. You can read more about Blazor Server [here](https://learn.microsoft.com/en-us/aspnet/core/blazor/?view=aspnetcore-7.0#blazor-server)
+You can take advantage of ASP.NET’s dependency injection system by adding the `@inject` directive in your Razor components.
 
-In .NET 8, Blazor introduces Server Side Rendering and the ability to change render modes on a per component basis. Spark will take advantage of both of these.
+.NET will automatically resolve the dependency for you provided it has been registered in the apps service container.
 
-Spark does not support the WASM render mode. If you'd like to hear me rant about why, feel free to DM me on Twitter.
+```razor
+@inject IConfiguration Config
+
+@code {
+    private string name = '';
+
+    protected override void OnInitialized()
+    {
+        name = Config.GetValue<string>("Developer:Name");
+    }
+}
+```
+
+### Page State
+
+Spark exposes the `PageState` object to all Razor components as a cascading parameter.
+
+This parameter can be used in any Razor component in a Spark app.
+
+The `PageState` object has two properties.
+
+```csharp
+public class PageState
+{
+	public User User { get; set; } = new();
+	public string AppName { get; set; }
+}
+```
+
+These properties are set for you automatically when a route is visited, giving you access to the authenticated users data and the apps name.
+
+For example, you can display the authenticated users name on a page like this:
+
+```razor
+@code {
+	[CascadingParameter]
+    public PageState PageState { get; set; } = default!;
+}
+
+<div>@PageState.User.Name</div>
+```
+
+### HTTP Context
+
+Because Spark use Blazor SSR, you can access the `HttpContext` in your Razor components through a cascading parameter.
+
+```razor
+@code {
+	[CascadingParameter]
+    public HttpContext? HttpContext { get; set; }
+}
+```
+
+## Pages
+
+Your Blazor pages should be created in the `Pages` directory.
+
+A Blazor page is a Razor component with a `@page "/some-url"` attribute at the top that represents the url it's located at. The Blazor router will automatically register this route for you.
+
+You can read more about Pages [here](/docs/pages)
+
+## Layouts
+
+Layout files define a top level template for pages in Spark apps.
+
+Spark projects come with a MainLayout.razor file setup for you already in the `Pages/Layouts` directory. All pages will use this layout by default.
+
+### Creating Layouts
+
+To create your own layout file, add a new razor component to the `Pages/Layouts` directory. For example, `Pages/Layouts/NewLayout.razor`.
+
+Layout files need to inherit `LayoutComponentBase` and have an `@Body` tag to let Blazor know where to render the pages content.
+
+```razor
+@* Pages/Layouts/NewLayout.razor *@
+@inherits LayoutComponentBase
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <HeadOutlet />
+    </head>
+    <body>
+        @Body
+    </body>
+</html>
+```
+
+To use the new layout on a page, add the `@layout` attribute.
+
+```razor
+@page "/developers"
+@layout NewLayout
+
+<h2>Episodes</h2>
+```
+
+### Default Layout
+
+The default layout used by your pages is set in the `Pages/PageRoutes.razor` file.
+
+```razor
+...
+<RouteView RouteData="@routeData" DefaultLayout="@typeof(Layouts.MainLayout)"/>
+...
+```
+
+To change your default layout, simply pass a different layout to the `DefaultLayout` parameter.
+
+```razor
+...
+<RouteView RouteData="@routeData" DefaultLayout="@typeof(Layouts.NewLayout)"/>
+...
+```

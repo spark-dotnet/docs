@@ -37,13 +37,10 @@ This makes changing variables simple between environments. You don't have to cre
 ## Setup
 Because all of your configuration values end up in the `appsettings.json` file, they can be accessed by dependency injecting the `IConfiguration` interface.
 
-```csharp
-namespace MyApp.Pages.Developers.Index;
-
-public partial class Index
-{
-    [Inject] public IConfiguration Config { get; set; }
-
+```razor
+@page "/"
+@inject IConfiguration Config
+@code {
     protected override void OnInitialized()
     {
         var value = Config.GetValue<string>("Some:Variable");
@@ -67,4 +64,4 @@ var appName = Env.Get("APP_NAME");
 ## Security
 The `.env` file should never be committed to your apps source control. They contain sensitive information like database credentials and should be created when setting up a new environment.
 
-The `.env.example` file acts as an example of what your `.env` file should look like. This should be commited to source control with sensitive values removed. It acts as a guide for other developers when setting up their app.
+The `.env.example` file acts as an example of what your `.env` file should look like. This should be commited to source control with sensitive values removed. It acts as a guide for other developers when setting up your app.

@@ -18,8 +18,6 @@ dotnet tool uninstall -g Spark.CLI
 dotnet tool install -g Spark.CLI
 ```
 
-
-
 ## Install
 Install the Spark Templates. This must be ran 1 time before creating your first Spark project.
 ```bash
@@ -38,8 +36,8 @@ Create a Spark project.
 spark new [projectName]
 ```
 
-## Open Project
-Opens a Spark project with your default editor.
+## Open Solution
+Opens a Spark solution with your default editor.
 ```bash
 spark open
 ```
@@ -62,20 +60,9 @@ Create an new Razor component.
 ```bash
 spark make component [ComponentName]
 ```
-The new component will be under `Pages/Shared`. 
+The new component will be under `Pages/Components`. 
 
-The command accepts subfolders as well. For instance, `spark make component Profile/ProfileDetails` would make a new component at `Pages/Shared/Profile/ProfileDetails.razor`.
-
-All components are created with a code behind file as well. 
-
-So `Pages/Shared/Profile/ProfileDetails.razor` would also have a code behind file of `Pages/Shared/Profile/ProfileDetails.cs` created with it.
-
-### Inline Components
-If you prefer to combine your razor and code behind files into 1 .razor file, you can pass the `--inline` flag.
-
-```bash
-spark make page [PageName] --inline
-```
+The command accepts subfolders as well. For instance, `spark make component Profile/ProfileDetails` would make a new component at `Pages/Components/Profile/ProfileDetails.razor`.
 
 ## Create Page
 Create an new Blazor page.
@@ -85,15 +72,6 @@ spark make page [PageName]
 The new page will be under `Pages`. 
 
 The command accepts subfolders as well. For instance, `spark make page Profile/Index` would make a new Blazor page at `Pages/Profile/Index.razor`.
-
-All pages are created with a code behind file as well. So the `Pages/Profile/Index.razor` page would also have a code behind file of `Pages/Profile/Index.cs` created with it.
-
-### Inline Pages
-If you prefer to combine your razor and code behind files into 1 .razor file, you can pass the `--inline` flag.
-
-```bash
-spark make page [PageName] --inline
-```
 
 ## Create Event
 Create an new Event and Listener.
@@ -129,25 +107,3 @@ Create an new Invocable Job.
 spark make job [jobName]
 ```
 The new Job will be under `Application/Jobs`.
-
-{/* ## Create Page
-Create an new Blazor Page.
-```bash
-spark make page [pageName]
-```
-The new Blazor Page will be under `Pages`. This command supports subdirectories. The following command:
-```bash
-spark make page Users/Index
-```
-Would create a new Blazor page at `Pages/Users/Index.razor`
-
-## Create Component
-Create an new Razor component.
-```bash
-spark make component [componentName]
-```
-The new Razor component will be under `Pages/Shared`. This command supports subdirectories. The following command:
-```bash
-spark make component Users/UserPreview
-```
-Would create a new Razor component at `Pages/Shared/Users/UserPreview.razor` */}

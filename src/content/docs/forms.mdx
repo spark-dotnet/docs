@@ -1,0 +1,258 @@
+---
+title: "Forms"
+description: "Spark Blazor Forms"
+---
+
+## Introduction
+
+Forms are a core component for most web applications. Blazor comes with built-in components to help you easily create dynamic forms.
+
+## Using Forms
+
+The easiest way to create a form in your Razor components is to utilize the `EditForm` component that comes with Blazor.
+
+```razor
+@page "/developers/create"
+
+<EditForm Model="@Model" OnSubmit="@Submit" FormName="CreateDeveloper">
+    <InputText @bind-Value="Model!.Name">
+    <button type="submit">Save</button>
+</EditForm>
+
+@code {
+    [SupplyParameterFromForm]
+    public Developer? Model { get; set; }
+
+    protected override void OnInitialized() {
+        Model ??= new();
+    }
+
+    private void Submit()
+    {
+        Console.Writeline("New dev named {Model.Name}");
+    }
+}
+```
+
+### Binding your Model
+
+`EditForm` components accept a model parameter. This allows you to bind an object to the edit form, so the data entered in the forms input elements can be bound to your own object on the server when the form is submitted.
+
+The `SupplyParameterFromForm` attribute is required for this to work properly.
+
+```razor
+<EditForm Model="@Model">
+    ...
+</EditForm>
+
+@code {
+    [SupplyParameterFromForm]
+    public Developer? Model { get; set; }
+...
+```
+
+When a form is submitted, the `OnInitialized` method will run in your component. This is important to note because if your instantiating your forms model in this method, it will overwrite the bound data when the form is submitted.
+
+To work around this, use a **null-coalescing operator** to only instantiate a new object if it's null.
+
+```csharp
+protected override void OnInitialized() {
+    Model ??= new();
+}
+```
+
+### Submitting the Form
+
+`EditForm` components can be submitted by assigning the `OnValidSubmit` or `OnSubmit` event handlers to a method in your component.
+
+When the user clicks the "Submit" button in your edit form, an HTTP request will be made to the server and your method will run.
+
+```razor
+@page "/developers/create"
+
+<EditForm Model="@Model" OnSubmit="@Submit" FormName="CreateDeveloper">
+    <InputText @bind-Value="Model!.Name">
+    <button type="submit">Save</button>
+</EditForm>
+
+@code {
+    ...
+
+    // The event handler that will be called on form submit
+    private void Submit()
+    {
+        Console.Writeline("New dev named {Model.Name}");
+    }
+}
+```
+
+> `OnValidSubmit` will run validation on your model before running your event handler method.
+> We will talk more about this below.
+
+### Validating the Form
+
+Most of the time, you will need to validate your forms data before doing anything with it.
+
+You can accomplish this 1 of 2 ways.
+
+-   Data Annotations Validator
+-   Fluent validation
+
+**Data Annotations Validator**
+
+The data annotations validator is the easiest way to validate form data but can't cover complex scenarios like fluent validation can.
+
+To use the data annotations, first define your forms model with with Data Annotation attributes on it's properties.
+
+```csharp
+public class Developer {
+
+    [Required]
+    public string Name { get; set; }
+
+}
+```
+
+Then bind your model to the `EditForm` and add the `<DataAnnotationsValidator />` component inside of the form.
+
+```razor
+@page "/developers/create"
+
+<EditForm Model="@Model" OnSubmit="@Submit" FormName="CreateDeveloper">
+    <DataAnnotationsValidator />
+    <InputText @bind-Value="Model!.Name">
+    <button type="submit">Save</button>
+</EditForm>
+
+@code {
+    [SupplyParameterFromForm]
+    public Developer? Model { get; set; }
+...
+```
+
+When the form is submitted, your model will be validated before your `OnValidSubmit` method is called. If validations fails, your `OnValidSubmit` method will not be called.
+
+To display error messages for failed validation, add the `ValidationMessage` component to your forms fields.
+
+```razor
+...
+<InputText @bind-Value="Model!.Name">
+<div>
+    <ValidationMessage For="() => Model!.Name" />
+</div>
+...
+```
+
+**Fluent Validation**
+
+Spark comes with the Fluent Validation package installed for you.
+
+Fluent Validation takes more effort to setup than the Data Annotations Validator but is more flexible and covers more advanced validation scenarios.
+
+To use Fluent Validation in your forms, first create a Validator class for you forms model.
+
+```csharp
+public class Developer {
+
+    [Required]
+    public string Name { get; set; }
+
+}
+
+public class DeveloperFormValidator : AbstractValidator<Developer>
+{
+    public DeveloperFormValidator()
+    {
+        RuleFor(p => p.Name)
+            .NotEmpty().WithMessage("Name is required")
+    }
+}
+
+```
+
+Then use the `<FluentValidationValidator />` component inside of your `EditForm`.
+
+```razor
+@page "/developers/create"
+
+<EditForm Model="@Model" OnSubmit="@Submit" FormName="CreateDeveloper">
+    <FluentValidationValidator />
+    <InputText @bind-Value="Model!.Name">
+    <button type="submit">Save</button>
+</EditForm>
+
+@code {
+    [SupplyParameterFromForm]
+    public Developer? Model { get; set; }
+...
+```
+
+To display error messages for failed validation, add the `ValidationMessage` component to your forms fields.
+
+```razor
+...
+<InputText @bind-Value="Model!.Name">
+<div>
+    <ValidationMessage For="() => Model!.Name" />
+</div>
+...
+```
+
+### Saving the Data
+
+Typically when submitting a form, your goal is to save or update some data in your database from the data submitted in the form.
+
+To do this, simply inject your apps `DatabaseContext` into your component and use it to save the forms data.
+
+```razor
+@page "/developers/create"
+@inject DatabaseContext Db
+
+<EditForm Model="@Model" OnSubmit="@SaveDeveloper" FormName="CreateDeveloper">
+    <InputText @bind-Value="Model!.Name">
+    <button type="submit">Save</button>
+</EditForm>
+
+@code {
+    [SupplyParameterFromForm]
+    public Developer? Model { get; set; }
+
+    protected override void OnInitialized() {
+        Model ??= new();
+    }
+
+    private void SaveDeveloper()
+    {
+        DB.Developers.Save(Model);
+    }
+}
+```
+
+### Redirecting After Submit
+
+It's common to want to redirect to another page in your app after a successful form submission.
+
+You can utilize the `NavigationManager` class to do this.
+
+```razor
+@page "/developers/create"
+@inject NavigationManager NavManager
+
+...
+
+@code {
+
+    private void SaveDeveloper()
+    {
+        DB.Developers.Save(Model);
+
+        // Navigate to another page.
+		NavManager.NavigateTo("dashboard");
+    }
+}
+
+```
+
+## Extracting a Form Component
+
+TODO

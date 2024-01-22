@@ -1,91 +1,212 @@
 <div class="w-full px-6 sm:px-8 z-10">
-    <nav class="navbar bg-base-100 max-w-7xl mx-auto px-6 rounded-full">
-        <div class="navbar-start space-x-2 w-3/4">
-            <a class="inline-flex items-center" href="/">
-                <div class="p-1.5 bg-accent rounded-full">
-                    <svg
+  <nav class="navbar bg-base-100 max-w-7xl mx-auto px-6 rounded-full">
+    <div class="navbar-start space-x-2 w-3/4">
+      <a class="inline-flex items-center" href="/">
+        <div class="p-1.5 bg-accent rounded-full">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-5 h-auto text-white"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-zap"
+            ><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"
+            ></polygon></svg
+          >
+        </div>
+      </a>
+      <ul
+        class="menu menu-horizontal px-1 font-medium text-base hidden sm:flex"
+      >
+        <li><a href="/docs/introduction">Docs</a></li>
+        <li>
+          <details>
+            <summary> Ecosystem</summary>
+            <ul class="p-2 bg-base-50 w-56 z-50">
+              <li>
+                <a
+                  href="https://dotnetengine.com"
+                  target="_blank"
+                  class="flex rounded-md"
+                >
+                  <div class="">
+                    <div class="p-1 bg-blue-500 rounded-lg mr-2">
+                      <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        class="w-5 h-auto text-white"
+                        class="w-6 h-auto text-white"
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
                         stroke-width="2"
                         stroke-linecap="round"
                         stroke-linejoin="round"
-                        class="lucide lucide-zap"
-                        ><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"
-                        ></polygon></svg
-                    >
-                </div>
-            </a>
-            <ul class="menu menu-horizontal px-1 font-medium text-base hidden sm:flex">
-                <li><a href="/docs/introduction">Docs</a></li>
-                <li>
-                    <details>
-                        <summary> Ecosystem</summary>
-                        <ul class="p-2 bg-base-50 w-56 z-50">
-                            <li>
-                                <a href="https://dotnetengine.com" target="_blank" class="flex rounded-md">
-                                    <div class="">
-                                        <div class="p-1 bg-blue-500 rounded-lg mr-2">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-auto text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" /><path d="M12 12v9" /><path d="m16 16-4-4-4 4" /></svg>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <p class="text-sm font-bold mb-0.5">Dotnet Engine</p>
-                                        <p class="text-xs text-gray-500">Hosting and deploy .NET web apps</p>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="https://dotnet-jobs.com" target="_blank" class="flex rounded-md">
-                                    <div class="">
-                                        <div class="p-1 bg-red-500 rounded-lg mr-2">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-auto text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m19 5 3-3" /><path d="m2 22 3-3" /><path d="M6.3 20.3a2.4 2.4 0 0 0 3.4 0L12 18l-6-6-2.3 2.3a2.4 2.4 0 0 0 0 3.4Z" /><path d="M7.5 13.5 10 11" /><path d="M10.5 16.5 13 14" /><path d="m12 6 6 6 2.3-2.3a2.4 2.4 0 0 0 0-3.4l-2.6-2.6a2.4 2.4 0 0 0-3.4 0Z" /></svg>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <p class="text-sm font-bold mb-0.5">Dotnet Jobs</p>
-                                        <p class="text-xs text-gray-500">Find & post .NET developer jobs.</p>
-                                    </div>
-                                </a>
-                            </li>
-                        </ul>
-                    </details>
-                </li>
-                <li><a href="/newsletter">News</a></li>
+                        ><path
+                          d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"
+                        ></path><path d="M12 12v9"></path><path
+                          d="m16 16-4-4-4 4"></path></svg
+                      >
+                    </div>
+                  </div>
+                  <div>
+                    <p class="text-sm font-bold mb-0.5">Dotnet Engine</p>
+                    <p class="text-xs text-gray-500">
+                      Hosting and deploy .NET web apps
+                    </p>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://dotnet-jobs.com"
+                  target="_blank"
+                  class="flex rounded-md"
+                >
+                  <div class="">
+                    <div class="p-1 bg-red-500 rounded-lg mr-2">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="w-6 h-auto text-white"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        ><path d="m19 5 3-3"></path><path d="m2 22 3-3"
+                        ></path><path
+                          d="M6.3 20.3a2.4 2.4 0 0 0 3.4 0L12 18l-6-6-2.3 2.3a2.4 2.4 0 0 0 0 3.4Z"
+                        ></path><path d="M7.5 13.5 10 11"></path><path
+                          d="M10.5 16.5 13 14"></path><path
+                          d="m12 6 6 6 2.3-2.3a2.4 2.4 0 0 0 0-3.4l-2.6-2.6a2.4 2.4 0 0 0-3.4 0Z"
+                        ></path></svg
+                      >
+                    </div>
+                  </div>
+                  <div>
+                    <p class="text-sm font-bold mb-0.5">Dotnet Jobs</p>
+                    <p class="text-xs text-gray-500">
+                      Find & post .NET developer jobs.
+                    </p>
+                  </div>
+                </a>
+              </li>
             </ul>
+          </details>
+        </li>
+        <li><a href="/newsletter">News</a></li>
+      </ul>
+    </div>
+    <div class="navbar-end space-x-2 w-1/4">
+      <div class="space-x-3 hidden sm:inline-flex">
+        <a
+          href="https://github.com/spark-dotnet/framework"
+          target="_blank"
+          rel="noreferrer nofollow"
+          class="p-1.5 rounded-full bg-accent hover:bg-[#CF9831] transition"
+        >
+          <svg
+            class="h-5 w-5 fill-white"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            ><title>github-black</title><path
+              d="M0 12.305c0 5.435 3.438 10.047 8.207 11.674.6.113.82-.267.82-.593 0-.292-.011-1.066-.017-2.093-3.339.744-4.043-1.65-4.043-1.65-.545-1.42-1.332-1.798-1.332-1.798-1.09-.764.083-.749.083-.749 1.203.087 1.837 1.268 1.837 1.268 1.071 1.88 2.809 1.338 3.493 1.022.109-.795.42-1.337.762-1.645-2.665-.31-5.466-1.365-5.466-6.08 0-1.343.467-2.442 1.235-3.302-.123-.311-.535-1.562.117-3.256 0 0 1.008-.33 3.3 1.261.958-.273 1.984-.409 3.005-.414 1.019.005 2.046.141 3.004.414 2.29-1.592 3.297-1.261 3.297-1.261.654 1.694.242 2.945.119 3.256.77.86 1.234 1.959 1.234 3.302 0 4.726-2.806 5.767-5.48 6.071.431.38.815 1.13.815 2.279 0 1.645-.015 2.971-.015 3.375 0 .329.216.712.825.591 4.765-1.63 8.2-6.239 8.2-11.672C24 5.508 18.627 0 12 0S0 5.508 0 12.305z"
+              fill-rule="evenodd"></path></svg
+          >
+        </a>
+        <a
+          href="https://discord.gg/TyxmQgvtDw"
+          target="_blank"
+          rel="noreferrer nofollow"
+          class="p-1.5 rounded-full bg-accent hover:bg-[#CF9831] transition"
+        >
+          <svg
+            class="h-5 w-5 fill-white"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 127.14 96.36"
+            ><defs></defs><g id="图层_2" data-name="图层 2"
+              ><g id="Discord_Logos" data-name="Discord Logos"
+                ><g
+                  id="Discord_Logo_-_Large_-_White"
+                  data-name="Discord Logo - Large - White"
+                  ><path
+                    class="cls-1"
+                    d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,46,96.12,53,91.08,65.69,84.69,65.69Z"
+                  ></path></g
+                ></g
+              ></g
+            ></svg
+          >
+        </a>
+        <a
+          href="https://www.youtube.com/@sparkdotnet"
+          target="_blank"
+          rel="noreferrer nofollow"
+          class="p-1.5 rounded-full bg-accent hover:bg-[#CF9831] transition"
+        >
+          <svg
+            class="h-5 w-5 fill-white"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 576 512"
+            ><path
+              d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"
+            ></path></svg
+          >
+        </a>
+      </div>
+      <div class="dropdown dropdown-end inline-block sm:hidden">
+        <div tabindex="0" role="button" class="btn btn-ghost lg:hidden -mr-2">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            style="display: block; transform: scale(-1,1)"
+            ><path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h8m-8 6h16"></path></svg
+          >
         </div>
-        <div class="navbar-end space-x-2 w-1/4">
-            <div class="space-x-3 hidden sm:inline-flex ">
-                <a
-                href="https://github.com/spark-dotnet/framework"
-                target="_blank"
-                rel="noreferrer nofollow"
-                class="p-1.5 rounded-full bg-accent hover:bg-[#CF9831] transition"
+        <ul
+          tabindex="0"
+          class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+        >
+          <li><a href="/docs/introduction">Docs</a></li>
+          <li>
+            <a>Ecoystem</a>
+            <ul class="p-2">
+              <li>
+                <a href="https://dotnetengine.com" target="_blank"
+                  >Dotnet Engine</a
                 >
-                    <svg class="h-5 w-5 fill-white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>github-black</title><path d="M0 12.305c0 5.435 3.438 10.047 8.207 11.674.6.113.82-.267.82-.593 0-.292-.011-1.066-.017-2.093-3.339.744-4.043-1.65-4.043-1.65-.545-1.42-1.332-1.798-1.332-1.798-1.09-.764.083-.749.083-.749 1.203.087 1.837 1.268 1.837 1.268 1.071 1.88 2.809 1.338 3.493 1.022.109-.795.42-1.337.762-1.645-2.665-.31-5.466-1.365-5.466-6.08 0-1.343.467-2.442 1.235-3.302-.123-.311-.535-1.562.117-3.256 0 0 1.008-.33 3.3 1.261.958-.273 1.984-.409 3.005-.414 1.019.005 2.046.141 3.004.414 2.29-1.592 3.297-1.261 3.297-1.261.654 1.694.242 2.945.119 3.256.77.86 1.234 1.959 1.234 3.302 0 4.726-2.806 5.767-5.48 6.071.431.38.815 1.13.815 2.279 0 1.645-.015 2.971-.015 3.375 0 .329.216.712.825.591 4.765-1.63 8.2-6.239 8.2-11.672C24 5.508 18.627 0 12 0S0 5.508 0 12.305z" fill-rule="evenodd"/></svg>
-                </a>
-                <a
-                    href="https://discord.gg/TyxmQgvtDw"
-                    target="_blank"
-                    rel="noreferrer nofollow"
-                    class="p-1.5 rounded-full bg-accent hover:bg-[#CF9831] transition"
+              </li>
+              <li>
+                <a href="https://dotnet-jobs.com" target="_blank">Dotnet Jobs</a
                 >
-                    <svg class="h-5 w-5 fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 127.14 96.36"><defs></defs><g id="图层_2" data-name="图层 2"><g id="Discord_Logos" data-name="Discord Logos"><g id="Discord_Logo_-_Large_-_White" data-name="Discord Logo - Large - White"><path class="cls-1" d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,46,96.12,53,91.08,65.69,84.69,65.69Z" /></g></g></g></svg>
-                </a>
-                <a
-                    href="https://www.youtube.com/@sparkdotnet"
-                    target="_blank"
-                    rel="noreferrer nofollow"
-                    class="p-1.5 rounded-full bg-accent hover:bg-[#CF9831] transition"
-                >
-                    <svg class="h-5 w-5 fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"/></svg>
-                </a>
-            </div>
-            <button class="btn btn-square btn-ghost flex sm:hidden">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-5 h-5 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-            </button>
-        </div>
-    </nav>
+              </li>
+            </ul>
+          </li>
+          <li><a href="/newsletter">News</a></li>
+          <li>
+            <a href="https://github.com/spark-dotnet/framework" target="_blank"
+              >Github</a
+            >
+          </li>
+          <li>
+            <a href="https://discord.gg/BC3kVCM9" target="_blank">Discord</a>
+          </li>
+          <li>
+            <a href="https://www.youtube.com/@sparkdotnet" target="_blank"
+              >Youtube</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 </div>

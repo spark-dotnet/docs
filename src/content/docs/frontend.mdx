@@ -1,0 +1,173 @@
+---
+title: "Frontend"
+description: "Spark Frontend"
+---
+
+## Introduction
+Spark.NET is a full stack framework. Because of this, we recognize that you not only need a backend but also a frontend as well.
+
+Spark gives you two project options to build your frontends with.
+- Blazor SSR
+- Razor Pages
+
+## Blazor SSR
+Blazor utilizes Razor components to split your markdown into re-usable chunks. These components also have the ability to contain logic specific to themselves and can even have url routes invoke them.
+
+```razor
+@page "/developers"
+@inject DeveloperService developerService
+@code {
+    private List<Developer> developers { get; set; }
+    protected override void OnInitialized()
+    {
+        developers = await developerService.GetDevelopers();
+    }
+}
+
+<ul>
+    @foreach (var developer in developers)
+    {
+    <li>
+        @developer.Name
+    </li>
+    }
+</ul>
+```
+
+All Blazor SSR apps come with enhanced navigation, meaning any navigation or form submissions don't require full page reloads, making your apps nice and snappy.
+
+You can learn more on our [Blazor](/docs/blazor) page.
+
+### Enhancing with HTMX
+You can also swap out the out of the box enhancements that come with Blazor for [HTMX](https://htmx.org/).
+
+HTMX will provide the same enhanced navigation and form submissions by adding the `hx-boost` attribute to the body tag in your layout files and swapping the `blazor.web.js` script with the HTMX script.
+```razor
+<!-- MainLayout.razor -->
+
+<head>
+    ...
+    <script src="https://unpkg.com/htmx.org@1.9.10" crossorigin="anonymous"></script>
+</head>
+<body hx-boost="true" class="bg-gray-100 flex flex-col min-h-screen">
+    <NavBar />
+    <main class="container py-20 px-4 md:px-12 max-w-6xl w-full mx-auto">
+        @Body
+    </main>
+    <FlashMessages />
+    @*<script src="_framework/blazor.web.js"></script> 👈 Remove this *@
+</body>
+...
+```
+HTMX adds other enhancements that the Blazor enhancements do not. Things such as:
+- Polling
+- Removing elements after x seconds
+- GET and POST triggers on elements
+
+## Razor Pages
+Razor Pages utilizes the Razor Templating language to build server side rendered views with code behind files to run logic on GET or POST requests for that view.
+
+For example, a simple home page for an app would look like the following.
+```razor
+<!-- Index.cshtml -->
+
+@page "/"
+@model Index
+
+<h1>Hello @Model.Name</h1>
+```
+
+And the code behind...
+```csharp
+// Index.cshtml.cs
+
+public class Index : PageModel
+{
+    public string Name { get; set; }
+
+	public void OnGet()
+	{
+        Name = "World";
+	}
+}
+```
+
+### Enhancing with HTMX
+[HTMX](https://htmx.org/) is a quick way to enhance the feel of your Razor Pages application.
+
+HTMX gives you the ability to use AJAX requests via HTML attributes. You can also utilize the `hx-boost` attribute in the body tag of your layout files. This will make any navigation or form submissions in your app utilize AJAX for partial page reloads, giving it a SPA like feel. 
+```razor
+<!-- _MainLayout.cshtml -->
+
+<head>
+    ...
+    <script src="https://unpkg.com/htmx.org@1.9.10" crossorigin="anonymous"></script>
+</head>
+<body hx-boost="true" class="bg-gray-100 flex flex-col min-h-screen">
+    <partial name="_NavBar" />
+    <main class="container py-20 px-4 md:px-12 max-w-6xl w-full mx-auto">
+        @RenderBody()
+    </main>
+    <partial name="_FlashMessages" />
+</body>
+...
+```
+
+
+### Enhancing with Hydro
+[Hydro](https://usehydro.dev/) is a framework for building Razor Pages apps that behave like dynamic and interactive JavaScript frontends like React.
+
+Hydro, unlike HTMX, allows you to persist page state between HTTP requests. This makes it great for building rich, interactive UIs.
+
+For example, a "Counter" component would look like the following:
+```csharp
+// Counter.cs
+
+public class Counter : HydroComponent
+{
+    public int Count { get; set; }
+    
+    public void Add(int value)
+    {
+        Count += value;
+    }
+}
+```
+
+And it's corresponding razor template:
+```razor
+<!-- Counter.cshtml -->
+
+@model Counter
+
+<div>
+  Count: @Model.Count
+  
+  <button hydro-on:click="@(() => Model.Add(1))">
+    Add 1
+  </button>
+</div>
+```
+
+By adding HTML attributes, like `hydro-on:click` above, you can tie actions in your markup to functions on your backend. This opens the door for .NET developers to build dynamic web applications while staying within the ASP.NET and C# ecosystem.
+
+## CSS
+Spark projects come with [Tailwind CSS](https://tailwindcss.com/) and [DaisyUI](https://daisyui.com/) installed via NPM.
+
+If you need to write custom CSS, you can do so in the `Assets/Css/app.css` file.
+
+If you need to customize Tailwind CSS configuration, you can do so in the `tailwind.config.js` file.
+
+If you need to add custom CSS classes outside of the Tailwind library, you can do so by updating the `Assets/Css/app.css` file. This file is picked up by Vite, which prunes any unused Tailwind classes and bundles a minified CSS file for you.
+
+## Bundling Assets
+Spark uses Vite to bundle your CSS and JS for you. It provides fast build times and Hot Module Replacement during local development.
+
+You will find a `vite.config.js` file that configures and loads Vite for you.
+
+Spark also uses the [Vite.AspNetCore](https://github.com/Eptagone/Vite.AspNetCore) Nuget package. This auto starts a Vite server for you when developing locally so you don't have to start it manually.
+
+Finally, Spark projects are also setup to build your assets for you whenever running a `dotnet build` or `dotnet publish`. You can find thses build commands in your `.csproj` file in the `App` folder.
+
+### Custom Javascript
+If you need to write custom JavaScript, it is advised to do so in the `Assets/Js/app.js` file. This file is picked up by Vite, which then builds the minified Js file for you.

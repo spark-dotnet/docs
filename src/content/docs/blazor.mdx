@@ -1,0 +1,625 @@
+---
+title: "Blazor"
+description: "Using Blazor with Saprk"
+---
+
+## Introduction
+
+Blazor SSR utilizes Razor components to split your markdown into re-usable chunks. These components also have the ability to contain logic specific to themselves and can even have url routes invoke them.
+
+Razor components let you mix in HTML markup with C#, allowing you to quickly create dynamic components to use in your app.
+
+```razor
+@inject DeveloperService developerService
+@code {
+    private List<Developer> developers { get; set; }
+    protected override void OnInitialized()
+    {
+        developers = await developerService.GetDevelopers();
+    }
+}
+
+<ul>
+    @foreach (var developer in developers)
+    {
+    <li>
+        @developer.Name
+    </li>
+    }
+</ul>
+```
+
+## Components
+
+Razor components are re-usable elements you can use anywhere in your application.
+
+Your components should be created in the `Pages/Components` directory.
+
+### Creating Razor Components
+
+To create a new Razor component, simply run the Spark make component command.
+
+```bash
+spark make component SomeComponent
+```
+
+A new Razor component named `SomeComponent.razor` will be created in the `Pages/Components` directory.
+
+```razor
+<p>My Component</p>
+
+@code {
+
+    protected override async Task OnInitializedAsync()
+    {
+
+    }
+}
+```
+
+### Rendering Components
+
+To display a component, you may use a Razor component tag within another Razor component or page. Razor component tags are just the name of it's source file.
+
+```razor
+<SomeComponent />
+```
+
+### Passing Data To Components
+
+You can pass data to a Razor component or page by using **Component Parameters**.
+
+Component parameters are defined using public C# properties on the component class with the `[Parameter]` attribute.
+
+For example, below is a razor component called `ChildComponent.razor`. It accepts a parameter of `Title`.
+
+```razor
+<h1>@Title</h1>
+
+@code {
+    [Parameter]
+    public string Title { get; set; } = "";
+}
+```
+
+Then, in a parent Razor component, you can render the child component and pass the `Title` parameter value.
+
+```razor
+<div>
+    <SomeComponent Title="This is my title" />
+</div>
+
+@code {
+}
+```
+
+In this example, the following markup would ultimately be rendered to the browser.
+
+```html
+<div>
+	<h1>This is my title</h1>
+</div>
+```
+
+### Child Content
+
+You will often need to pass additional content to your razor components via a `RenderFragment`. RenderFragments can be HTML markup or even other Razor Components.
+
+For example, the below `ChildComponent.razor` component has a `ChildContent` parameter of type `RenderFragment`. This represents a segment of UI to render.
+
+```razor
+<h1>
+    @ChildContent
+</h1>
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+}
+```
+
+Then, in a parent Razor component, you can render the child component while passing content between it's opening and closing tags.
+
+```razor
+<ChildComponent>
+    Spark is <span class="text-yellow-600">Awesome!</span>
+</ChildComponent>
+```
+
+In this example, the following markup would ultimately be rendered to the browser.
+
+```html
+<h1>Spark is <span class="text-yellow-600">Awesome!</span></h1>
+```
+
+### Dependency Injection
+
+You can take advantage of ASP.NET’s dependency injection system by adding the `@inject` directive in your Razor components.
+
+.NET will automatically resolve the dependency for you provided it has been registered in the apps service container.
+
+```razor
+@inject IConfiguration Config
+
+@code {
+    private string name = '';
+
+    protected override void OnInitialized()
+    {
+        name = Config.GetValue<string>("Developer:Name");
+    }
+}
+```
+
+### Page State
+
+Spark exposes the `PageState` object to all Razor components as a cascading parameter.
+
+This parameter can be used in any Razor component in a Spark app.
+
+The `PageState` object has two properties.
+
+```csharp
+public class PageState
+{
+	public User User { get; set; } = new();
+	public string AppName { get; set; }
+}
+```
+
+These properties are set for you automatically when a route is visited, giving you access to the authenticated users data and the apps name.
+
+For example, you can display the authenticated users name on a page like this:
+
+```razor
+@code {
+	[CascadingParameter]
+    public PageState PageState { get; set; } = default!;
+}
+
+<div>@PageState.User.Name</div>
+```
+
+### HTTP Context
+
+Because Spark use Blazor SSR, you can access the `HttpContext` in your Razor components through a cascading parameter.
+
+```razor
+@code {
+	[CascadingParameter]
+    public HttpContext? HttpContext { get; set; }
+}
+```
+
+## Pages
+
+Blazor allows you to assign a route directly to a component in your application. These are called Blazor pages.
+
+To assign a route to a component, use the `@page` attribute at the top of your .razor file.
+
+```razor
+@page "/developers"
+
+<div>
+...
+</div>
+```
+
+### Creating Blazor Pages
+
+You can create a new Blazor page by hand or by running the following Spark CLI command:
+
+```bash
+spark make page Developers/Index
+```
+
+Just like a normal component, after running this command Spark will create a new file in your application at `Pages/Developers/Index.razor`.
+
+```razor
+@page "/developers/index"
+@code {
+    protected override void OnInitialized()
+    {
+
+    }
+}
+
+<h1>My Page</h1>
+```
+
+### Organizing Pages
+
+It is advised to create your Blazor pages in a subdirectory of the `Pages` folder and not the root of the Pages folder.
+
+For example, lets say our app has a list of developers and open source work they've done.
+
+We would want the following pages in the `Pages/Developers` directory:
+
+-   `Pages/Developers/Index.razor` Show a list of developers
+-   `Pages/Developers/Show.razor` Show 1 developer
+-   `Pages/Developers/Create.razor` Create developer
+-   `Pages/Developers/Edit.razor` Edit developer
+-   `Pages/Developers/Delete.razor` Delete developer
+
+### Component Naming Conventions
+
+Blazer pages and components should always use **PascalCase** naming.
+
+```razor
+<MyComponent />
+```
+
+### Routes
+
+### Route Parameters
+
+Parameters can be passed into a Blazor page through the url. For example, lets say you have a page to show the details about a developer.
+
+You can setup a route parameter in your URL to pass in the Id. Then setup a public property in your Blazor page with the same name.
+
+Route parameter names are **case insensitive**.
+
+```razor
+@page "/developers/{Id:int}"
+
+@if (developer != null) {
+    <h1>@developer.Name</h1>
+}
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+	private Developer developer { get; set; }
+
+	protected override async Task OnInitializedAsync()
+	{
+		developer = await _developerService.Get(Id);
+	}
+}
+```
+
+### Page title and metadata
+
+You can set a Blazor pages `<title>` element by using the `PageTitle` component.
+
+```razor
+@page "/developers"
+
+<PageTitle>This is the developers page</PageTitle>
+```
+
+To set metadata, like the pages description, use the `HeadContent` component.
+
+```razor
+@page "/developers"
+
+<PageTitle>This is the developers page</PageTitle>
+<HeadContent>
+    <meta name="description" content="This is a page that shows all the developers.">
+</HeadContent>
+```
+
+### SEO
+
+Because Spark uses Server-side Rendered Blazor, all pages are rendered on the server and the HTML is then sent to the clients browser.
+
+This means search engines can easily index your sites content.
+
+### Navigation
+
+Blazor pages use standard html anchor elements to navigate to other Blazor pages.
+
+```razor
+@page "/developers"
+
+<a href="/">Go to home page</a>
+```
+
+HTMX will intercept the navigation and use an AJAX fetch request. The response will then be evaluated by HTMX and replace the content on the page without having to do a full page reload.
+
+### Authentication
+
+To read about how to authenticate and access User data from your Razor components and pages, check out Spark's [Authentication guide](/docs/authentication).
+
+## Layouts
+
+Layout files define a top level template for pages in Spark apps.
+
+Spark projects come with a MainLayout.razor file setup for you already in the `Pages/Layouts` directory. All pages will use this layout by default.
+
+### Creating Layouts
+
+To create your own layout file, add a new razor component to the `Pages/Layouts` directory. For example, `Pages/Layouts/NewLayout.razor`.
+
+Layout files need to inherit `LayoutComponentBase` and have an `@Body` tag to let Blazor know where to render the pages content.
+
+```razor
+@* Pages/Layouts/NewLayout.razor *@
+@inherits LayoutComponentBase
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <HeadOutlet />
+    </head>
+    <body>
+        @Body
+    </body>
+</html>
+```
+
+To use the new layout on a page, add the `@layout` attribute.
+
+```razor
+@page "/developers"
+@layout NewLayout
+
+<h2>Episodes</h2>
+```
+
+### Default Layout
+
+The default layout used by your pages is set in the `Pages/PageRoutes.razor` file.
+
+```razor
+...
+<RouteView RouteData="@routeData" DefaultLayout="@typeof(Layouts.MainLayout)"/>
+...
+```
+
+To change your default layout, simply pass a different layout to the `DefaultLayout` parameter.
+
+```razor
+...
+<RouteView RouteData="@routeData" DefaultLayout="@typeof(Layouts.NewLayout)"/>
+...
+```
+
+## Forms
+
+Forms are a core component for most web applications. Blazor comes with built-in components to help you easily create dynamic forms.
+
+### Using Forms
+
+The easiest way to create a form in your Razor components is to utilize the `EditForm` component that comes with Blazor.
+
+```razor
+@page "/developers/create"
+
+<EditForm Model="@Model" OnSubmit="@Submit" FormName="CreateDeveloper">
+    <InputText @bind-Value="Model!.Name">
+    <button type="submit">Save</button>
+</EditForm>
+
+@code {
+    [SupplyParameterFromForm]
+    public Developer? Model { get; set; }
+
+    protected override void OnInitialized() {
+        Model ??= new();
+    }
+
+    private void Submit()
+    {
+        Console.Writeline("New dev named {Model.Name}");
+    }
+}
+```
+
+### Binding your Model
+
+`EditForm` components accept a model parameter. This allows you to bind an object to the edit form, so the data entered in the forms input elements can be bound to your own object on the server when the form is submitted.
+
+The `SupplyParameterFromForm` attribute is required for this to work properly.
+
+```razor
+<EditForm Model="@Model">
+    ...
+</EditForm>
+
+@code {
+    [SupplyParameterFromForm]
+    public Developer? Model { get; set; }
+...
+```
+
+When a form is submitted, the `OnInitialized` method will run in your component. This is important to note because if your instantiating your forms model in this method, it will overwrite the bound data when the form is submitted.
+
+To work around this, use a **null-coalescing operator** to only instantiate a new object if it's null.
+
+```csharp
+protected override void OnInitialized() {
+    Model ??= new();
+}
+```
+
+### Submitting the Form
+
+`EditForm` components can be submitted by assigning the `OnValidSubmit` or `OnSubmit` event handlers to a method in your component.
+
+When the user clicks the "Submit" button in your edit form, an HTTP request will be made to the server and your method will run.
+
+```razor
+@page "/developers/create"
+
+<EditForm Model="@Model" OnSubmit="@Submit" FormName="CreateDeveloper">
+    <InputText @bind-Value="Model!.Name">
+    <button type="submit">Save</button>
+</EditForm>
+
+@code {
+    ...
+
+    // The event handler that will be called on form submit
+    private void Submit()
+    {
+        Console.Writeline("New dev named {Model.Name}");
+    }
+}
+```
+
+> `OnValidSubmit` will run validation on your model before running your event handler method.
+> We will talk more about this below.
+
+### Validating the Form
+
+Most of the time, you will need to validate your forms data before doing anything with it.
+
+You can accomplish this 1 of 2 ways.
+
+-   Data Annotations Validator
+-   Fluent validation
+
+**Data Annotations Validator**
+
+The data annotations validator is the easiest way to validate form data but can't cover complex scenarios like fluent validation can.
+
+To use the data annotations, first define your forms model with with Data Annotation attributes on it's properties.
+
+```csharp
+public class Developer {
+
+    [Required]
+    public string Name { get; set; }
+
+}
+```
+
+Then bind your model to the `EditForm` and add the `<DataAnnotationsValidator />` component inside of the form.
+
+```razor
+@page "/developers/create"
+
+<EditForm Model="@Model" OnSubmit="@Submit" FormName="CreateDeveloper">
+    <DataAnnotationsValidator />
+    <InputText @bind-Value="Model!.Name">
+    <button type="submit">Save</button>
+</EditForm>
+
+@code {
+    [SupplyParameterFromForm]
+    public Developer? Model { get; set; }
+...
+```
+
+When the form is submitted, your model will be validated before your `OnValidSubmit` method is called. If validations fails, your `OnValidSubmit` method will not be called.
+
+To display error messages for failed validation, add the `ValidationMessage` component to your forms fields.
+
+```razor
+...
+<InputText @bind-Value="Model!.Name">
+<div>
+    <ValidationMessage For="() => Model!.Name" />
+</div>
+...
+```
+
+**Fluent Validation**
+
+Spark comes with the Fluent Validation package installed for you.
+
+Fluent Validation takes more effort to setup than the Data Annotations Validator but is more flexible and covers more advanced validation scenarios.
+
+To use Fluent Validation in your forms, first create a Validator class for you forms model.
+
+```csharp
+public class Developer {
+
+    [Required]
+    public string Name { get; set; }
+
+}
+
+public class DeveloperFormValidator : AbstractValidator<Developer>
+{
+    public DeveloperFormValidator()
+    {
+        RuleFor(p => p.Name)
+            .NotEmpty().WithMessage("Name is required")
+    }
+}
+
+```
+
+Then use the `<FluentValidationValidator />` component inside of your `EditForm`.
+
+```razor
+@page "/developers/create"
+
+<EditForm Model="@Model" OnSubmit="@Submit" FormName="CreateDeveloper">
+    <FluentValidationValidator />
+    <InputText @bind-Value="Model!.Name">
+    <button type="submit">Save</button>
+</EditForm>
+
+@code {
+    [SupplyParameterFromForm]
+    public Developer? Model { get; set; }
+...
+```
+
+To display error messages for failed validation, add the `ValidationMessage` component to your forms fields.
+
+```razor
+...
+<InputText @bind-Value="Model!.Name">
+<div>
+    <ValidationMessage For="() => Model!.Name" />
+</div>
+...
+```
+
+### Saving the Data
+
+Typically when submitting a form, your goal is to save or update some data in your database from the data submitted in the form.
+
+To do this, simply inject your apps `DatabaseContext` into your component and use it to save the forms data.
+
+```razor
+@page "/developers/create"
+@inject DatabaseContext Db
+
+<EditForm Model="@Model" OnSubmit="@SaveDeveloper" FormName="CreateDeveloper">
+    <InputText @bind-Value="Model!.Name">
+    <button type="submit">Save</button>
+</EditForm>
+
+@code {
+    [SupplyParameterFromForm]
+    public Developer? Model { get; set; }
+
+    protected override void OnInitialized() {
+        Model ??= new();
+    }
+
+    private void SaveDeveloper()
+    {
+        DB.Developers.Save(Model);
+    }
+}
+```
+
+### Redirecting After Submit
+
+It's common to want to redirect to another page in your app after a successful form submission.
+
+You can utilize the `NavigationManager` class to do this.
+
+```razor
+@page "/developers/create"
+@inject NavigationManager NavManager
+
+...
+
+@code {
+
+    private void SaveDeveloper()
+    {
+        DB.Developers.Save(Model);
+
+        // Navigate to another page.
+		NavManager.NavigateTo("dashboard");
+    }
+}
+
+```
